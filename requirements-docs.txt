@@ -1,0 +1,3 @@
+mkdocs-terminal
+pygments
+pymdown-extensions
