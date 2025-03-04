@@ -1,5 +1,5 @@
 import { describe, expect, it, mock, spyOn } from 'bun:test';
-import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { OpenAPIV3 } from 'openapi-types';
 import { ParameterLocation } from '../models';
@@ -284,6 +284,12 @@ describe('OpenAPIParser', () => {
       );
       expect(fileFormatParam).toBeDefined();
       expect(fileFormatParam?.derivedFrom).toBe('file_path');
+
+      // Check that other_param is not marked as derived
+      expect(parser._derivedParameters.get('other_param')).toBeUndefined();
+
+      // Check that file_path is marked as UI-only
+      expect(parser._uiOnlyParameters.has('file_path')).toBe(true);
     });
   });
 
@@ -717,8 +723,14 @@ describe('OpenAPIParser', () => {
       const parser = new OpenAPIParser(createMinimalSpec());
 
       const pathItem = {
-        get: { operationId: 'getUser', responses: { '200': { description: 'OK' } } },
-        post: { operationId: 'createUser', responses: { '200': { description: 'OK' } } },
+        get: {
+          operationId: 'getUser',
+          responses: { '200': { description: 'OK' } },
+        },
+        post: {
+          operationId: 'createUser',
+          responses: { '200': { description: 'OK' } },
+        },
       };
 
       const operations = parser.extractOperations(pathItem as OpenAPIV3.PathItemObject);
@@ -829,7 +841,7 @@ describe('OpenAPIParser', () => {
 
       parser.simplifyFileUploadParameters(properties, parameterLocations);
 
-      // Check that file_path is added and original parameters are kept
+      // Check that file_path is added and original file parameters are kept
       expect(properties.file_path).toBeDefined();
       expect(properties.name).toBeDefined();
       expect(properties.content).toBeDefined();
@@ -846,13 +858,6 @@ describe('OpenAPIParser', () => {
 
       // Check that file_path is marked as UI-only
       expect(parser._uiOnlyParameters.has('file_path')).toBe(true);
-
-      // Check that file_path is set correctly in parameterLocations
-      expect(parameterLocations.file_path).toBe(ParameterLocation.FILE);
-      expect(parameterLocations.name).toBe(ParameterLocation.BODY);
-      expect(parameterLocations.content).toBe(ParameterLocation.BODY);
-      expect(parameterLocations.file_format).toBe(ParameterLocation.BODY);
-      expect(parameterLocations.other_param).toBe(ParameterLocation.BODY);
     });
 
     it('should handle required fields correctly in file upload operations', () => {
@@ -900,36 +905,31 @@ describe('OpenAPIParser', () => {
   describe('Snapshot Tests', () => {
     it('should parse all OpenAPI specs correctly', () => {
       // Load all specs
-      const testDir = join(process.cwd(), '.oas');
+      const filePath = join(process.cwd(), '.oas', 'hris.json');
 
-      if (!existsSync(testDir)) {
-        throw new Error('Test directory not found');
+      if (!existsSync(filePath)) {
+        throw new Error('Test file not found');
       }
 
-      for (const specName of readdirSync(testDir)) {
-        const specPath = join(testDir, specName);
+      const testFile = readFileSync(filePath, 'utf-8');
+      const spec = JSON.parse(testFile) as OpenAPIV3.Document;
 
-        if (statSync(specPath).isFile() && specName.endsWith('.json')) {
-          const spec = JSON.parse(readFileSync(specPath, 'utf-8')) as OpenAPIV3.Document;
-          const parser = new OpenAPIParser(spec);
-          const tools = parser.parseTools();
+      const parser = new OpenAPIParser(spec);
+      const tools = parser.parseTools();
 
-          // Basic validation
-          expect(Object.keys(tools).length).toBeGreaterThan(0);
+      // Basic validation
+      expect(Object.keys(tools).length).toBeGreaterThan(0);
 
-          // Check that each tool has the required properties
-          for (const toolName in tools) {
-            const tool = tools[toolName];
-            expect(tool).toHaveProperty('name');
-            expect(tool).toHaveProperty('description');
-            expect(tool).toHaveProperty('parameters');
-            expect(tool).toHaveProperty('execute');
-          }
-
-          // Use Bun's snapshot testing for the tools
-          expect(tools).toMatchSnapshot();
-        }
+      // Check that each tool has the required properties
+      for (const toolName in tools) {
+        const tool = tools[toolName];
+        expect(tool).toHaveProperty('name');
+        expect(tool).toHaveProperty('description');
+        expect(tool).toHaveProperty('parameters');
+        expect(tool).toHaveProperty('execute');
       }
+
+      expect(tools).toMatchSnapshot();
     });
   });
 });

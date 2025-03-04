@@ -581,40 +581,76 @@ export class OpenAPIParser {
               // Add file_path to required params
               requiredParams.push('file_path');
 
-              this.simplifyFileUploadParameters(properties, parameterLocations);
-            }
+              // Store the original properties for execution config
+              const executionProperties = { ...properties };
 
-            // Create tool definition with deep copies to prevent shared state
-            tools[name] = {
-              name,
-              description: operation.summary || '',
-              parameters: {
-                type: 'object',
-                properties: JSON.parse(JSON.stringify(properties)),
-                required: requiredParams.length > 0 ? requiredParams : undefined,
-              },
-              execute: {
-                method: method.toUpperCase(),
-                url: `${this._baseUrl}${path}`,
-                bodyType: (bodyType as 'json' | 'multipart-form') || 'json',
-                params: Object.entries(parameterLocations)
-                  // Filter out UI-only parameters from the execution config
-                  .filter(([name]) => !this._uiOnlyParameters.has(name))
-                  .map(([name, location]) => {
+              // Apply file upload simplification
+              this.simplifyFileUploadParameters(properties, parameterLocations);
+
+              // For file upload operations, we need to remove the file parameters from the user-facing properties
+              // but keep them in the execution config
+              for (const key of fileParams) {
+                if (key in properties) {
+                  // Remove the parameter from properties
+                  delete properties[key];
+                }
+              }
+
+              // Create tool definition with deep copies to prevent shared state
+              tools[name] = {
+                name,
+                description: operation.summary || '',
+                parameters: {
+                  type: 'object',
+                  properties: JSON.parse(JSON.stringify(properties)),
+                  required: requiredParams.length > 0 ? requiredParams : undefined,
+                },
+                execute: {
+                  method: method.toUpperCase(),
+                  url: `${this._baseUrl}${path}`,
+                  bodyType: (bodyType as 'json' | 'multipart-form') || 'json',
+                  params: Object.entries(parameterLocations)
+                    // Filter out UI-only parameters from the execution config
+                    .filter(([name]) => !this._uiOnlyParameters.has(name))
+                    .map(([name, location]) => {
+                      return {
+                        name,
+                        location,
+                        type: (executionProperties[name]?.type as JsonSchema['type']) || 'string',
+                        // Add derivedFrom if it exists in our derivation map
+                        ...(this._derivedParameters.has(name)
+                          ? {
+                              derivedFrom: this._derivedParameters.get(name),
+                            }
+                          : {}),
+                      };
+                    }),
+                },
+              };
+            } else {
+              // Create tool definition with deep copies to prevent shared state
+              tools[name] = {
+                name,
+                description: operation.summary || '',
+                parameters: {
+                  type: 'object',
+                  properties: JSON.parse(JSON.stringify(properties)),
+                  required: requiredParams.length > 0 ? requiredParams : undefined,
+                },
+                execute: {
+                  method: method.toUpperCase(),
+                  url: `${this._baseUrl}${path}`,
+                  bodyType: (bodyType as 'json' | 'multipart-form') || 'json',
+                  params: Object.entries(parameterLocations).map(([name, location]) => {
                     return {
                       name,
                       location,
                       type: (properties[name]?.type as JsonSchema['type']) || 'string',
-                      // Add derivedFrom if it exists in our derivation map
-                      ...(this._derivedParameters.has(name)
-                        ? {
-                            derivedFrom: this._derivedParameters.get(name),
-                          }
-                        : {}),
                     };
                   }),
-              },
-            };
+                },
+              };
+            }
           } catch (operationError) {
             console.error(`Error processing operation ${name}: ${operationError}`);
             // Continue with other operations even if one fails
