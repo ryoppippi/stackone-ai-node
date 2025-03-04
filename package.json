@@ -14,7 +14,6 @@
   "scripts": {
     "build": "bun build ./src/index.ts --outdir ./dist --target node",
     "test": "bun test",
-    "prepublishOnly": "bun run build",
     "fetch:specs": "bun run ./scripts/fetch-specs.ts",
     "build:docs": "bun run ./scripts/build-docs.ts",
     "docs:serve": "mkdocs serve",
