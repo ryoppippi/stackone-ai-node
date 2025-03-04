@@ -1,20 +1,16 @@
 {
-  "name": "stackone-ai-node",
-  "version": "0.0.2",
+  "name": "@stackone/ai",
+  "version": "0.0.1",
   "description": "Agents performing actions on your SaaS",
   "module": "dist/index.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
+  "files": ["dist", "README.md", "LICENSE"],
   "scripts": {
     "build": "bun build ./src/index.ts --outdir ./dist --target node",
+    "publish-package": "bun run build && bun publish --access=public",
     "test": "bun test",
-    "prepublishOnly": "bun run build",
     "fetch:specs": "bun run ./scripts/fetch-specs.ts",
     "build:docs": "bun run ./scripts/build-docs.ts",
     "docs:serve": "mkdocs serve",
@@ -22,8 +18,7 @@
     "docs:deploy": "bun run build:docs && mkdocs gh-deploy --force",
     "lint": "biome check .",
     "format": "biome format --write .",
-    "check": "biome check --write .",
-    "prepare": "husky install"
+    "check": "biome check --write ."
   },
   "devDependencies": {
     "@biomejs/biome": "^1.5.3",
@@ -31,7 +26,7 @@
     "@types/json-schema": "^7.0.15",
     "@types/node": "^22.13.5",
     "dotenv": "^16.3.1",
-    "husky": "^8.0.3",
+    "husky": "^9.1.7",
     "json-schema": "^0.4.0",
     "lint-staged": "^15.2.0",
     "mkdocs": "^0.0.1",
@@ -51,13 +46,7 @@
     "type": "git",
     "url": "git+https://github.com/stackone-ai/stackone-ai-node.git"
   },
-  "keywords": [
-    "stackone",
-    "ai",
-    "saas",
-    "tools",
-    "agents"
-  ],
+  "keywords": ["stackone", "ai", "saas", "tools", "agents"],
   "author": "StackOne",
   "license": "MIT",
   "bugs": {
@@ -65,9 +54,6 @@
   },
   "homepage": "https://github.com/stackone-ai/stackone-ai-node#readme",
   "lint-staged": {
-    "*.{js,ts,jsx,tsx}": [
-      "biome check --write",
-      "biome format --write"
-    ]
+    "*.{js,ts,jsx,tsx}": ["biome check --write", "biome format --write"]
   }
 }

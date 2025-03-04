@@ -26,15 +26,27 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
         uses: oven-sh/setup-bun@v2
 
+      - name: Install Node
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
       - name: Install dependencies
         if: ${{ steps.release.outputs.release_created }}
         run: bun install
 
-      - name: Build and publish package
+      - name: Build package
         if: ${{ steps.release.outputs.release_created }}
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: bun run build
+
+      - name: Creating .npmrc
         run: |
-          bun build
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-          bun publish --access=public
+          cat << EOF > "$HOME/.npmrc"
+            //registry.npmjs.org/:_authToken=$NPM_TOKEN
+          EOF
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_CONFIG_TOKEN }}
+
+      - name: Publish package
+        run: npm publish --access public

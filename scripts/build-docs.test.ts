@@ -8,7 +8,7 @@ describe('convertFileToMarkdown', () => {
  *
  * \`\`\`bash
  * # Using npm
- * npm install stackone-ai-node
+ * npm install @stackone/ai
  * \`\`\`
  *
  * # Authentication
@@ -31,7 +31,7 @@ dotenv.config();`;
 
 \`\`\`bash
 # Using npm
-npm install stackone-ai-node
+npm install @stackone/ai
 \`\`\`
 
 # Authentication

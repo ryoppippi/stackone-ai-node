@@ -3,13 +3,13 @@
  *
  * ```bash
  * # Using npm
- * npm install stackone-ai-node
+ * npm install @stackone/ai
  *
  * # Using yarn
- * yarn add stackone-ai-node
+ * yarn add @stackone/ai
  *
  * # Using bun
- * bun add stackone-ai-node
+ * bun add @stackone/ai
  * ```
  *
  * # Authentication
