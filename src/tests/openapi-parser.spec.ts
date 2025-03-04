@@ -1,5 +1,5 @@
 import { describe, expect, it, mock, spyOn } from 'bun:test';
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import type { OpenAPIV3 } from 'openapi-types';
 import { ParameterLocation } from '../models';
@@ -900,8 +900,14 @@ describe('OpenAPIParser', () => {
   describe('Snapshot Tests', () => {
     it('should parse all OpenAPI specs correctly', () => {
       // Load all specs
-      for (const specName of readdirSync(join(process.cwd(), '.oas'))) {
-        const specPath = join(process.cwd(), '.oas', specName);
+      const testDir = join(process.cwd(), '.oas');
+
+      if (!existsSync(testDir)) {
+        throw new Error('Test directory not found');
+      }
+
+      for (const specName of readdirSync(testDir)) {
+        const specPath = join(testDir, specName);
 
         if (statSync(specPath).isFile() && specName.endsWith('.json')) {
           const spec = JSON.parse(readFileSync(specPath, 'utf-8')) as OpenAPIV3.Document;
