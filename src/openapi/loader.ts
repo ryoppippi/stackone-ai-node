@@ -25,7 +25,8 @@ export const loadSpecs = (directory?: string): Record<string, Record<string, Too
   for (const file of files) {
     const vertical = path.basename(file, '.json');
     const specPath = path.join(oasDir, file);
-    const parser = new OpenAPIParser(specPath);
+    const spec = JSON.parse(fs.readFileSync(specPath, 'utf8'));
+    const parser = new OpenAPIParser(spec);
     tools[vertical] = parser.parseTools();
   }
 

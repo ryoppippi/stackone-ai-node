@@ -4,17 +4,23 @@ import { ParameterLocation, StackOneAPIError, StackOneTool, Tools } from '../mod
 // Create a mock tool for testing
 const createMockTool = (): StackOneTool => {
   return new StackOneTool(
+    'test_tool',
     'Test tool',
     {
       type: 'object',
       properties: { id: { type: 'string', description: 'ID parameter' } },
     },
     {
-      headers: {},
       method: 'GET',
       url: 'https://api.example.com/test/{id}',
-      name: 'test_tool',
-      parameterLocations: { id: ParameterLocation.PATH },
+      bodyType: 'json',
+      params: [
+        {
+          name: 'id',
+          location: ParameterLocation.PATH,
+          type: 'string',
+        },
+      ],
     },
     'test_key'
   );
@@ -41,7 +47,8 @@ describe('StackOneTool', () => {
       globalThis.fetch = async () => {
         return {
           ok: true,
-          json: async () => ({ id: '123', name: 'Test User' }),
+          json: async () => ({ id: '123', name: 'Test' }),
+          text: async () => JSON.stringify({ id: '123', name: 'Test' }),
           status: 200,
           statusText: 'OK',
         } as Response;
@@ -50,7 +57,7 @@ describe('StackOneTool', () => {
       const tool = createMockTool();
       const result = await tool.execute({ id: '123' });
 
-      expect(result).toEqual({ id: '123', name: 'Test User' });
+      expect(result).toEqual({ id: '123', name: 'Test' });
     } finally {
       // Restore original fetch
       globalThis.fetch = originalFetch;
@@ -66,7 +73,8 @@ describe('StackOneTool', () => {
       globalThis.fetch = async () => {
         return {
           ok: true,
-          json: async () => ({ id: '123', name: 'Test User' }),
+          json: async () => ({ id: '123', name: 'Test' }),
+          text: async () => JSON.stringify({ id: '123', name: 'Test' }),
           status: 200,
           statusText: 'OK',
         } as Response;
@@ -75,7 +83,7 @@ describe('StackOneTool', () => {
       const tool = createMockTool();
       const result = await tool.execute('{"id": "123"}');
 
-      expect(result).toEqual({ id: '123', name: 'Test User' });
+      expect(result).toEqual({ id: '123', name: 'Test' });
     } finally {
       // Restore original fetch
       globalThis.fetch = originalFetch;
@@ -92,6 +100,7 @@ describe('StackOneTool', () => {
         return {
           ok: false,
           json: async () => ({ error: 'Not found' }),
+          text: async () => JSON.stringify({ error: 'Not found' }),
           status: 404,
           statusText: 'Not Found',
         } as Response;
@@ -148,6 +157,7 @@ describe('StackOneTool', () => {
 
   it('should convert complex parameter types to zod schema', () => {
     const complexTool = new StackOneTool(
+      'complex_tool',
       'Complex tool',
       {
         type: 'object',
@@ -168,11 +178,10 @@ describe('StackOneTool', () => {
         },
       },
       {
-        headers: {},
         method: 'GET',
         url: 'https://example.com/complex',
-        name: 'complex_tool',
-        parameterLocations: {},
+        bodyType: 'json',
+        params: [],
       },
       'test_key'
     );
@@ -205,7 +214,8 @@ describe('StackOneTool', () => {
       globalThis.fetch = async () => {
         return {
           ok: true,
-          json: async () => ({ id: '123', name: 'Test User' }),
+          json: async () => ({ id: '123', name: 'Test' }),
+          text: async () => JSON.stringify({ id: '123', name: 'Test' }),
           status: 200,
           statusText: 'OK',
         } as Response;
@@ -223,7 +233,7 @@ describe('StackOneTool', () => {
       // Execute the AI SDK tool
       const result = await aiSdkTool.execute({ id: '123' }, mockOptions);
 
-      expect(result).toEqual({ id: '123', name: 'Test User' });
+      expect(result).toEqual({ id: '123', name: 'Test' });
     } finally {
       // Restore original fetch
       globalThis.fetch = originalFetch;
@@ -267,17 +277,23 @@ describe('Tools', () => {
   it('should convert all tools to AI SDK tools', () => {
     const tool1 = createMockTool();
     const tool2 = new StackOneTool(
+      'another_tool',
       'Another tool',
       {
         type: 'object',
         properties: { name: { type: 'string' } },
       },
       {
-        headers: {},
         method: 'POST',
         url: 'https://api.example.com/test',
-        name: 'another_tool',
-        parameterLocations: { name: ParameterLocation.BODY },
+        bodyType: 'json',
+        params: [
+          {
+            name: 'name',
+            location: ParameterLocation.BODY,
+            type: 'string',
+          },
+        ],
       },
       'test_key'
     );
@@ -296,17 +312,23 @@ describe('Tools', () => {
   it('should be iterable', () => {
     const tool1 = createMockTool();
     const tool2 = new StackOneTool(
+      'another_tool',
       'Another tool',
       {
         type: 'object',
         properties: { name: { type: 'string' } },
       },
       {
-        headers: {},
         method: 'POST',
         url: 'https://api.example.com/test',
-        name: 'another_tool',
-        parameterLocations: { name: ParameterLocation.BODY },
+        bodyType: 'json',
+        params: [
+          {
+            name: 'name',
+            location: ParameterLocation.BODY,
+            type: 'string',
+          },
+        ],
       },
       'test_key'
     );

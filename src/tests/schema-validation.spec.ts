@@ -37,6 +37,7 @@ const validateArrayItems = (obj: Record<string, unknown>, path = ''): string[] =
 // Create a test tool with various array structures
 const createArrayTestTool = (): StackOneTool => {
   return new StackOneTool(
+    'test_tool',
     'Test tool with arrays',
     {
       type: 'object',
@@ -81,11 +82,10 @@ const createArrayTestTool = (): StackOneTool => {
       },
     },
     {
-      headers: {},
       method: 'GET',
       url: 'https://example.com/test',
-      name: 'test_arrays',
-      parameterLocations: {},
+      bodyType: 'json',
+      params: [],
     },
     'test_api_key'
   );
@@ -94,6 +94,7 @@ const createArrayTestTool = (): StackOneTool => {
 // Create a test tool that mimics the problematic structure
 const createNestedArrayTestTool = (): StackOneTool => {
   return new StackOneTool(
+    'test_nested_arrays',
     'Test nested arrays in objects',
     {
       type: 'object',
@@ -120,11 +121,10 @@ const createNestedArrayTestTool = (): StackOneTool => {
       },
     },
     {
-      headers: {},
       method: 'GET',
       url: 'https://example.com/test',
-      name: 'test_nested_arrays',
-      parameterLocations: {},
+      bodyType: 'json',
+      params: [],
     },
     'test_api_key'
   );

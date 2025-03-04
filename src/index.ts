@@ -19,8 +19,6 @@ export {
 export { ParameterLocation } from './models';
 export type {
   ExecuteConfig,
-  Headers,
-  JsonDict,
   ToolDefinition,
   ToolParameters,
 } from './models';

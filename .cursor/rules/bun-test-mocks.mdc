@@ -1,0 +1,158 @@
+---
+description: bun testing mocks
+globs: *.spec.ts
+alwaysApply: false
+---
+# Bun Mocks
+
+This document outlines the standards for writing tests using Bun's testing framework in this repository.
+
+## Mocking Best Practices
+
+### Use Proper Mocking Functions
+
+Always use the appropriate mocking functions from Bun's testing framework:
+
+- Use `spyOn()` to track calls to existing functions without replacing their implementation
+- Use `mock()` to create standalone mock functions
+- Use `mock.module()` for module-level mocking
+
+```typescript
+// Good: Using spyOn for existing methods
+const spy = spyOn(fs, "readFileSync");
+
+// Good: Creating a standalone mock function
+const mockFn = mock(() => "mocked result");
+```
+
+### Restore Mocks After Tests
+
+Always restore mocks after tests to prevent test pollution:
+
+- Use `mock.restore()` in `afterEach` or `afterAll` hooks
+- Alternatively, use `mockFn.mockRestore()` for individual mocks
+
+```typescript
+// Good: Restoring all mocks after each test
+afterEach(() => {
+  mock.restore();
+});
+```
+
+### Use Test Lifecycle Hooks
+
+Organize test setup and teardown using lifecycle hooks:
+
+- Use `beforeEach` for setting up mocks and test data
+- Use `afterEach` for cleaning up mocks and test data
+- Use `afterAll` for final cleanup
+
+```typescript
+describe("My Test Suite", () => {
+  let mySpy;
+
+  beforeEach(() => {
+    // Setup mocks
+    mySpy = spyOn(myObject, "myMethod");
+  });
+
+  afterEach(() => {
+    // Clean up
+    mock.restore();
+  });
+
+  // Tests go here
+});
+```
+
+### Avoid Global Mocks
+
+Avoid modifying global objects or prototypes directly. Instead:
+
+- Use `spyOn` to mock methods on objects
+- Use `mock.module()` to mock entire modules
+- Keep mocks scoped to the tests that need them
+
+```typescript
+// Bad: Directly modifying a global object
+fs.readFileSync = jest.fn();
+
+// Good: Using spyOn
+const readFileSpy = spyOn(fs, "readFileSync");
+```
+
+### Use Module Mocking Appropriately
+
+When mocking modules:
+
+- Use `mock.module()` before the module is imported when possible
+- For modules already imported, be aware that side effects have already occurred
+- Consider using `--preload` for mocks that need to be in place before any imports
+
+```typescript
+// Good: Module mocking
+mock.module("./myModule", () => {
+  return {
+    myFunction: () => "mocked result",
+  };
+});
+```
+
+### Verify Mock Interactions
+
+Always verify that mocks were called as expected:
+
+- Use `.toHaveBeenCalled()` to verify a function was called
+- Use `.toHaveBeenCalledWith()` to verify arguments
+- Use `.toHaveBeenCalledTimes()` to verify call count
+
+```typescript
+test("my function calls the dependency", () => {
+  const spy = spyOn(dependency, "method");
+  myFunction();
+  expect(spy).toHaveBeenCalled();
+  expect(spy).toHaveBeenCalledWith("expected arg");
+  expect(spy).toHaveBeenCalledTimes(1);
+});
+```
+
+## Test Organization
+
+### Group Related Tests
+
+Use `describe` blocks to group related tests:
+
+```typescript
+describe("MyClass", () => {
+  describe("myMethod", () => {
+    it("should handle valid input", () => {
+      // Test with valid input
+    });
+
+    it("should handle invalid input", () => {
+      // Test with invalid input
+    });
+  });
+});
+```
+
+### Write Clear Test Descriptions
+
+Test descriptions should clearly state what is being tested and the expected outcome:
+
+```typescript
+// Good: Clear test description
+it("should return user data when given a valid user ID", () => {
+  // Test implementation
+});
+
+// Bad: Vague test description
+it("works correctly", () => {
+  // Test implementation
+});
+```
+
+## Additional Resources
+
+- [Bun Testing Documentation](mdc:https:/bun.sh/docs/cli/test)
+- [Jest API Reference](mdc:https:/jestjs.io/docs/api) (for compatible APIs)
