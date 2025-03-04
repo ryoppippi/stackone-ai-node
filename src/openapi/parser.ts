@@ -168,6 +168,37 @@ export class OpenAPIParser {
   }
 
   /**
+   * Filter out source_value properties from schema objects
+   */
+  private stripSourceValueProperties(schema: Record<string, unknown>): Record<string, unknown> {
+    const filtered: Record<string, unknown> = {};
+
+    for (const [key, value] of Object.entries(schema)) {
+      // Skip source_value properties
+      if (key === 'source_value') {
+        continue;
+      }
+
+      // Recursively filter nested objects
+      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        filtered[key] = this.stripSourceValueProperties(value as Record<string, unknown>);
+      } else if (Array.isArray(value)) {
+        // Handle arrays by filtering each item if it's an object
+        filtered[key] = value.map((item) =>
+          typeof item === 'object' && item !== null
+            ? this.stripSourceValueProperties(item as Record<string, unknown>)
+            : item
+        );
+      } else {
+        // Keep non-object values as is
+        filtered[key] = value;
+      }
+    }
+
+    return filtered;
+  }
+
+  /**
    * Resolve all references in a schema, preserving structure
    */
   public resolveSchema(
@@ -197,7 +228,9 @@ export class OpenAPIParser {
         ...JSON.parse(JSON.stringify(resolved)),
         ...Object.fromEntries(Object.entries(schema).filter(([k]) => k !== '$ref')),
       };
-      return this.filterVendorExtensions(result as Record<string, unknown>) as JsonSchema;
+      // Filter out vendor extensions and source_value properties
+      const filteredResult = this.filterVendorExtensions(result as Record<string, unknown>);
+      return this.stripSourceValueProperties(filteredResult) as JsonSchema;
     }
 
     // Handle allOf combinations
@@ -235,7 +268,9 @@ export class OpenAPIParser {
         }
       }
 
-      return this.filterVendorExtensions(mergedSchema as Record<string, unknown>) as JsonSchema;
+      // Filter out vendor extensions and source_value properties
+      const filteredResult = this.filterVendorExtensions(mergedSchema as Record<string, unknown>);
+      return this.stripSourceValueProperties(filteredResult) as JsonSchema;
     }
 
     // Recursively resolve all nested objects and arrays
@@ -248,16 +283,20 @@ export class OpenAPIParser {
 
       if (typeof value === 'object' && value !== null) {
         if (Array.isArray(value)) {
+          // Handle arrays
           resolved[key] = value.map((item) => this.resolveSchema(item, new Set(visited)));
         } else {
+          // Handle objects
           resolved[key] = this.resolveSchema(value, new Set(visited));
         }
       } else {
+        // Handle primitive values
         resolved[key] = value;
       }
     }
 
-    return resolved as JsonSchema;
+    // Filter out source_value properties
+    return this.stripSourceValueProperties(resolved) as JsonSchema;
   }
 
   /**
@@ -540,7 +579,9 @@ export class OpenAPIParser {
                 properties[paramName] = this.resolveSchema(schema);
 
                 // Add to required params if required
-                if (resolvedParam.required) {
+                // Special case for x-account-id: only add to required if it's required in the spec
+                // The StackOneTool class will handle adding it from the accountId parameter if available
+                if (resolvedParam.required && !(paramName === 'x-account-id')) {
                   requiredParams.push(paramName);
                 }
               } catch (_paramError) {

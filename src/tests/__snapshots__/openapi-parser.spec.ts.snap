@@ -44,12 +44,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
                 },
                 "nullable": true,
                 "properties": {
-                  "source_value": {
-                    "description": "The provider specific category for associating uploaded files, if provided, the value will be ignored.",
-                    "example": "550e8400-e29b-41d4-a716-446655440000",
-                    "nullable": true,
-                    "type": "string",
-                  },
                   "value": {
                     "description": "The category name to associate with the file",
                     "enum": [
@@ -97,28 +91,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
                 "description": "The confidentiality level of the file to be uploaded",
                 "nullable": true,
                 "properties": {
-                  "source_value": {
-                    "example": "public",
-                    "nullable": true,
-                    "oneOf": [
-                      {
-                        "type": "string",
-                      },
-                      {
-                        "type": "number",
-                      },
-                      {
-                        "type": "boolean",
-                      },
-                      {
-                        "type": "object",
-                      },
-                      {
-                        "items": {},
-                        "type": "array",
-                      },
-                    ],
-                  },
                   "value": {
                     "description": "Whether the file is confidential or not",
                     "enum": [
@@ -143,28 +115,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
                 "description": "The file format of the file",
                 "nullable": true,
                 "properties": {
-                  "source_value": {
-                    "example": "abc",
-                    "nullable": true,
-                    "oneOf": [
-                      {
-                        "type": "string",
-                      },
-                      {
-                        "type": "number",
-                      },
-                      {
-                        "type": "boolean",
-                      },
-                      {
-                        "type": "object",
-                      },
-                      {
-                        "items": {},
-                        "type": "array",
-                      },
-                    ],
-                  },
                   "value": {
                     "description": "The file format of the file, expressed as a file extension",
                     "enum": [
@@ -1412,7 +1362,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
         "items",
       ],
@@ -1676,27 +1625,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
                 "description": "The type of the benefit",
                 "nullable": true,
                 "properties": {
-                  "source_value": {
-                    "nullable": true,
-                    "oneOf": [
-                      {
-                        "type": "string",
-                      },
-                      {
-                        "type": "number",
-                      },
-                      {
-                        "type": "boolean",
-                      },
-                      {
-                        "type": "object",
-                      },
-                      {
-                        "items": {},
-                        "type": "array",
-                      },
-                    ],
-                  },
                   "value": {
                     "description": "The type of the benefit",
                     "enum": [
@@ -1769,27 +1697,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "description": "The citizenships of the Employee",
           "items": {
             "properties": {
-              "source_value": {
-                "nullable": true,
-                "oneOf": [
-                  {
-                    "type": "string",
-                  },
-                  {
-                    "type": "number",
-                  },
-                  {
-                    "type": "boolean",
-                  },
-                  {
-                    "type": "object",
-                  },
-                  {
-                    "items": {},
-                    "type": "array",
-                  },
-                ],
-              },
               "value": {
                 "description": "The ISO3166-1 Alpha2 Code of the Country",
                 "enum": [
@@ -2192,27 +2099,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "full_time",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "full_time",
@@ -2232,27 +2118,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "active",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "active",
@@ -2275,27 +2140,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "full_time",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "contractor",
@@ -2345,27 +2189,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
                 "example": "full_time",
                 "nullable": true,
                 "properties": {
-                  "source_value": {
-                    "nullable": true,
-                    "oneOf": [
-                      {
-                        "type": "string",
-                      },
-                      {
-                        "type": "number",
-                      },
-                      {
-                        "type": "boolean",
-                      },
-                      {
-                        "type": "object",
-                      },
-                      {
-                        "items": {},
-                        "type": "array",
-                      },
-                    ],
-                  },
                   "value": {
                     "enum": [
                       "full_time",
@@ -2385,27 +2208,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
                 "example": "permanent",
                 "nullable": true,
                 "properties": {
-                  "source_value": {
-                    "nullable": true,
-                    "oneOf": [
-                      {
-                        "type": "string",
-                      },
-                      {
-                        "type": "number",
-                      },
-                      {
-                        "type": "boolean",
-                      },
-                      {
-                        "type": "object",
-                      },
-                      {
-                        "items": {},
-                        "type": "array",
-                      },
-                    ],
-                  },
                   "value": {
                     "enum": [
                       "contractor",
@@ -2456,27 +2258,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
                 "example": "hourly",
                 "nullable": true,
                 "properties": {
-                  "source_value": {
-                    "nullable": true,
-                    "oneOf": [
-                      {
-                        "type": "string",
-                      },
-                      {
-                        "type": "number",
-                      },
-                      {
-                        "type": "boolean",
-                      },
-                      {
-                        "type": "object",
-                      },
-                      {
-                        "items": {},
-                        "type": "array",
-                      },
-                    ],
-                  },
                   "value": {
                     "enum": [
                       "hourly",
@@ -2508,27 +2289,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
                 "example": "monthly",
                 "nullable": true,
                 "properties": {
-                  "source_value": {
-                    "nullable": true,
-                    "oneOf": [
-                      {
-                        "type": "string",
-                      },
-                      {
-                        "type": "number",
-                      },
-                      {
-                        "type": "boolean",
-                      },
-                      {
-                        "type": "object",
-                      },
-                      {
-                        "items": {},
-                        "type": "array",
-                      },
-                    ],
-                  },
                   "value": {
                     "enum": [
                       "hour",
@@ -2582,27 +2342,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "white",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "white",
@@ -2634,27 +2373,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "male",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "male",
@@ -2693,27 +2411,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "description": "The country code",
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "description": "The ISO3166-1 Alpha2 Code of the Country",
                   "enum": [
@@ -3007,27 +2704,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "example": "GB-LIN",
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "enum": [
                     "AD-07",
@@ -6912,27 +6588,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "single",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "single",
@@ -6968,27 +6623,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "description": "The country code",
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "description": "The ISO3166-1 Alpha2 Code of the Country",
                   "enum": [
@@ -7253,27 +6887,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
             "type": {
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "description": "The type of the national identity number",
                   "enum": [
@@ -7445,27 +7058,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
                 "description": "The country code",
                 "nullable": true,
                 "properties": {
-                  "source_value": {
-                    "nullable": true,
-                    "oneOf": [
-                      {
-                        "type": "string",
-                      },
-                      {
-                        "type": "number",
-                      },
-                      {
-                        "type": "boolean",
-                      },
-                      {
-                        "type": "object",
-                      },
-                      {
-                        "items": {},
-                        "type": "array",
-                      },
-                    ],
-                  },
                   "value": {
                     "description": "The ISO3166-1 Alpha2 Code of the Country",
                     "enum": [
@@ -7730,27 +7322,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "type": {
                 "nullable": true,
                 "properties": {
-                  "source_value": {
-                    "nullable": true,
-                    "oneOf": [
-                      {
-                        "type": "string",
-                      },
-                      {
-                        "type": "number",
-                      },
-                      {
-                        "type": "boolean",
-                      },
-                      {
-                        "type": "object",
-                      },
-                      {
-                        "items": {},
-                        "type": "array",
-                      },
-                    ],
-                  },
                   "value": {
                     "description": "The type of the national identity number",
                     "enum": [
@@ -7943,27 +7514,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "en_US",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "description": "The ISO639-2 Code of the language",
               "enum": [
@@ -8122,27 +7672,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "description": "The country code",
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "description": "The ISO3166-1 Alpha2 Code of the Country",
                   "enum": [
@@ -8436,27 +7965,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "example": "GB-LIN",
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "enum": [
                     "AD-07",
@@ -12323,9 +11831,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -12429,27 +11935,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "full_time",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "full_time",
@@ -12469,27 +11954,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "permanent",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "contractor",
@@ -12549,27 +12013,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "hourly",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "hourly",
@@ -12601,27 +12044,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "monthly",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "hour",
@@ -12670,7 +12092,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -12741,27 +12162,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "nullable": true,
               "type": "string",
             },
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "1",
@@ -12799,27 +12199,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "nullable": true,
               "type": "string",
             },
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "1",
@@ -12847,7 +12226,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -12996,27 +12374,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "description": "The status of the time off request",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "approved",
@@ -13036,27 +12393,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "description": "The type of the time off request",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "sick",
@@ -13090,7 +12426,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -13166,27 +12501,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "example": "templates, forms, backups, etc.",
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "description": "The category of the file",
                   "nullable": true,
@@ -13210,28 +12524,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
                     "description": "The file format of the file",
                     "nullable": true,
                     "properties": {
-                      "source_value": {
-                        "example": "abc",
-                        "nullable": true,
-                        "oneOf": [
-                          {
-                            "type": "string",
-                          },
-                          {
-                            "type": "number",
-                          },
-                          {
-                            "type": "boolean",
-                          },
-                          {
-                            "type": "object",
-                          },
-                          {
-                            "items": {},
-                            "type": "array",
-                          },
-                        ],
-                      },
                       "value": {
                         "description": "The file format of the file, expressed as a file extension",
                         "enum": [
@@ -14484,28 +13776,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "description": "The file format of the file",
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "example": "abc",
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "description": "The file format of the file, expressed as a file extension",
                   "enum": [
@@ -15776,27 +15046,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "description": "The country code of the issued by authority",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "description": "The ISO3166-1 Alpha2 Code of the Country",
               "enum": [
@@ -16081,27 +15330,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "visa",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "visa",
@@ -16136,7 +15364,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
       },
       "required": [
         "id",
-        "x-account-id",
       ],
       "type": "object",
     },
@@ -16276,27 +15503,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "description": "The status of the time off request",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "approved",
@@ -16316,27 +15522,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "description": "The type of the time off request",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "sick",
@@ -16369,9 +15554,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -16425,7 +15608,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
         "subResourceId",
       ],
@@ -16496,7 +15678,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -16566,7 +15747,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -16636,7 +15816,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -16706,7 +15885,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -16798,7 +15976,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -16929,7 +16106,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -17007,7 +16183,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
         "subResourceId",
       ],
@@ -17078,7 +16253,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -17167,7 +16341,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
         "subResourceId",
       ],
@@ -17246,7 +16419,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
         "subResourceId",
       ],
@@ -17336,7 +16508,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
         "subResourceId",
       ],
@@ -17415,7 +16586,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
         "subResourceId",
       ],
@@ -17496,7 +16666,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
       "required": [
         "id",
         "subResourceId",
-        "x-account-id",
       ],
       "type": "object",
     },
@@ -17576,7 +16745,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -17646,7 +16814,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -17716,7 +16883,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -17786,7 +16952,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -17856,7 +17021,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -17926,7 +17090,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -17996,7 +17159,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -18066,7 +17228,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -18136,7 +17297,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -18187,7 +17347,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -18309,9 +17468,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -18431,9 +17588,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -18553,9 +17708,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -18675,9 +17828,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -18797,9 +17948,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -18919,9 +18068,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -19050,7 +18197,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -19192,7 +18338,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -19323,7 +18468,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -19475,7 +18619,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -19614,7 +18757,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -19746,7 +18888,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
       },
       "required": [
         "id",
-        "x-account-id",
       ],
       "type": "object",
     },
@@ -19899,9 +19040,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -20032,9 +19171,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -20154,9 +19291,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -20276,9 +19411,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -20398,9 +19531,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -20520,9 +19651,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -20662,9 +19791,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -20784,9 +19911,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -20914,9 +20039,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -21036,9 +20159,7 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "type": "string",
         },
       },
-      "required": [
-        "x-account-id",
-      ],
+      "required": undefined,
       "type": "object",
     },
   },
@@ -21294,27 +20415,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
                 "description": "The type of the benefit",
                 "nullable": true,
                 "properties": {
-                  "source_value": {
-                    "nullable": true,
-                    "oneOf": [
-                      {
-                        "type": "string",
-                      },
-                      {
-                        "type": "number",
-                      },
-                      {
-                        "type": "boolean",
-                      },
-                      {
-                        "type": "object",
-                      },
-                      {
-                        "items": {},
-                        "type": "array",
-                      },
-                    ],
-                  },
                   "value": {
                     "description": "The type of the benefit",
                     "enum": [
@@ -21387,27 +20487,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "description": "The citizenships of the Employee",
           "items": {
             "properties": {
-              "source_value": {
-                "nullable": true,
-                "oneOf": [
-                  {
-                    "type": "string",
-                  },
-                  {
-                    "type": "number",
-                  },
-                  {
-                    "type": "boolean",
-                  },
-                  {
-                    "type": "object",
-                  },
-                  {
-                    "items": {},
-                    "type": "array",
-                  },
-                ],
-              },
               "value": {
                 "description": "The ISO3166-1 Alpha2 Code of the Country",
                 "enum": [
@@ -21784,27 +20863,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "full_time",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "full_time",
@@ -21824,27 +20882,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "active",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "active",
@@ -21867,27 +20904,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "full_time",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "contractor",
@@ -21920,27 +20936,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "white",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "white",
@@ -21972,27 +20967,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "male",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "male",
@@ -22031,27 +21005,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "description": "The country code",
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "description": "The ISO3166-1 Alpha2 Code of the Country",
                   "enum": [
@@ -22345,27 +21298,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "example": "GB-LIN",
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "enum": [
                     "AD-07",
@@ -26253,27 +25185,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "single",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "single",
@@ -26309,27 +25220,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "description": "The country code",
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "description": "The ISO3166-1 Alpha2 Code of the Country",
                   "enum": [
@@ -26594,27 +25484,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
             "type": {
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "description": "The type of the national identity number",
                   "enum": [
@@ -26786,27 +25655,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
                 "description": "The country code",
                 "nullable": true,
                 "properties": {
-                  "source_value": {
-                    "nullable": true,
-                    "oneOf": [
-                      {
-                        "type": "string",
-                      },
-                      {
-                        "type": "number",
-                      },
-                      {
-                        "type": "boolean",
-                      },
-                      {
-                        "type": "object",
-                      },
-                      {
-                        "items": {},
-                        "type": "array",
-                      },
-                    ],
-                  },
                   "value": {
                     "description": "The ISO3166-1 Alpha2 Code of the Country",
                     "enum": [
@@ -27071,27 +25919,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "type": {
                 "nullable": true,
                 "properties": {
-                  "source_value": {
-                    "nullable": true,
-                    "oneOf": [
-                      {
-                        "type": "string",
-                      },
-                      {
-                        "type": "number",
-                      },
-                      {
-                        "type": "boolean",
-                      },
-                      {
-                        "type": "object",
-                      },
-                      {
-                        "items": {},
-                        "type": "array",
-                      },
-                    ],
-                  },
                   "value": {
                     "description": "The type of the national identity number",
                     "enum": [
@@ -27284,27 +26111,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "en_US",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "description": "The ISO639-2 Code of the language",
               "enum": [
@@ -27463,27 +26269,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "description": "The country code",
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "description": "The ISO3166-1 Alpha2 Code of the Country",
                   "enum": [
@@ -27777,27 +26562,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "example": "GB-LIN",
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "enum": [
                     "AD-07",
@@ -31665,7 +30429,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -31776,27 +30539,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "full_time",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "full_time",
@@ -31816,27 +30558,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "permanent",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "contractor",
@@ -31896,27 +30617,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "hourly",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "hourly",
@@ -31948,27 +30648,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "monthly",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "hour",
@@ -32020,7 +30699,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
         "subResourceId",
       ],
@@ -32102,27 +30780,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "example": "templates, forms, backups, etc.",
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "description": "The category of the file",
                   "nullable": true,
@@ -32146,28 +30803,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
                     "description": "The file format of the file",
                     "nullable": true,
                     "properties": {
-                      "source_value": {
-                        "example": "abc",
-                        "nullable": true,
-                        "oneOf": [
-                          {
-                            "type": "string",
-                          },
-                          {
-                            "type": "number",
-                          },
-                          {
-                            "type": "boolean",
-                          },
-                          {
-                            "type": "object",
-                          },
-                          {
-                            "items": {},
-                            "type": "array",
-                          },
-                        ],
-                      },
                       "value": {
                         "description": "The file format of the file, expressed as a file extension",
                         "enum": [
@@ -33420,28 +32055,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
               "description": "The file format of the file",
               "nullable": true,
               "properties": {
-                "source_value": {
-                  "example": "abc",
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "type": "string",
-                    },
-                    {
-                      "type": "number",
-                    },
-                    {
-                      "type": "boolean",
-                    },
-                    {
-                      "type": "object",
-                    },
-                    {
-                      "items": {},
-                      "type": "array",
-                    },
-                  ],
-                },
                 "value": {
                   "description": "The file format of the file, expressed as a file extension",
                   "enum": [
@@ -34712,27 +33325,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "description": "The country code of the issued by authority",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "description": "The ISO3166-1 Alpha2 Code of the Country",
               "enum": [
@@ -35020,27 +33612,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "example": "visa",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "visa",
@@ -35076,7 +33647,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
       "required": [
         "id",
         "subResourceId",
-        "x-account-id",
       ],
       "type": "object",
     },
@@ -35224,27 +33794,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "description": "The status of the time off request",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "approved",
@@ -35264,27 +33813,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "description": "The type of the time off request",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "enum": [
                 "sick",
@@ -35318,7 +33846,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
       ],
       "type": "object",
@@ -35392,12 +33919,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           },
           "nullable": true,
           "properties": {
-            "source_value": {
-              "description": "The provider specific category for associating uploaded files, if provided, the value will be ignored.",
-              "example": "550e8400-e29b-41d4-a716-446655440000",
-              "nullable": true,
-              "type": "string",
-            },
             "value": {
               "description": "The category name to associate with the file",
               "enum": [
@@ -35445,28 +33966,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
           "description": "The confidentiality level of the file to be uploaded",
           "nullable": true,
           "properties": {
-            "source_value": {
-              "example": "public",
-              "nullable": true,
-              "oneOf": [
-                {
-                  "type": "string",
-                },
-                {
-                  "type": "number",
-                },
-                {
-                  "type": "boolean",
-                },
-                {
-                  "type": "object",
-                },
-                {
-                  "items": {},
-                  "type": "array",
-                },
-              ],
-            },
             "value": {
               "description": "Whether the file is confidential or not",
               "enum": [
@@ -35500,7 +33999,6 @@ exports[`OpenAPIParser Snapshot Tests should parse all OpenAPI specs correctly 1
         },
       },
       "required": [
-        "x-account-id",
         "id",
         "file_path",
       ],
