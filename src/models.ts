@@ -1,16 +1,10 @@
-/// <reference types="bun-types" />
 import { type Schema, type Tool, type ToolExecutionOptions, jsonSchema, tool } from 'ai';
 // Import OpenAPI and JSON Schema types
-import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
+import type { JSONSchema7 } from 'json-schema';
 import type { ChatCompletionTool } from 'openai/resources/chat/completions';
-
+import { deriveParameters } from './derivations';
+import type { Headers, JsonDict, JsonSchemaProperties, JsonSchemaType } from './types';
 // Type aliases for common types
-export type JsonDict = Record<string, unknown>;
-export type Headers = Record<string, string>;
-
-// JSON Schema related types
-export type JsonSchemaProperties = Record<string, JSONSchema7Definition>;
-export type JsonSchemaType = JSONSchema7['type'];
 
 /**
  * Base exception for StackOne errors
@@ -28,12 +22,102 @@ export class StackOneError extends Error {
 export class StackOneAPIError extends StackOneError {
   statusCode: number;
   responseBody: unknown;
+  providerErrors?: unknown[];
+  requestBody?: unknown;
 
-  constructor(message: string, statusCode: number, responseBody: unknown) {
-    super(message);
+  constructor(message: string, statusCode: number, responseBody: unknown, requestBody?: unknown) {
+    // Extract the error message from responseBody if it exists
+    let errorMessage = message;
+    if (
+      responseBody &&
+      typeof responseBody === 'object' &&
+      'message' in responseBody &&
+      responseBody.message &&
+      typeof responseBody.message === 'string'
+    ) {
+      errorMessage = `${message}: ${responseBody.message}`;
+    }
+
+    super(errorMessage);
     this.name = 'StackOneAPIError';
     this.statusCode = statusCode;
     this.responseBody = responseBody;
+    this.requestBody = requestBody;
+
+    // Extract provider errors if they exist
+    if (
+      responseBody &&
+      typeof responseBody === 'object' &&
+      'provider_errors' in responseBody &&
+      Array.isArray(responseBody.provider_errors)
+    ) {
+      this.providerErrors = responseBody.provider_errors;
+    }
+  }
+
+  toString(): string {
+    // Format the main error message
+    let errorMessage = `API Error: ${this.statusCode} - ${this.message.replace(` for ${this._getUrlFromMessage()}`, '')}`;
+
+    // Add the URL on a new line for better readability
+    const url = this._getUrlFromMessage();
+    if (url) {
+      errorMessage += `\nEndpoint: ${url}`;
+    }
+
+    // Add request headers information (for debugging)
+    errorMessage += '\n\nRequest Headers:';
+    errorMessage += '\n- Authorization: [REDACTED]';
+    errorMessage += '\n- User-Agent: stackone-ai-node';
+
+    // Add request body information if available
+    if (this.requestBody) {
+      errorMessage += '\n\nRequest Body:';
+      try {
+        if (typeof this.requestBody === 'object') {
+          errorMessage += `\n${JSON.stringify(this.requestBody, null, 2)}`;
+        } else {
+          errorMessage += ` ${String(this.requestBody)}`;
+        }
+      } catch (_e) {
+        errorMessage += ' [Unable to stringify request body]';
+      }
+    }
+
+    // Add provider error information if available
+    if (this.providerErrors && this.providerErrors.length > 0) {
+      const providerError = this.providerErrors[0];
+      if (typeof providerError === 'object' && providerError !== null) {
+        errorMessage += '\n\nProvider Error:';
+
+        if ('status' in providerError) {
+          errorMessage += ` ${providerError.status}`;
+        }
+
+        // Include raw error message if available
+        if (
+          'raw' in providerError &&
+          typeof providerError.raw === 'object' &&
+          providerError.raw !== null &&
+          'error' in providerError.raw
+        ) {
+          errorMessage += ` - ${providerError.raw.error}`;
+        }
+
+        // Add provider URL on a new line
+        if ('url' in providerError) {
+          errorMessage += `\nProvider Endpoint: ${providerError.url}`;
+        }
+      }
+    }
+
+    return errorMessage;
+  }
+
+  // Helper method to extract URL from the error message
+  private _getUrlFromMessage(): string | null {
+    const match = this.message.match(/ for (https?:\/\/[^\s:]+)/);
+    return match ? match[1] : null;
   }
 }
 
@@ -45,19 +129,22 @@ export enum ParameterLocation {
   QUERY = 'query',
   PATH = 'path',
   BODY = 'body',
-  FILE = 'file', // For file uploads
+  FILE = 'file', // this is a special case. It should only be for file_path parameter.
 }
 
 /**
  * Configuration for executing a tool against an API endpoint
  */
 export interface ExecuteConfig {
-  headers: Headers;
   method: string;
   url: string;
-  name: string;
-  bodyType?: string;
-  parameterLocations: Record<string, ParameterLocation>;
+  bodyType: 'json' | 'multipart-form' | 'form';
+  params: {
+    name: string;
+    location: ParameterLocation;
+    type: JsonSchemaType;
+    derivedFrom?: string; // this is the name of the param that this one is derived from.
+  }[]; // this params are the full list of params used to execute. This should come straight from the OpenAPI spec.
 }
 
 /**
@@ -65,13 +152,15 @@ export interface ExecuteConfig {
  */
 export interface ToolParameters {
   type: string;
-  properties: JsonSchemaProperties;
+  properties: JsonSchemaProperties; // these are the params we will expose to the user/agent in the tool. These might be higher level params.
+  required?: string[]; // list of required parameter names
 }
 
 /**
  * Complete definition of a tool including its schema and execution config
  */
 export interface ToolDefinition {
+  name?: string; // Make name optional to maintain backward compatibility
   description: string;
   parameters: ToolParameters;
   execute: ExecuteConfig;
@@ -90,13 +179,14 @@ export class StackOneTool {
   private _accountId?: string;
 
   constructor(
+    name: string,
     description: string,
     parameters: ToolParameters,
     executeConfig: ExecuteConfig,
     apiKey: string,
     accountId?: string
   ) {
-    this.name = executeConfig.name;
+    this.name = name;
     this.description = description;
     this.parameters = parameters;
     this._executeConfig = executeConfig;
@@ -112,7 +202,7 @@ export class StackOneTool {
     const authString = Buffer.from(`${this._apiKey}:`).toString('base64');
     const headers: Headers = {
       Authorization: `Basic ${authString}`,
-      'User-Agent': 'stackone-node/1.0.0',
+      'User-Agent': 'stackone-ai-node',
     };
 
     if (this._accountId) {
@@ -120,7 +210,7 @@ export class StackOneTool {
     }
 
     // Add predefined headers
-    return { ...headers, ...this._executeConfig.headers };
+    return { ...headers };
   }
 
   /**
@@ -134,7 +224,9 @@ export class StackOneTool {
     const queryParams: JsonDict = {};
 
     for (const [key, value] of Object.entries(params)) {
-      const paramLocation = this._executeConfig.parameterLocations[key];
+      // Find the parameter configuration in the params array
+      const paramConfig = this._executeConfig.params.find((p) => p.name === key);
+      const paramLocation = paramConfig?.location;
 
       switch (paramLocation) {
         case ParameterLocation.PATH:
@@ -144,7 +236,6 @@ export class StackOneTool {
           queryParams[key] = value;
           break;
         case ParameterLocation.BODY:
-        case ParameterLocation.FILE:
           bodyParams[key] = value;
           break;
         default:
@@ -166,6 +257,48 @@ export class StackOneTool {
   }
 
   /**
+   * Map user-provided parameters to API parameters
+   * @param userParams Parameters provided by the user
+   * @returns Parameters ready for API execution
+   */
+  private _mapParameters(userParams: JsonDict): JsonDict {
+    const apiParams: JsonDict = {};
+
+    // First, copy all user params directly
+    for (const [key, value] of Object.entries(userParams)) {
+      // Skip file_path as it will be handled specially
+      if (key !== 'file_path') {
+        apiParams[key] = value;
+      }
+    }
+
+    // Find parameters that need to be derived
+    const derivedParamMap = new Map<string, string[]>();
+
+    for (const param of this._executeConfig.params) {
+      if (param.derivedFrom && userParams[param.derivedFrom] !== undefined) {
+        // Group parameters by their source
+        if (!derivedParamMap.has(param.derivedFrom)) {
+          derivedParamMap.set(param.derivedFrom, []);
+        }
+        derivedParamMap.get(param.derivedFrom)?.push(param.name);
+      }
+    }
+
+    // Apply derivations for each source parameter
+    for (const [sourceParam, targetParams] of derivedParamMap.entries()) {
+      if (userParams[sourceParam] !== undefined) {
+        const derivedValues = deriveParameters(sourceParam, userParams[sourceParam], targetParams);
+
+        // Merge derived values into apiParams
+        Object.assign(apiParams, derivedValues);
+      }
+    }
+
+    return apiParams;
+  }
+
+  /**
    * Execute the tool with the given parameters
    * @param params Tool arguments as string or object
    * @returns API response as object
@@ -175,22 +308,21 @@ export class StackOneTool {
   async execute(params?: string | JsonDict): Promise<JsonDict> {
     try {
       // Parse arguments
-      let kwargs: JsonDict = {};
+      let userParams: JsonDict = {};
       if (typeof params === 'string') {
-        kwargs = JSON.parse(params);
+        userParams = JSON.parse(params);
       } else if (params) {
-        kwargs = params;
+        userParams = { ...params }; // Create a shallow copy to avoid modifying the original
       }
 
-      // Prepare request
+      // Map user parameters to API parameters
+      const apiParams = this._mapParameters(userParams);
+
+      // Prepare request parameters
+      const [url, bodyParams, queryParams] = this._prepareRequestParams(apiParams);
+
+      // Prepare headers
       const headers = this._prepareHeaders();
-      const [url, bodyParams, queryParams] = this._prepareRequestParams(kwargs);
-
-      // Build URL with query parameters
-      const urlWithQuery = new URL(url);
-      for (const [key, value] of Object.entries(queryParams)) {
-        urlWithQuery.searchParams.append(key, String(value));
-      }
 
       // Prepare fetch options
       const fetchOptions: RequestInit = {
@@ -198,37 +330,28 @@ export class StackOneTool {
         headers,
       };
 
+      // Add query parameters to URL
+      const urlWithQuery = new URL(url);
+      for (const [key, value] of Object.entries(queryParams)) {
+        urlWithQuery.searchParams.append(key, String(value));
+      }
+
       // Add body if needed
       if (Object.keys(bodyParams).length > 0) {
-        const bodyType = this._executeConfig.bodyType || 'json';
-        if (bodyType === 'json') {
+        if (this._executeConfig.bodyType === 'multipart-form') {
+          // Handle multipart form data (for file uploads)
+          const formData = new FormData();
+          for (const [key, value] of Object.entries(bodyParams)) {
+            formData.append(key, String(value));
+          }
+          fetchOptions.body = formData;
+        } else {
+          // Default to JSON body
           fetchOptions.body = JSON.stringify(bodyParams);
           fetchOptions.headers = {
             ...fetchOptions.headers,
             'Content-Type': 'application/json',
           };
-        } else if (bodyType === 'form') {
-          const formData = new URLSearchParams();
-          for (const [key, value] of Object.entries(bodyParams)) {
-            formData.append(key, String(value));
-          }
-          fetchOptions.body = formData;
-          fetchOptions.headers = {
-            ...fetchOptions.headers,
-            'Content-Type': 'application/x-www-form-urlencoded',
-          };
-        } else if (bodyType === 'multipart') {
-          const formData = new FormData();
-          for (const [key, value] of Object.entries(bodyParams)) {
-            // Convert value to string or Blob as required by FormData.append
-            if (value instanceof Blob) {
-              formData.append(key, value);
-            } else {
-              formData.append(key, String(value));
-            }
-          }
-          fetchOptions.body = formData;
-          // Content-Type is automatically set by the browser for FormData
         }
       }
 
@@ -237,28 +360,53 @@ export class StackOneTool {
 
       // Handle errors
       if (!response.ok) {
-        let responseBody: string | JsonDict = '';
+        let errorResponseBody: unknown;
         try {
-          responseBody = await response.json();
+          errorResponseBody = await response.json();
         } catch (_e) {
-          // If response is not JSON, use text
-          responseBody = await response.text();
+          // If we can't parse as JSON, use text content instead
+          try {
+            errorResponseBody = await response.text();
+          } catch {
+            errorResponseBody = 'Unable to read response body';
+          }
         }
+
+        // Create a more descriptive error message
+        let errorMessage = `API request failed with status ${response.status}`;
+
+        // Add the URL to the error message for better debugging
+        errorMessage += ` for ${urlWithQuery.toString()}`;
+
+        // Include the request body in the error
+        const requestBodyForError = fetchOptions.body
+          ? this._executeConfig.bodyType === 'json'
+            ? bodyParams
+            : 'Multipart form data'
+          : undefined;
+
         throw new StackOneAPIError(
-          `API request failed with status ${response.status}`,
+          errorMessage,
           response.status,
-          responseBody
+          errorResponseBody,
+          requestBodyForError
         );
       }
 
-      // Parse response
-      const result = await response.json();
-      return typeof result === 'object' && result !== null ? result : { result };
-    } catch (error) {
-      if (error instanceof SyntaxError) {
-        throw new Error(`Invalid JSON in arguments: ${error.message}`);
+      // Parse the response
+      let responseData: JsonDict;
+      try {
+        responseData = await response.json();
+      } catch (error) {
+        responseData = { error: `Failed to parse response as JSON: ${(error as Error).message}` };
       }
-      throw error;
+
+      return responseData;
+    } catch (error) {
+      if (error instanceof StackOneAPIError) {
+        throw error;
+      }
+      throw new StackOneError(`Unknown error executing tool: ${String(error)}`);
     }
   }
 
@@ -271,9 +419,34 @@ export class StackOneTool {
     const properties: Record<string, JSONSchema7> = {};
     const required: string[] = [];
 
-    for (const [name, propValue] of Object.entries(this.parameters.properties)) {
-      if (typeof propValue === 'object' && propValue !== null) {
-        const prop = propValue as JSONSchema7;
+    // Helper function to recursively ensure all arrays have items property
+    const ensureArrayItems = (schema: JSONSchema7): JSONSchema7 => {
+      const result = { ...schema };
+
+      // If this is an array, ensure it has items
+      if (result.type === 'array' && !result.items) {
+        result.items = { type: 'string' };
+      }
+
+      // Process properties recursively
+      if (result.properties && typeof result.properties === 'object') {
+        const newProperties: Record<string, JSONSchema7> = {};
+        for (const [key, value] of Object.entries(result.properties)) {
+          newProperties[key] = ensureArrayItems(value as JSONSchema7);
+        }
+        result.properties = newProperties;
+      }
+
+      // Process array items recursively
+      if (result.items && typeof result.items === 'object' && !Array.isArray(result.items)) {
+        result.items = ensureArrayItems(result.items as JSONSchema7);
+      }
+
+      return result;
+    };
+
+    for (const [name, prop] of Object.entries(this.parameters.properties)) {
+      if (typeof prop === 'object' && prop !== null) {
         // Only keep standard JSON Schema properties
         const cleanedProp: JSONSchema7 = {};
 
@@ -304,28 +477,53 @@ export class StackOneTool {
 
         // Handle object types
         if (cleanedProp.type === 'object' && 'properties' in prop) {
-          const propProperties = prop.properties as Record<string, JSONSchema7>;
-          cleanedProp.properties = Object.fromEntries(
-            Object.entries(propProperties).map(([k, v]) => {
-              const propValue = v as JSONSchema7;
-              // Recursively ensure arrays in nested objects have items
-              if (propValue.type === 'array' && !('items' in propValue)) {
-                return [k, { ...propValue, items: { type: 'string' } }];
+          cleanedProp.properties = {};
+          if (typeof prop.properties === 'object' && prop.properties !== null) {
+            for (const [propName, propDef] of Object.entries(prop.properties)) {
+              if (typeof propDef === 'object' && propDef !== null) {
+                const subProp = propDef as JSONSchema7;
+                const cleanedSubProp: JSONSchema7 = {};
+
+                if ('type' in subProp) {
+                  cleanedSubProp.type = subProp.type;
+                }
+                if ('description' in subProp) {
+                  cleanedSubProp.description = subProp.description;
+                }
+                if ('enum' in subProp) {
+                  cleanedSubProp.enum = subProp.enum;
+                }
+
+                // Ensure array items for nested arrays
+                if (subProp.type === 'array' && !subProp.items) {
+                  cleanedSubProp.items = { type: 'string' };
+                } else if (subProp.type === 'array' && subProp.items) {
+                  cleanedSubProp.items = { type: 'string', ...(subProp.items as JSONSchema7) };
+                }
+
+                (cleanedProp.properties as Record<string, JSONSchema7>)[propName] = cleanedSubProp;
               }
-              return [
-                k,
-                Object.fromEntries(
-                  Object.entries(propValue).filter(([sk]) =>
-                    ['type', 'description', 'enum', 'items'].includes(sk)
-                  )
-                ) as JSONSchema7,
-              ];
-            })
-          ) as Record<string, JSONSchema7>;
+            }
+          }
         }
 
         properties[name] = cleanedProp;
+
+        // Add to required list if the property is required
+        if (
+          'required' in this.parameters &&
+          Array.isArray(this.parameters.required) &&
+          this.parameters.required.includes(name)
+        ) {
+          required.push(name);
+        }
       }
+    }
+
+    // Apply the ensureArrayItems function to the entire schema
+    const finalProperties: Record<string, JSONSchema7> = {};
+    for (const [key, value] of Object.entries(properties)) {
+      finalProperties[key] = ensureArrayItems(value);
     }
 
     return {
@@ -335,8 +533,8 @@ export class StackOneTool {
         description: this.description,
         parameters: {
           type: 'object',
-          properties,
-          required,
+          properties: finalProperties,
+          required: required.length > 0 ? required : undefined,
         },
       },
     };

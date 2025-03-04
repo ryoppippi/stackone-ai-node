@@ -133,13 +133,17 @@ export class StackOneToolSet {
         .map((file) => path.join(OAS_DIR, file));
 
       for (const specFile of specFiles) {
-        const parser = new OpenAPIParser(specFile, this.baseUrl);
+        // Read and parse the spec file first
+        const specContent = fs.readFileSync(specFile, 'utf-8');
+        const spec = JSON.parse(specContent);
+        const parser = new OpenAPIParser(spec, this.baseUrl);
         const toolDefinitions = parser.parseTools();
 
         // Create tools and filter if pattern is provided
-        for (const [_, toolDef] of Object.entries(toolDefinitions)) {
-          if (!filterPattern || this._matchesFilter(toolDef.execute.name, filterPattern)) {
+        for (const [toolName, toolDef] of Object.entries(toolDefinitions)) {
+          if (!filterPattern || this._matchesFilter(toolName, filterPattern)) {
             const tool = new StackOneTool(
+              toolName,
               toolDef.description,
               toolDef.parameters,
               toolDef.execute,
