@@ -267,34 +267,22 @@
             <main id="terminal-mkdocs-main-content">
 <section id="mkdocs-terminal-content">
     <h1 id="stackone-ai-sdk">StackOne AI SDK<a class="headerlink" href="#stackone-ai-sdk" title="Anchor link to this section for reference">#</a></h1>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #888; font-style: italic">/**</span>
-<span style="color: #888; font-style: italic"> * StackOne AI provides a unified interface for accessing various SaaS tools through AI-friendly APIs.</span>
-<span style="color: #888; font-style: italic"> *</span>
-<span style="color: #888; font-style: italic"> * # Installation</span>
-<span style="color: #888; font-style: italic"> *</span>
-<span style="color: #888; font-style: italic"> * ```bash</span>
-<span style="color: #888; font-style: italic"> * # Using npm</span>
-<span style="color: #888; font-style: italic"> * npm install stackone-ai-node</span>
-<span style="color: #888; font-style: italic"> *</span>
-<span style="color: #888; font-style: italic"> * # Using yarn</span>
-<span style="color: #888; font-style: italic"> * yarn add stackone-ai-node</span>
-<span style="color: #888; font-style: italic"> *</span>
-<span style="color: #888; font-style: italic"> * # Using bun</span>
-<span style="color: #888; font-style: italic"> * bun add stackone-ai-node</span>
-<span style="color: #888; font-style: italic"> * ```</span>
-<span style="color: #888; font-style: italic"> *</span>
-<span style="color: #888; font-style: italic"> * # Authentication</span>
-<span style="color: #888; font-style: italic"> *</span>
-<span style="color: #888; font-style: italic"> * Set the `STACKONE_API_KEY` environment variable:</span>
-<span style="color: #888; font-style: italic"> *</span>
-<span style="color: #888; font-style: italic"> * ```bash</span>
-<span style="color: #888; font-style: italic"> * export STACKONE_API_KEY=&lt;your-api-key&gt;</span>
-<span style="color: #888; font-style: italic"> * ```</span>
-<span style="color: #888; font-style: italic"> *</span>
-<span style="color: #888; font-style: italic"> * or load from a .env file:</span>
-<span style="color: #888; font-style: italic"> */</span>
+<h1 id="installation">Installation<a class="headerlink" href="#installation" title="Anchor link to this section for reference">#</a></h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #888; font-style: italic"># Using npm</span>
+npm<span style="color: #A89028"> </span>install<span style="color: #A89028"> </span>stackone-ai-node
 
-<span style="color: #888; font-style: italic">// Load environment variables from .env file</span>
+<span style="color: #888; font-style: italic"># Using yarn</span>
+yarn<span style="color: #A89028"> </span>add<span style="color: #A89028"> </span>stackone-ai-node
+
+<span style="color: #888; font-style: italic"># Using bun</span>
+bun<span style="color: #A89028"> </span>add<span style="color: #A89028"> </span>stackone-ai-node
+</code></pre></div>
+<h1 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Anchor link to this section for reference">#</a></h1>
+<p>Set the <code>STACKONE_API_KEY</code> environment variable:</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #388038">export</span><span style="color: #A89028"> </span><span style="color: #B04040">STACKONE_API_KEY</span><span style="color: #666">=</span>&lt;your-api-key&gt;
+</code></pre></div>
+<p>or load from a .env file:</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #888; font-style: italic">// Load environment variables from .env file</span>
 <span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #666">*</span><span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>dotenv<span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;dotenv&#39;</span><span style="color: #888">;</span>
 dotenv<span style="color: #888">.</span>config<span style="color: #888">();</span>
 </code></pre></div>
@@ -331,9 +319,11 @@ quickstart<span style="color: #888">().</span><span style="color: #2838B0">catch
 <h1 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Anchor link to this section for reference">#</a></h1>
 <p>Check out some more examples:</p>
 <ul>
-<li>OpenAI Integration (openai-integration.ts)</li>
-<li>Error Handling (error-handling.ts)</li>
-<li>File Uploads (file-uploads.ts)</li>
+<li><a href="openai-integration/">OpenAI Integration</a></li>
+<li><a href="ai-sdk-integration/">AI SDK Integration</a></li>
+<li><a href="error-handling/">Error Handling</a></li>
+<li><a href="file-uploads/">File Uploads</a></li>
+<li><a href="custom-base-url/">Custom Base URL</a></li>
 </ul>
 </section>
 
