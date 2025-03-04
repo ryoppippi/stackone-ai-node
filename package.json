@@ -6,11 +6,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
+  "files": ["dist", "README.md", "LICENSE"],
   "scripts": {
     "build": "bun build ./src/index.ts --outdir ./dist --target node",
     "publish-package": "bun run build && bun publish --access=public",
@@ -50,13 +46,7 @@
     "type": "git",
     "url": "git+https://github.com/stackone-ai/stackone-ai-node.git"
   },
-  "keywords": [
-    "stackone",
-    "ai",
-    "saas",
-    "tools",
-    "agents"
-  ],
+  "keywords": ["stackone", "ai", "saas", "tools", "agents"],
   "author": "StackOne",
   "license": "MIT",
   "bugs": {
@@ -64,9 +54,6 @@
   },
   "homepage": "https://github.com/stackone-ai/stackone-ai-node#readme",
   "lint-staged": {
-    "*.{js,ts,jsx,tsx}": [
-      "biome check --write",
-      "biome format --write"
-    ]
+    "*.{js,ts,jsx,tsx}": ["biome check --write", "biome format --write"]
   }
 }
