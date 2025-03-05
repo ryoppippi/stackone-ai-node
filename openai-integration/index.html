@@ -268,7 +268,8 @@
 <section id="mkdocs-terminal-content">
     <h1 id="openai-integration">Openai Integration<a class="headerlink" href="#openai-integration" title="Anchor link to this section for reference">#</a></h1>
 <p>This example shows how to use StackOne tools with OpenAI.</p>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0">import</span><span style="color: #A89028"> </span>OpenAI<span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;openai&#39;</span><span style="color: #888">;</span>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0">import</span><span style="color: #A89028"> </span>assert<span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;node:assert&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span>OpenAI<span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;openai&#39;</span><span style="color: #888">;</span>
 <span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;../src&#39;</span><span style="color: #888">;</span>
 
 <span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>openaiIntegration<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #388038">Promise</span><span style="color: #666">&lt;</span><span style="color: #A848A8">void</span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
@@ -283,50 +284,43 @@
 <span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Initialize OpenAI client</span>
 <span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>openai<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span>OpenAI<span style="color: #888">();</span>
 
-<span style="color: #A89028">  </span><span style="color: #2838B0">try</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
-<span style="color: #A89028">    </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>openai<span style="color: #888">.</span>chat<span style="color: #888">.</span>completions<span style="color: #888">.</span>create<span style="color: #888">({</span>
-<span style="color: #A89028">      </span>model<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;gpt-4o-mini&#39;</span><span style="color: #888">,</span>
-<span style="color: #A89028">      </span>messages<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">[</span>
-<span style="color: #A89028">        </span><span style="color: #888">{</span>
-<span style="color: #A89028">          </span>role<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;system&#39;</span><span style="color: #888">,</span>
-<span style="color: #A89028">          </span>content<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;You are a helpful assistant that can access HRIS information.&#39;</span><span style="color: #888">,</span>
-<span style="color: #A89028">        </span><span style="color: #888">},</span>
-<span style="color: #A89028">        </span><span style="color: #888">{</span>
-<span style="color: #A89028">          </span>role<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;user&#39;</span><span style="color: #888">,</span>
-<span style="color: #A89028">          </span>content<span style="color: #666">:</span>
-<span style="color: #A89028">            </span><span style="color: #B83838">&#39;What is the employee with id: c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA phone number?&#39;</span><span style="color: #888">,</span>
-<span style="color: #A89028">        </span><span style="color: #888">},</span>
-<span style="color: #A89028">      </span><span style="color: #888">],</span>
-<span style="color: #A89028">      </span>tools<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">openAITools</span><span style="color: #888">,</span>
-<span style="color: #A89028">    </span><span style="color: #888">});</span>
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Create a chat completion with tool calls</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>response<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>openai<span style="color: #888">.</span>chat<span style="color: #888">.</span>completions<span style="color: #888">.</span>create<span style="color: #888">({</span>
+<span style="color: #A89028">    </span>model<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;gpt-4o-mini&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span>messages<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">[</span>
+<span style="color: #A89028">      </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>role<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;system&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>content<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;You are a helpful assistant that can access HRIS information.&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">      </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>role<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;user&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>content<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;What is the employee with id: c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA phone number?&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">],</span>
+<span style="color: #A89028">    </span>tools<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">openAITools</span><span style="color: #888">,</span>
+<span style="color: #A89028">  </span><span style="color: #888">});</span>
 
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// {</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//   &quot;index&quot;: 0,</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//   &quot;message&quot;: {</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//     &quot;role&quot;: &quot;assistant&quot;,</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//     &quot;content&quot;: null,</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//     &quot;tool_calls&quot;: [</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//       {</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//         &quot;id&quot;: &quot;call_1ffppzVwBWnTbBR1KKD38GA3&quot;,</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//         &quot;type&quot;: &quot;function&quot;,</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//         &quot;function&quot;: {</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//           &quot;name&quot;: &quot;hris_get_employee&quot;,</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//           &quot;arguments&quot;: &quot;{\&quot;id\&quot;:\&quot;c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA\&quot;,\&quot;fields\&quot;:\&quot;phone_number\&quot;}&quot;</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//         }</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//       }</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//     ],</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//     &quot;refusal&quot;: null</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//   },</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//   &quot;logprobs&quot;: null,</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">//   &quot;finish_reason&quot;: &quot;tool_calls&quot;</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// }</span>
-<span style="color: #A89028">  </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">catch</span><span style="color: #A89028"> </span><span style="color: #888">(</span>error<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
-<span style="color: #A89028">    </span>console<span style="color: #888">.</span>error<span style="color: #888">(</span><span style="color: #B83838">&#39;Error:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>error<span style="color: #888">);</span>
-<span style="color: #A89028">  </span><span style="color: #888">}</span>
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Verify the response contains tool calls</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>response<span style="color: #888">.</span>choices<span style="color: #888">.</span>length<span style="color: #A89028"> </span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #444">0</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Expected at least one choice in the response&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>choice<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>response<span style="color: #888">.</span>choices<span style="color: #888">[</span><span style="color: #444">0</span><span style="color: #888">];</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>choice<span style="color: #888">.</span>message<span style="color: #888">.</span>tool_calls<span style="color: #A89028"> </span><span style="color: #666">!==</span><span style="color: #A89028"> </span><span style="color: #444; font-style: italic">undefined</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Expected tool_calls to be defined&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>choice<span style="color: #888">.</span>message<span style="color: #888">.</span>tool_calls<span style="color: #888">.</span>length<span style="color: #A89028"> </span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #444">0</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Expected at least one tool call&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>toolCall<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>choice<span style="color: #888">.</span>message<span style="color: #888">.</span>tool_calls<span style="color: #888">[</span><span style="color: #444">0</span><span style="color: #888">];</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>toolCall<span style="color: #888">.</span><span style="color: #2838B0; font-style: italic">function</span><span style="color: #888">.</span>name<span style="color: #A89028"> </span><span style="color: #666">===</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;hris_get_employee&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected tool call to be hris_get_employee&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Parse the arguments to verify they contain the expected fields</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>args<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #388038">JSON</span><span style="color: #888">.</span>parse<span style="color: #888">(</span>toolCall<span style="color: #888">.</span><span style="color: #2838B0; font-style: italic">function</span><span style="color: #888">.</span>arguments<span style="color: #888">);</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>args<span style="color: #888">.</span>id<span style="color: #A89028"> </span><span style="color: #666">===</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Expected id to match the query&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>args<span style="color: #888">.</span>fields<span style="color: #A89028"> </span><span style="color: #666">!==</span><span style="color: #A89028"> </span><span style="color: #444; font-style: italic">undefined</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Expected fields to be defined&#39;</span><span style="color: #888">);</span>
 <span style="color: #888">};</span>
 
 <span style="color: #888; font-style: italic">// Run the example</span>
-openaiIntegration<span style="color: #888">().</span><span style="color: #2838B0">catch</span><span style="color: #888">(</span>console<span style="color: #888">.</span>error<span style="color: #888">);</span>
+openaiIntegration<span style="color: #888">();</span>
 </code></pre></div>
 </section>
 

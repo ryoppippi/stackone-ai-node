@@ -293,7 +293,8 @@ See the example in the README for more details.</p>
 <div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>accountId<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;45072196112816593343&#39;</span><span style="color: #888">;</span>
 </code></pre></div>
 <h1 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Anchor link to this section for reference">#</a></h1>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;../src&#39;</span><span style="color: #888">;</span>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0">import</span><span style="color: #A89028"> </span>assert<span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;node:assert&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;../src&#39;</span><span style="color: #888">;</span>
 
 <span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>quickstart<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #388038">Promise</span><span style="color: #666">&lt;</span><span style="color: #A848A8">void</span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
 <span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>toolset<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">();</span>
@@ -301,20 +302,21 @@ See the example in the README for more details.</p>
 <span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Get all HRIS-related tools</span>
 <span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>tools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getTools<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>accountId<span style="color: #888">);</span>
 
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Verify we have tools</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>tools<span style="color: #888">.</span>length<span style="color: #A89028"> </span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #444">0</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Expected to find HRIS tools&#39;</span><span style="color: #888">);</span>
+
 <span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Use a specific tool</span>
 <span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>employeeTool<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>tools<span style="color: #888">.</span>getTool<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_list_employees&#39;</span><span style="color: #888">);</span>
-<span style="color: #A89028">  </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span>employeeTool<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
-<span style="color: #A89028">    </span><span style="color: #2838B0">try</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
-<span style="color: #A89028">      </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>employees<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>employeeTool<span style="color: #888">.</span>execute<span style="color: #888">();</span>
-<span style="color: #A89028">      </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span>employees<span style="color: #888">);</span>
-<span style="color: #A89028">    </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">catch</span><span style="color: #A89028"> </span><span style="color: #888">(</span>error<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
-<span style="color: #A89028">      </span>console<span style="color: #888">.</span>error<span style="color: #888">(</span><span style="color: #B83838">&#39;Error executing tool:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>error<span style="color: #888">);</span>
-<span style="color: #A89028">    </span><span style="color: #888">}</span>
-<span style="color: #A89028">  </span><span style="color: #888">}</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>employeeTool<span style="color: #A89028"> </span><span style="color: #666">!==</span><span style="color: #A89028"> </span><span style="color: #444; font-style: italic">undefined</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Expected to find hris_list_employees tool&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Execute the tool and verify the response</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>employees<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>employeeTool<span style="color: #888">.</span>execute<span style="color: #888">();</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span><span style="color: #388038">Array</span><span style="color: #888">.</span>isArray<span style="color: #888">(</span>employees<span style="color: #888">),</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Expected employees to be an array&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>employees<span style="color: #888">.</span>length<span style="color: #A89028"> </span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #444">0</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Expected to find at least one employee&#39;</span><span style="color: #888">);</span>
 <span style="color: #888">};</span>
 
 <span style="color: #888; font-style: italic">// Run the example</span>
-quickstart<span style="color: #888">().</span><span style="color: #2838B0">catch</span><span style="color: #888">(</span>console<span style="color: #888">.</span>error<span style="color: #888">);</span>
+quickstart<span style="color: #888">();</span>
 </code></pre></div>
 <h1 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Anchor link to this section for reference">#</a></h1>
 <p>Check out some more examples:</p>
@@ -324,6 +326,7 @@ quickstart<span style="color: #888">().</span><span style="color: #2838B0">catch
 <li><a href="error-handling/">Error Handling</a></li>
 <li><a href="file-uploads/">File Uploads</a></li>
 <li><a href="custom-base-url/">Custom Base URL</a></li>
+<li><a href="account-id-usage/">Account ID Usage</a></li>
 </ul>
 </section>
 
