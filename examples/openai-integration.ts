@@ -2,6 +2,7 @@
  * This example shows how to use StackOne tools with OpenAI.
  */
 
+import assert from 'node:assert';
 import OpenAI from 'openai';
 import { StackOneToolSet } from '../src';
 
@@ -17,47 +18,40 @@ const openaiIntegration = async (): Promise<void> => {
   // Initialize OpenAI client
   const openai = new OpenAI();
 
-  try {
-    await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: [
-        {
-          role: 'system',
-          content: 'You are a helpful assistant that can access HRIS information.',
-        },
-        {
-          role: 'user',
-          content:
-            'What is the employee with id: c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA phone number?',
-        },
-      ],
-      tools: openAITools,
-    });
+  // Create a chat completion with tool calls
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
+    messages: [
+      {
+        role: 'system',
+        content: 'You are a helpful assistant that can access HRIS information.',
+      },
+      {
+        role: 'user',
+        content: 'What is the employee with id: c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA phone number?',
+      },
+    ],
+    tools: openAITools,
+  });
 
-    // {
-    //   "index": 0,
-    //   "message": {
-    //     "role": "assistant",
-    //     "content": null,
-    //     "tool_calls": [
-    //       {
-    //         "id": "call_1ffppzVwBWnTbBR1KKD38GA3",
-    //         "type": "function",
-    //         "function": {
-    //           "name": "hris_get_employee",
-    //           "arguments": "{\"id\":\"c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA\",\"fields\":\"phone_number\"}"
-    //         }
-    //       }
-    //     ],
-    //     "refusal": null
-    //   },
-    //   "logprobs": null,
-    //   "finish_reason": "tool_calls"
-    // }
-  } catch (error) {
-    console.error('Error:', error);
-  }
+  // Verify the response contains tool calls
+  assert(response.choices.length > 0, 'Expected at least one choice in the response');
+
+  const choice = response.choices[0];
+  assert(choice.message.tool_calls !== undefined, 'Expected tool_calls to be defined');
+  assert(choice.message.tool_calls.length > 0, 'Expected at least one tool call');
+
+  const toolCall = choice.message.tool_calls[0];
+  assert(
+    toolCall.function.name === 'hris_get_employee',
+    'Expected tool call to be hris_get_employee'
+  );
+
+  // Parse the arguments to verify they contain the expected fields
+  const args = JSON.parse(toolCall.function.arguments);
+  assert(args.id === 'c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA', 'Expected id to match the query');
+  assert(args.fields !== undefined, 'Expected fields to be defined');
 };
 
 // Run the example
-openaiIntegration().catch(console.error);
+openaiIntegration();

@@ -16,7 +16,7 @@ const aiSdkIntegration = async (): Promise<void> => {
   const tools = toolset.getTools('hris_*', accountId);
 
   // Convert to AI SDK tools
-  const aiSdkTools = tools.toAISDKTools();
+  const aiSdkTools = tools.toAISDK();
 
   // Use max steps to automatically call the tool if it's needed
   const { text } = await generateText({
@@ -29,4 +29,4 @@ const aiSdkIntegration = async (): Promise<void> => {
   assert(text.includes('Isac Newton'), 'Expected employee name to be included in the response');
 };
 
-aiSdkIntegration().catch(console.error);
+aiSdkIntegration();

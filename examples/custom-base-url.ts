@@ -13,6 +13,7 @@
  * ```
  */
 
+import assert from 'node:assert';
 import { StackOneToolSet } from '../src';
 
 const customBaseUrl = async (): Promise<void> => {
@@ -22,48 +23,41 @@ const customBaseUrl = async (): Promise<void> => {
   const defaultToolset = new StackOneToolSet();
   const hrisTools = defaultToolset.getTools('hris_*');
 
-  console.log(`Found ${hrisTools.length} HRIS tools with default base URL`);
+  assert(hrisTools.length > 0, 'Should have at least one HRIS tool');
   const defaultTool = hrisTools.getTool('hris_get_employee');
-  if (defaultTool) {
-    console.log(`Default tool URL: ${defaultTool._executeConfig.url}`);
-    // Should start with https://api.stackone.com
+  if (!defaultTool) {
+    throw new Error('Tool not found');
   }
 
   /**
    * Custom base URL
    */
-  const devToolset = new StackOneToolSet(
-    process.env.STACKONE_API_KEY,
-    process.env.STACKONE_ACCOUNT_ID,
-    'https://api.example-dev.com'
-  );
+  const devToolset = new StackOneToolSet({
+    baseUrl: 'https://api.example-dev.com',
+  });
+
   const devHrisTools = devToolset.getTools('hris_*');
 
-  console.log(`Found ${devHrisTools.length} HRIS tools with custom base URL`);
+  assert(devHrisTools.length > 0, 'Should have at least one HRIS tool');
   const devTool = devHrisTools.getTool('hris_get_employee');
-  if (devTool) {
-    console.log(`Custom tool URL: ${devTool._executeConfig.url}`);
-    // Should start with https://api.example-dev.com
+  if (!devTool) {
+    throw new Error('Tool not found');
   }
 
   /**
    * Note this uses the same tools but substitutes the base URL
    */
   if (defaultTool && devTool) {
-    console.assert(defaultTool.name === devTool.name, 'Tool names should be the same');
-    console.assert(
+    assert(defaultTool.name === devTool.name, 'Tool names should be the same');
+    assert(
       defaultTool._executeConfig.url.includes('https://api.stackone.com'),
       'Default tool should use the default base URL'
     );
-    console.assert(
+    assert(
       devTool._executeConfig.url.includes('https://api.example-dev.com'),
       'Custom tool should use the custom base URL'
     );
   }
 };
 
-// Run the example
-customBaseUrl().catch((error) => {
-  console.error('Error:', error);
-  process.exit(1);
-});
+customBaseUrl();
