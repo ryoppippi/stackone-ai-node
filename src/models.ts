@@ -195,6 +195,24 @@ export class StackOneTool {
   }
 
   /**
+   * Get the current account ID
+   * @returns The current account ID or undefined if not set
+   */
+  getAccountId(): string | undefined {
+    return this._accountId;
+  }
+
+  /**
+   * Set the account ID for this tool
+   * @param accountId The account ID to set
+   * @returns This tool instance for chaining
+   */
+  setAccountId(accountId: string): StackOneTool {
+    this._accountId = accountId;
+    return this;
+  }
+
+  /**
    * Prepare headers for the API request
    * @returns Headers to use in the request
    */
@@ -313,6 +331,14 @@ export class StackOneTool {
         userParams = JSON.parse(params);
       } else if (params) {
         userParams = { ...params }; // Create a shallow copy to avoid modifying the original
+      }
+
+      // Remove accountId from params if present - we should not be setting it here
+      if ('accountId' in userParams) {
+        console.warn(
+          'Setting accountId in execute parameters is deprecated. Use setAccountId method instead.'
+        );
+        userParams.accountId = undefined;
       }
 
       // Map user parameters to API parameters

@@ -25,77 +25,83 @@ export STACKONE_API_KEY=<your-api-key>
 
 or load from a .env file using your preferred environment variable library.
 
-## Account IDs
-
-StackOne uses account IDs to identify different integrations. You can specify the account ID when initializing the SDK or when getting tools.
-
 ## Quickstart
 
 ```typescript
 import { StackOneToolSet } from "@stackone/ai";
 
-// Initialize with API key from environment variable
 const toolset = new StackOneToolSet();
-
-// Or initialize with explicit API key
-// const toolset = new StackOneToolSet('your-api-key');
-
-// Get all HRIS-related tools
-const tools = toolset.getTools("hris_*", "your-stackone-account-id");
-
-// Use a specific tool
+const tools = toolset.getTools("hris_*", "your-account-id");
 const employeeTool = tools.getTool("hris_list_employees");
-if (employeeTool) {
-  const employees = await employeeTool.execute();
-  console.log(employees);
-}
+const employees = await employeeTool.execute();
 ```
+
+[View full example](examples/index.ts)
+
+## Account IDs
+
+StackOne uses account IDs to identify different integrations. You can specify the account ID at different levels:
+
+```typescript
+import { StackOneToolSet } from "@stackone/ai";
+
+// Method 1: Set at toolset initialization
+const toolset = new StackOneToolSet({ accountId: "your-account-id" });
+
+// Method 2: Set when getting tools (overrides toolset account ID)
+const tools = toolset.getTools("hris_*", "override-account-id");
+
+// Method 3: Set directly on a tool instance
+tool.setAccountId("direct-account-id");
+const currentAccountId = tool.getAccountId(); // Get the current account ID
+```
+
+[View full example](examples/account-id-usage.ts)
 
 ## Custom Base URL
 
-You can specify a custom base URL when initializing the SDK. This is useful for testing against development APIs or working with self-hosted StackOne instances.
-
 ```typescript
 import { StackOneToolSet } from "@stackone/ai";
 
-// Initialize with a custom base URL
-const toolset = new StackOneToolSet(
-  "your-api-key",
-  _,
-  "https://api.example-dev.com"
-);
-
-// Get tools with the custom base URL
+const toolset = new StackOneToolSet({ baseUrl: "https://api.example-dev.com" });
 const tools = toolset.getTools("hris_*");
-
-// All API requests will use the custom base URL
 const employeeTool = tools.getTool("hris_list_employees");
-if (employeeTool) {
-  const employees = await employeeTool.execute();
-  console.log(employees);
-}
 ```
+
+[View full example](examples/custom-base-url.ts)
 
 ## File Uploads
 
-The SDK supports file uploads for tools that accept file parameters. File uploads have been simplified to use a single `file_path` parameter:
-
 ```typescript
 import { StackOneToolSet } from "@stackone/ai";
-import * as path from "path";
 
-// Initialize with API key and account ID
 const toolset = new StackOneToolSet();
-const tools = toolset.getTools("documents_*");
-const uploadTool = tools.getTool("documents_upload_file");
-
-// Upload a file using the file_path parameter
-const result = await uploadTool.execute({
-  file_path: "/path/to/document.pdf", // Path to the file
+const uploadTool = toolset
+  .getTools("hris_*")
+  .getTool("hris_upload_employee_document");
+await uploadTool.execute({
+  file_path: "/path/to/document.pdf",
+  id: "employee-id",
 });
-
-The name, file format, and content of the file are automatically extracted from the path.
 ```
+
+[View full example](examples/file-uploads.ts)
+
+## Error Handling
+
+```typescript
+import { StackOneAPIError, StackOneError } from "@stackone/ai";
+
+try {
+  await tool.execute();
+} catch (error) {
+  if (error instanceof StackOneAPIError) {
+    // Handle API errors
+  }
+}
+```
+
+[View full example](examples/error-handling.ts)
 
 ## Integrations
 
@@ -105,18 +111,12 @@ The name, file format, and content of the file are automatically extracted from 
 import { OpenAI } from "openai";
 import { StackOneToolSet } from "@stackone/ai";
 
-const openai = new OpenAI();
 const toolset = new StackOneToolSet();
-
-const tools = toolset.getTools("hris_*");
-const tool = tools.getTool("hris_list_employees");
-
-const result = await completionTool.execute({
-  model: "gpt-4o-mini",
-  prompt: "What are the names of the employees?",
-  tools: [tool.toOpenAI()],
-});
+const openAITools = toolset.getTools("hris_*").toOpenAI();
+await openai.chat.completions.create({ tools: openAITools });
 ```
+
+[View full example](examples/openai-integration.ts)
 
 ### AI SDK by Vercel
 
@@ -125,18 +125,9 @@ import { openai } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { StackOneToolSet } from "@stackone/ai";
 
-// Initialize StackOne
 const toolset = new StackOneToolSet();
-const tools = toolset.getTools("hris_*", "your-account-id");
-
-// Convert to AI SDK tools
-const aiSdkTools = tools.toAISDKTools();
-
-// Use with AI SDK
-const { text } = await generateText({
-  model: openai("gpt-4o-mini"),
-  tools: aiSdkTools,
-  prompt: "Get employee details for John Doe",
-  maxSteps: 3, // Automatically calls tools when needed
-});
+const aiSdkTools = toolset.getTools("hris_*").toAISDK();
+await generateText({ tools: aiSdkTools, maxSteps: 3 });
 ```
+
+[View full example](examples/ai-sdk-integration.ts)
