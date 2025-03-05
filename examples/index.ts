@@ -42,6 +42,7 @@ const accountId = '45072196112816593343';
  * # Quickstart
  */
 
+import assert from 'node:assert';
 import { StackOneToolSet } from '../src';
 
 const quickstart = async (): Promise<void> => {
@@ -50,20 +51,21 @@ const quickstart = async (): Promise<void> => {
   // Get all HRIS-related tools
   const tools = toolset.getTools('hris_*', accountId);
 
+  // Verify we have tools
+  assert(tools.length > 0, 'Expected to find HRIS tools');
+
   // Use a specific tool
   const employeeTool = tools.getTool('hris_list_employees');
-  if (employeeTool) {
-    try {
-      const employees = await employeeTool.execute();
-      console.log(employees);
-    } catch (error) {
-      console.error('Error executing tool:', error);
-    }
-  }
+  assert(employeeTool !== undefined, 'Expected to find hris_list_employees tool');
+
+  // Execute the tool and verify the response
+  const employees = await employeeTool.execute();
+  assert(Array.isArray(employees), 'Expected employees to be an array');
+  assert(employees.length > 0, 'Expected to find at least one employee');
 };
 
 // Run the example
-quickstart().catch(console.error);
+quickstart();
 
 /**
  * # Next Steps
@@ -75,4 +77,5 @@ quickstart().catch(console.error);
  * - [Error Handling](error-handling.md)
  * - [File Uploads](file-uploads.md)
  * - [Custom Base URL](custom-base-url.md)
+ * - [Account ID Usage](account-id-usage.md)
  */

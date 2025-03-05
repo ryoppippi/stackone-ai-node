@@ -1,6 +1,7 @@
 ---
-description: Standards for creating and maintaining examples for all functionality
+description: Standards for creating and maintaining examples in the StackOne repository
 globs: examples/*
+alwaysApply: false
 ---
 # Examples Standards
 
@@ -23,60 +24,82 @@ actions:
          ```
          examples/
          ├── basic_usage/
-         │   ├── basic_tool_usage.py      # Basic usage examples
-         │   └── error_handling.py        # Error handling examples
+         │   ├── basic_tool_usage.ts      # Basic usage examples
+         │   └── error_handling.ts        # Error handling examples
          ├── integrations/                # Integration examples
-         │   ├── openai_integration.py
-         │   └── other_integration.py
+         │   ├── openai_integration.ts
+         │   └── other_integration.ts
          └── README.md                    # Examples documentation
          ```
 
       2. Example Requirements:
          - Every public function/class needs at least one example
-         - Examples should be runnable Python scripts
-         - Include error handling cases
-         - Load credentials from .env
-         - Include type hints
+         - Examples should be runnable TypeScript scripts
+         - Use Node's assert module for validation instead of console.logs
+         - Include proper error handling with try/catch blocks
+         - Include TypeScript return types for all functions
          - Follow the same code style as the main codebase
+         - Exit with non-zero code on error using process.exit(1)
 
       3. Documentation:
          - Each example file should start with a docstring explaining its purpose
-         - Include expected output in comments
+         - Use assertions to validate expected behavior
          - Document any prerequisites (environment variables, etc)
 
       4. Testing:
          - Examples should be tested as part of CI
          - Examples should work with the latest package version
-         - Include sample responses in comments
+         - Use assertions to verify expected behavior
 
 examples:
   - input: |
-      # Good example structure
-      import os
-      from dotenv import load_dotenv
-      from stackone_ai import StackOneToolSet
-
-      def main():
-          """Example showing basic usage of StackOneToolSet."""
-          load_dotenv()
-          
-          api_key = os.getenv("STACKONE_API_KEY")
-          if not api_key:
-              raise ValueError("STACKONE_API_KEY not found")
-              
-          # Example code...
-
-      if __name__ == "__main__":
-          main()
+      /**
+       * Example showing basic usage of StackOneToolSet.
+       */
+      
+      import assert from 'node:assert';
+      import { StackOneToolSet } from '../src';
+      
+      const exampleFunction = async (): Promise<void> => {
+        // Initialize the toolset
+        const toolset = new StackOneToolSet();
+        
+        // Get tools and verify
+        const tools = toolset.getTools('hris_*');
+        assert(tools.length > 0, 'Expected to find HRIS tools');
+        
+        // Use a specific tool
+        const employeeTool = tools.getTool('hris_list_employees');
+        assert(employeeTool !== undefined, 'Expected to find tool');
+        
+        // Execute and verify result
+        const result = await employeeTool.execute();
+        assert(Array.isArray(result), 'Expected result to be an array');
+      };
+      
+      // Run the example
+      exampleFunction().catch((error) => {
+        console.error('Error:', error);
+        process.exit(1);
+      });
     output: "Correctly structured example"
 
   - input: |
-      # Bad example - missing error handling, docs, types
-      from stackone_ai import StackOneToolSet
-
-      toolset = StackOneToolSet("hardcoded_key")
-      tools = toolset.get_tools("crm")
-      result = tools["some_tool"].execute()
+      // Bad example - missing assertions, error handling, types
+      import { StackOneToolSet } from '../src';
+      
+      const badExample = async () => {
+        const toolset = new StackOneToolSet();
+        const tools = toolset.getTools("hris_*");
+        const tool = tools.getTool("hris_list_employees");
+        
+        if (tool) {
+          const result = await tool.execute();
+          console.log(result);
+        }
+      };
+      
+      badExample();
     output: "Incorrectly structured example"
 
 metadata:
