@@ -1,20 +1,28 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "node",
+    /* Base Options: */
     "esModuleInterop": true,
-    "declaration": true,
-    "outDir": "./dist",
-    "strict": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+    "target": "es2022",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "lib": ["ES2020", "DOM"],
+
+    /* Strictness */
+    "strict": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
+
+    /* Build for a library */
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "sourceMap": true,
+    "declaration": true,
+
+    /* Other */
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["es2022"],
     "types": ["bun-types"]
   },
   "include": ["src/**/*"],

@@ -396,7 +396,7 @@ export class StackOneTool {
       // Parse the response
       let responseData: JsonDict;
       try {
-        responseData = await response.json();
+        responseData = (await response.json()) as JsonDict;
       } catch (error) {
         responseData = { error: `Failed to parse response as JSON: ${(error as Error).message}` };
       }

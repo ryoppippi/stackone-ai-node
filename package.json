@@ -1,6 +1,6 @@
 {
   "name": "@stackone/ai",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Agents performing actions on your SaaS",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -15,7 +15,7 @@
   "scripts": {
     "prepare": "husky && bun run fetch:specs",
     "prebuild": "rimraf dist",
-    "build": "bun build ./src/index.ts --outdir ./dist --target node",
+    "build": "bun build ./src/index.ts --outdir ./dist --target node && tsc --emitDeclarationOnly",
     "rebuild": "bun run fetch:specs && bun run build",
     "publish-package": "bun run build && bun publish --access=public",
     "test": "bun test",
