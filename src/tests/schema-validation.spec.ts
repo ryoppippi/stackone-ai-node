@@ -227,7 +227,7 @@ describe('Schema Validation', () => {
   describe('AI SDK Integration', () => {
     it('should convert to AI SDK tool format', () => {
       const tool = createArrayTestTool();
-      const aiSdkTool = tool.toAISDKTool();
+      const aiSdkTool = tool.toAISDK();
 
       expect(aiSdkTool).toBeDefined();
       expect(typeof aiSdkTool.execute).toBe('function');

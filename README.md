@@ -41,8 +41,7 @@ const toolset = new StackOneToolSet();
 // const toolset = new StackOneToolSet('your-api-key');
 
 // Get all HRIS-related tools
-const accountId = "45072196112816593343";
-const tools = toolset.getTools("hris_*", accountId);
+const tools = toolset.getTools("hris_*", "your-stackone-account-id");
 
 // Use a specific tool
 const employeeTool = tools.getTool("hris_list_employees");
@@ -62,7 +61,7 @@ import { StackOneToolSet } from "@stackone/ai";
 // Initialize with a custom base URL
 const toolset = new StackOneToolSet(
   "your-api-key",
-  "your-account-id",
+  _,
   "https://api.example-dev.com"
 );
 

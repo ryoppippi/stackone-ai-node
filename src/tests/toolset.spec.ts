@@ -9,7 +9,7 @@ env.STACKONE_API_KEY = 'test_key';
 
 describe('StackOneToolSet', () => {
   it('should initialize with API key from constructor', () => {
-    const toolset = new StackOneToolSet('custom_key');
+    const toolset = new StackOneToolSet({ apiKey: 'custom_key' });
     expect(toolset).toBeDefined();
   });
 
@@ -31,7 +31,7 @@ describe('StackOneToolSet', () => {
 
   it('should correctly filter tools with a pattern', () => {
     // Create a test instance of StackOneToolSet
-    const toolset = new StackOneToolSet('test_key');
+    const toolset = new StackOneToolSet({ apiKey: 'test_key' });
 
     // Test the private _matchesFilter method directly
     // @ts-ignore - Accessing private method for testing
@@ -56,7 +56,7 @@ describe('StackOneToolSet', () => {
 
   it('should correctly match glob patterns', () => {
     // Create a test instance of StackOneToolSet
-    const toolset = new StackOneToolSet('test_key');
+    const toolset = new StackOneToolSet({ apiKey: 'test_key' });
 
     // Test the private _matchGlob method directly
     // @ts-ignore - Accessing private method for testing
@@ -98,7 +98,10 @@ describe('StackOneToolSet', () => {
   it('should pass custom base URL from StackOneToolSet to OpenAPIParser', () => {
     // Create a StackOneToolSet with a custom base URL
     const customBaseUrlValue = 'https://api.example-dev.com';
-    const toolset = new StackOneToolSet('test-key', undefined, customBaseUrlValue);
+    const toolset = new StackOneToolSet({
+      apiKey: 'test-key',
+      baseUrl: customBaseUrlValue,
+    });
 
     // Directly check that the baseUrl property is set correctly
     // @ts-ignore - Accessing private property for testing
@@ -165,7 +168,7 @@ describe('StackOneToolSet', () => {
     };
 
     try {
-      const toolset = new StackOneToolSet('test_key');
+      const toolset = new StackOneToolSet({ apiKey: 'test_key' });
 
       // Test with no filter (should return all tools)
       const allTools = toolset.getTools();
@@ -216,7 +219,7 @@ describe('StackOneToolSet', () => {
   // Replace the single test with multiple focused tests
   describe('real tool loading', () => {
     // Create a toolset once for all tests in this group
-    const toolset = new StackOneToolSet('test_key');
+    const toolset = new StackOneToolSet({ apiKey: 'test_key' });
     let allTools: Tools;
     let verticals: string[] = [];
 

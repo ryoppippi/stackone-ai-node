@@ -544,7 +544,7 @@ export class StackOneTool {
    * Convert this tool to an AI SDK tool
    * @returns AI SDK tool
    */
-  toAISDKTool() {
+  toAISDK() {
     // Create a wrapper function that will handle the execution
     const executeWrapper = async (
       args: unknown,
@@ -613,11 +613,11 @@ export class Tools {
    * Convert all tools to AI SDK tools
    * @returns Object with tool names as keys and AI SDK tools as values
    */
-  toAISDKTools(): Record<string, Tool<Schema<unknown>, JsonDict>> {
+  toAISDK(): Record<string, Tool<Schema<unknown>, JsonDict>> {
     const result: Record<string, Tool<Schema<unknown>, JsonDict>> = {};
 
     for (const stackOneTool of this.tools) {
-      result[stackOneTool.name] = stackOneTool.toAISDKTool();
+      result[stackOneTool.name] = stackOneTool.toAISDK();
     }
 
     return result;

@@ -34,6 +34,12 @@ export class ToolsetLoadError extends ToolsetError {
   }
 }
 
+export interface ToolsetConfig {
+  apiKey?: string;
+  accountId?: string;
+  baseUrl?: string;
+}
+
 /**
  * Main class for accessing StackOne tools
  */
@@ -49,8 +55,8 @@ export class StackOneToolSet {
    * @param baseUrl Optional base URL for API requests. If not provided, will use the default from the OpenAPI spec
    * @throws ToolsetConfigError If no API key is provided or found in environment
    */
-  constructor(apiKey?: string, accountId?: string, baseUrl?: string) {
-    const apiKeyValue = apiKey || process.env.STACKONE_API_KEY;
+  constructor(config?: ToolsetConfig) {
+    const apiKeyValue = config?.apiKey || process.env.STACKONE_API_KEY;
     if (!apiKeyValue) {
       throw new ToolsetConfigError(
         'API key must be provided either through apiKey parameter or ' +
@@ -58,8 +64,8 @@ export class StackOneToolSet {
       );
     }
     this.apiKey = apiKeyValue;
-    this.accountId = accountId || process.env.STACKONE_ACCOUNT_ID;
-    this.baseUrl = baseUrl;
+    this.accountId = config?.accountId || process.env.STACKONE_ACCOUNT_ID;
+    this.baseUrl = config?.baseUrl;
   }
 
   /**

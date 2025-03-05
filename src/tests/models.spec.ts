@@ -131,7 +131,7 @@ describe('StackOneTool', () => {
 
   it('should convert to AI SDK tool format', () => {
     const tool = createMockTool();
-    const aiSdkTool = tool.toAISDKTool();
+    const aiSdkTool = tool.toAISDK();
 
     expect(aiSdkTool).toBeDefined();
     expect(typeof aiSdkTool.execute).toBe('function');
@@ -186,7 +186,7 @@ describe('StackOneTool', () => {
       'test_key'
     );
 
-    const aiSdkTool = complexTool.toAISDKTool();
+    const aiSdkTool = complexTool.toAISDK();
 
     // Check that parameters is a JSON Schema
     expect(aiSdkTool.parameters).toBeDefined();
@@ -222,7 +222,7 @@ describe('StackOneTool', () => {
       };
 
       const stackOneTool = createMockTool();
-      const aiSdkTool = stackOneTool.toAISDKTool();
+      const aiSdkTool = stackOneTool.toAISDK();
 
       // Mock the ToolExecutionOptions
       const mockOptions = {
@@ -300,7 +300,7 @@ describe('Tools', () => {
 
     const tools = new Tools([tool1, tool2]);
 
-    const aiSdkTools = tools.toAISDKTools();
+    const aiSdkTools = tools.toAISDK();
 
     expect(Object.keys(aiSdkTools).length).toBe(2);
     expect(aiSdkTools.test_tool).toBeDefined();
