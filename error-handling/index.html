@@ -107,6 +107,8 @@
                 
                 
                 
+                
+                
                     
                     
 
@@ -171,7 +173,7 @@
         
     
 
-    terminal-mkdocs-side-nav-item--active terminal-mkdocs-side-nav-section-no-index">Usage</span>
+    terminal-mkdocs-side-nav-item--active terminal-mkdocs-side-nav-section-no-index">StackOne Usage</span>
     
     
         
@@ -355,6 +357,84 @@
     
   </li>
         
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+            
+                
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+            
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">OpenAPI Usage</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openapi-toolset/">Getting Started</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openapi-transformations/">Custom Transformations</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
     </ul>
   
 </nav>
@@ -365,7 +445,7 @@
 <h1 id="error-handling_1">Error Handling<a class="headerlink" href="#error-handling_1" title="Anchor link to this section for reference">#</a></h1>
 <p>This example shows how to handle errors when using the StackOne SDK.</p>
 <div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0">import</span><span style="color: #A89028"> </span>assert<span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;node:assert&#39;</span><span style="color: #888">;</span>
-<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>StackOneAPIError<span style="color: #888">,</span><span style="color: #A89028"> </span>StackOneError<span style="color: #888">,</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">,</span><span style="color: #A89028"> </span>ToolsetConfigError<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;../src&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>StackOneAPIError<span style="color: #888">,</span><span style="color: #A89028"> </span>StackOneError<span style="color: #888">,</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">,</span><span style="color: #A89028"> </span>ToolSetConfigError<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;../src&#39;</span><span style="color: #888">;</span>
 
 <span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>errorHandling<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #388038">Promise</span><span style="color: #666">&lt;</span><span style="color: #A848A8">void</span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
 <span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Example 1: Handle initialization errors</span>
@@ -378,9 +458,9 @@
 <span style="color: #A89028">    </span><span style="color: #2838B0">try</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
 <span style="color: #A89028">      </span><span style="color: #888; font-style: italic">// This will throw a ToolsetConfigError</span>
 <span style="color: #A89028">      </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>_toolset<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">();</span>
-<span style="color: #A89028">      </span>assert<span style="color: #888">(</span><span style="color: #444; font-style: italic">false</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Expected ToolsetConfigError was not thrown&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">      </span>assert<span style="color: #888">(</span><span style="color: #444; font-style: italic">false</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Expected ToolSetConfigError was not thrown&#39;</span><span style="color: #888">);</span>
 <span style="color: #A89028">    </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">catch</span><span style="color: #A89028"> </span><span style="color: #888">(</span>error<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
-<span style="color: #A89028">      </span>assert<span style="color: #888">(</span>error<span style="color: #A89028"> </span><span style="color: #A848A8">instanceof</span><span style="color: #A89028"> </span>ToolsetConfigError<span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Expected error to be ToolsetConfigError&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">      </span>assert<span style="color: #888">(</span>error<span style="color: #A89028"> </span><span style="color: #A848A8">instanceof</span><span style="color: #A89028"> </span>ToolSetConfigError<span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Expected error to be ToolSetConfigError&#39;</span><span style="color: #888">);</span>
 <span style="color: #A89028">    </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">finally</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
 <span style="color: #A89028">      </span><span style="color: #888; font-style: italic">// Restore the API key</span>
 <span style="color: #A89028">      </span>process<span style="color: #888">.</span>env<span style="color: #888">.</span>STACKONE_API_KEY<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>originalKey<span style="color: #888">;</span>
@@ -393,7 +473,7 @@
 <span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>accountId<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;invalid-account-id&#39;</span><span style="color: #888">;</span><span style="color: #A89028"> </span><span style="color: #888; font-style: italic">// Invalid account ID to force an error</span>
 
 <span style="color: #A89028">    </span><span style="color: #2838B0">try</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
-<span style="color: #A89028">      </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>tools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getTools<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>accountId<span style="color: #888">);</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>tools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getStackOneTools<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>accountId<span style="color: #888">);</span>
 <span style="color: #A89028">      </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>employeeTool<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>tools<span style="color: #888">.</span>getTool<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_list_employees&#39;</span><span style="color: #888">);</span>
 
 <span style="color: #A89028">      </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span>employeeTool<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>

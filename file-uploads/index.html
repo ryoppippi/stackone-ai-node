@@ -107,6 +107,8 @@
                 
                 
                 
+                
+                
                     
                     
 
@@ -171,7 +173,7 @@
         
     
 
-    terminal-mkdocs-side-nav-item--active terminal-mkdocs-side-nav-section-no-index">Usage</span>
+    terminal-mkdocs-side-nav-item--active terminal-mkdocs-side-nav-section-no-index">StackOne Usage</span>
     
     
         
@@ -355,6 +357,84 @@
     
   </li>
         
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+            
+                
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+            
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">OpenAPI Usage</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openapi-toolset/">Getting Started</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openapi-transformations/">Custom Transformations</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
     </ul>
   
 </nav>
@@ -383,7 +463,7 @@ the necessary file parameters (content, name, file_format) from the file_path.</
 <span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>toolset<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">();</span>
 
 <span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Get tools for documents</span>
-<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>tools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getTools<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>accountId<span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>tools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getStackOneTools<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>accountId<span style="color: #888">);</span>
 
 <span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Get the upload file tool</span>
 <span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>uploadTool<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>tools<span style="color: #888">.</span>getTool<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_upload_employee_document&#39;</span><span style="color: #888">);</span>
@@ -391,8 +471,11 @@ the necessary file parameters (content, name, file_format) from the file_path.</
 <span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Check if upload tool exists</span>
 <span style="color: #A89028">    </span>assert<span style="color: #888">(</span>uploadTool<span style="color: #A89028"> </span><span style="color: #666">!==</span><span style="color: #A89028"> </span><span style="color: #444; font-style: italic">undefined</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Upload document tool not found&#39;</span><span style="color: #888">);</span>
 
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Upload a file using the file_path parameter</span>
-<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// The SDK will automatically derive content, name, and file_format from the file_path</span>
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">/*</span>
+<span style="color: #888; font-style: italic">     * Upload a file using the file_path parameter</span>
+<span style="color: #888; font-style: italic">     * The SDK will automatically derive content, name, and file_format from the file_path</span>
+<span style="color: #888; font-style: italic">     * Read more about transformed parameters in the [Derived Parameters](parameter-derivation.md)</span>
+<span style="color: #888; font-style: italic">     */</span>
 <span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>result<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>uploadTool<span style="color: #888">.</span>execute<span style="color: #888">({</span>
 <span style="color: #A89028">      </span>file_path<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">sampleFilePath</span><span style="color: #888">,</span>
 <span style="color: #A89028">      </span>id<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA&#39;</span><span style="color: #888">,</span>

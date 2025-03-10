@@ -107,6 +107,8 @@
                 
                 
                 
+                
+                
                     
                     
 
@@ -169,7 +171,7 @@
         
     
 
-    terminal-mkdocs-side-nav-item--active terminal-mkdocs-side-nav-section-no-index">Usage</span>
+    terminal-mkdocs-side-nav-item--active terminal-mkdocs-side-nav-section-no-index">StackOne Usage</span>
     
     
         
@@ -353,6 +355,84 @@
     
   </li>
         
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+            
+                
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+            
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">OpenAPI Usage</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="openapi-toolset/">Getting Started</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="openapi-transformations/">Custom Transformations</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
     </ul>
   
 </nav>
@@ -392,8 +472,8 @@ See the example in the README for more details.</p>
 <span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>quickstart<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #388038">Promise</span><span style="color: #666">&lt;</span><span style="color: #A848A8">void</span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
 <span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>toolset<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">();</span>
 
-<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Get all HRIS-related tools</span>
-<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>tools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getTools<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>accountId<span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Get all HRIS-related tools using the StackOneTool method (adds accountId to the request)</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>tools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getStackOneTools<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>accountId<span style="color: #888">);</span>
 
 <span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Verify we have tools</span>
 <span style="color: #A89028">  </span>assert<span style="color: #888">(</span>tools<span style="color: #888">.</span>length<span style="color: #A89028"> </span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #444">0</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Expected to find HRIS tools&#39;</span><span style="color: #888">);</span>
