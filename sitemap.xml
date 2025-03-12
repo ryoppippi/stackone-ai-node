@@ -2,38 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://stackonehq.github.io/stackone-ai-node§/</loc>
-         <lastmod>2025-03-10</lastmod>
+         <lastmod>2025-03-12</lastmod>
     </url>
     <url>
          <loc>https://stackonehq.github.io/stackone-ai-node§/account-id-usage/</loc>
-         <lastmod>2025-03-10</lastmod>
+         <lastmod>2025-03-12</lastmod>
     </url>
     <url>
          <loc>https://stackonehq.github.io/stackone-ai-node§/ai-sdk-integration/</loc>
-         <lastmod>2025-03-10</lastmod>
+         <lastmod>2025-03-12</lastmod>
     </url>
     <url>
          <loc>https://stackonehq.github.io/stackone-ai-node§/custom-base-url/</loc>
-         <lastmod>2025-03-10</lastmod>
+         <lastmod>2025-03-12</lastmod>
     </url>
     <url>
          <loc>https://stackonehq.github.io/stackone-ai-node§/error-handling/</loc>
-         <lastmod>2025-03-10</lastmod>
+         <lastmod>2025-03-12</lastmod>
     </url>
     <url>
          <loc>https://stackonehq.github.io/stackone-ai-node§/file-uploads/</loc>
-         <lastmod>2025-03-10</lastmod>
+         <lastmod>2025-03-12</lastmod>
     </url>
     <url>
          <loc>https://stackonehq.github.io/stackone-ai-node§/openai-integration/</loc>
-         <lastmod>2025-03-10</lastmod>
+         <lastmod>2025-03-12</lastmod>
     </url>
     <url>
          <loc>https://stackonehq.github.io/stackone-ai-node§/openapi-toolset/</loc>
-         <lastmod>2025-03-10</lastmod>
+         <lastmod>2025-03-12</lastmod>
     </url>
     <url>
          <loc>https://stackonehq.github.io/stackone-ai-node§/openapi-transformations/</loc>
-         <lastmod>2025-03-10</lastmod>
+         <lastmod>2025-03-12</lastmod>
+    </url>
+    <url>
+         <loc>https://stackonehq.github.io/stackone-ai-node§/planning/</loc>
+         <lastmod>2025-03-12</lastmod>
     </url>
 </urlset>
