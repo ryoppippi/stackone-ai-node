@@ -1,0 +1,9 @@
+export { stackoneSpec } from './stackone';
+export { crmSpec } from './crm';
+export { atsSpec } from './ats';
+export { hrisSpec } from './hris';
+export { documentsSpec } from './documents';
+export { marketingSpec } from './marketing';
+export { ticketingSpec } from './ticketing';
+export { iamSpec } from './iam';
+export { lmsSpec } from './lms';
