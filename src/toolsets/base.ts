@@ -1,5 +1,10 @@
-import { ParameterLocation, type Tool, type ToolDefinition, Tools } from '../tools';
-import type { ParameterTransformer, ParameterTransformerMap } from '../types';
+import { type BaseTool, Tools } from '../tool';
+import {
+  ParameterLocation,
+  type ParameterTransformer,
+  type ParameterTransformerMap,
+  type ToolDefinition,
+} from '../types';
 
 /**
  * Base exception for toolset errors
@@ -62,7 +67,7 @@ export abstract class ToolSet {
   protected baseUrl?: string;
   protected authentication?: AuthenticationConfig;
   protected headers: Record<string, string>;
-  protected tools: Tool[] = [];
+  protected tools: BaseTool[] = [];
   protected transformers: ParameterTransformerMap;
 
   /**
@@ -77,25 +82,33 @@ export abstract class ToolSet {
 
     // Set Authentication headers if provided
     if (this.authentication) {
-      switch (this.authentication.type) {
-        case 'basic':
-          if (this.authentication.credentials?.username) {
-            const username = this.authentication.credentials.username;
-            const password = this.authentication.credentials.password || '';
-            const authString = Buffer.from(`${username}:${password}`).toString('base64');
-            this.headers.Authorization = `Basic ${authString}`;
-          }
-          break;
-        case 'bearer':
-          if (this.authentication.credentials?.token) {
-            this.headers.Authorization = `Bearer ${this.authentication.credentials.token}`;
-          }
-          break;
+      // Only set auth headers if they don't already exist in custom headers
+      const needsAuthHeader = !('Authorization' in this.headers);
+
+      if (needsAuthHeader) {
+        switch (this.authentication.type) {
+          case 'basic':
+            if (this.authentication.credentials?.username) {
+              const username = this.authentication.credentials.username;
+              const password = this.authentication.credentials.password || '';
+              const authString = Buffer.from(`${username}:${password}`).toString('base64');
+              this.headers.Authorization = `Basic ${authString}`;
+            }
+            break;
+          case 'bearer':
+            if (this.authentication.credentials?.token) {
+              this.headers.Authorization = `Bearer ${this.authentication.credentials.token}`;
+            }
+            break;
+
+          default:
+            throw new ToolSetError(`Unsupported authentication type: ${this.authentication.type}`);
+        }
       }
 
-      // Add any additional headers from authentication config
+      // Add any additional headers from authentication config, but don't override existing ones
       if (this.authentication.headers) {
-        this.headers = { ...this.headers, ...this.authentication.headers };
+        this.headers = { ...this.authentication.headers, ...this.headers };
       }
     }
   }
@@ -105,7 +118,7 @@ export abstract class ToolSet {
    * @param sourceParam Source parameter name
    * @param config Transformer configuration
    */
-  public addParameterTransformer(sourceParam: string, config: ParameterTransformer): void {
+  public setParameterTransformer(sourceParam: string, config: ParameterTransformer): void {
     this.transformers.set(sourceParam, config);
   }
 
@@ -193,7 +206,7 @@ export abstract class ToolSet {
    * @param headers Optional headers to apply to the tool
    * @returns Tool instance
    */
-  getTool(name: string, headers?: Record<string, string>): Tool {
+  getTool(name: string, headers?: Record<string, string>): BaseTool {
     const tool = this.tools.find((tool) => tool.name === name);
     if (!tool) {
       throw new ToolSetError(`Tool with name ${name} not found`);
@@ -254,7 +267,7 @@ export abstract class ToolSet {
     // Check if the parameter exists in any of the tools
     for (const tool of this.tools) {
       // Check if the parameter exists in the execute config
-      const param = tool._executeConfig.params.find((p) => p.name === paramName);
+      const param = tool.executeConfig.params.find((p) => p.name === paramName);
       if (param) {
         return param.location;
       }

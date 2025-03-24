@@ -1,10 +1,10 @@
 import { OAS_DIR } from '../constants';
 import { loadSpecs } from '../openapi/loader';
-import { StackOneTool, type ToolDefinition, type Tools } from '../tools';
-import type { ParameterTransformer } from '../types';
+import { StackOneTool, type Tools } from '../tool';
+import type { ParameterTransformer, ToolDefinition } from '../types';
 import { extractFileInfo, isValidFilePath, readFileAsBase64 } from '../utils/file';
 import { removeJsonSchemaProperty } from '../utils/schema';
-import { type BaseToolSetConfig, ToolSet, ToolSetError } from './base';
+import { type BaseToolSetConfig, ToolSet, ToolSetConfigError, ToolSetError } from './base';
 
 /**
  * Configuration for StackOne toolset
@@ -12,6 +12,8 @@ import { type BaseToolSetConfig, ToolSet, ToolSetError } from './base';
 export interface StackOneToolSetConfig extends BaseToolSetConfig {
   apiKey?: string;
   accountId?: string;
+  strict?: boolean;
+  removedParams?: string[]; // List of parameters to remove from all tools
 }
 
 /**
@@ -31,14 +33,65 @@ export interface WorkflowConfig {
  */
 export class StackOneToolSet extends ToolSet {
   /**
-   * API key for StackOne API
-   */
-  private apiKey: string;
-
-  /**
    * Account ID for StackOne API
    */
   private accountId?: string;
+  private readonly _removedParams: string[];
+
+  /**
+   * Initialize StackOne toolset with API key and optional account ID
+   * @param config Configuration object containing API key and optional account ID
+   */
+  constructor(config?: StackOneToolSetConfig) {
+    const apiKey = config?.apiKey || process.env.STACKONE_API_KEY;
+
+    if (!apiKey && config?.strict) {
+      throw new ToolSetConfigError(
+        'No API key provided. Set STACKONE_API_KEY environment variable or pass apiKey in config.'
+      );
+    }
+
+    if (!apiKey) {
+      console.warn(
+        'No API key provided. Set STACKONE_API_KEY environment variable or pass apiKey in config.'
+      );
+    }
+
+    const authentication = {
+      type: 'basic' as const,
+      credentials: {
+        username: apiKey || '',
+        password: '',
+      },
+    };
+
+    const accountId = config?.accountId || process.env.STACKONE_ACCOUNT_ID;
+
+    const headers = {
+      ...config?.headers,
+      ...(accountId ? { 'x-account-id': accountId } : {}),
+    };
+
+    // Initialize base class
+    super({
+      baseUrl: config?.baseUrl,
+      authentication,
+      headers,
+      transformers: config?.transformers,
+    });
+
+    this.accountId = accountId;
+    this._removedParams = ['source_value'];
+
+    // Add default parameter transformers
+    const defaultTransformers = StackOneToolSet.getDefaultParameterTransformers();
+    for (const [sourceParam, config] of defaultTransformers.entries()) {
+      this.setParameterTransformer(sourceParam, config);
+    }
+
+    // Load tools
+    this.loadTools();
+  }
 
   /**
    * Get the default derivation configurations for StackOne tools
@@ -68,50 +121,19 @@ export class StackOneToolSet extends ToolSet {
           const { fileName } = extractFileInfo(filePath);
           return fileName;
         },
+        file_format: (filePath: unknown): { value: string } => {
+          if (typeof filePath !== 'string') {
+            throw new ToolSetError('file_path must be a string');
+          }
+
+          // get the file extension
+          const { extension } = extractFileInfo(filePath);
+          return { value: extension || '' };
+        },
       },
     });
 
     return transformers;
-  }
-
-  /**
-   * Initialize StackOne toolset with API key and optional account ID
-   * @param config Configuration object containing API key and optional account ID
-   */
-  constructor(config?: StackOneToolSetConfig) {
-    // Initialize base class
-    super({
-      baseUrl: config?.baseUrl,
-      authentication: config?.authentication,
-      headers: config?.headers,
-      transformers: config?.transformers,
-    });
-
-    // Set API key
-    this.apiKey = config?.apiKey || process.env.STACKONE_API_KEY || '';
-    if (!this.apiKey) {
-      console.warn(
-        'No API key provided. Set STACKONE_API_KEY environment variable or pass apiKey in config.'
-      );
-    }
-
-    // Set account ID
-    this.accountId = config?.accountId || process.env.STACKONE_ACCOUNT_ID;
-
-    // Set default headers
-    this.headers = {
-      ...this.headers,
-      'x-api-key': this.apiKey,
-    };
-
-    // Add default parameter transformers
-    const defaultTransformers = StackOneToolSet.getDefaultParameterTransformers();
-    for (const [sourceParam, config] of defaultTransformers.entries()) {
-      this.addParameterTransformer(sourceParam, config);
-    }
-
-    // Load tools
-    this.loadTools();
   }
 
   /**
@@ -146,8 +168,7 @@ export class StackOneToolSet extends ToolSet {
    * Load tools from the OAS directory
    */
   private loadTools(): void {
-    // Load specs from the OAS directory
-    const specs = loadSpecs(OAS_DIR);
+    const specs = loadSpecs(OAS_DIR, this.baseUrl, this._removedParams);
 
     // Process each vertical
     for (const [_, tools] of Object.entries(specs)) {
@@ -161,13 +182,17 @@ export class StackOneToolSet extends ToolSet {
           this.removeAccountIdParameter(processedDef);
         }
 
+        // Add transformation source parameters to the tool's parameters schema
+        this.addTransformationSourceParameters(processedDef);
+
         // Create tool
         const tool = new StackOneTool(
           toolName,
           processedDef.description,
           processedDef.parameters,
           processedDef.execute,
-          this.headers
+          this.headers,
+          this.transformers
         );
 
         // Add tool to the list
@@ -191,6 +216,29 @@ export class StackOneToolSet extends ToolSet {
       toolDef.parameters.required = toolDef.parameters.required.filter(
         (param) => param !== 'x-account-id'
       );
+    }
+  }
+
+  /**
+   * Add transformation source parameters to the tool's parameters schema
+   * This ensures parameters like file_path are included in the schema for model consumption
+   * @param toolDef Tool definition to modify
+   */
+  private addTransformationSourceParameters(toolDef: ToolDefinition): void {
+    // Skip if there are no transformers or no parameters
+    if (!this.transformers || !toolDef.parameters.properties) return;
+
+    // Add each transformer source parameter to the schema
+    for (const [sourceParam, _] of this.transformers.entries()) {
+      // Skip if the parameter is already in the schema
+      if (sourceParam in toolDef.parameters.properties) continue;
+
+      // Add the parameter to the schema
+      toolDef.parameters.properties[sourceParam] = {
+        type: 'string',
+        description:
+          'Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.',
+      };
     }
   }
 }
