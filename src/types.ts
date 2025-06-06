@@ -51,6 +51,12 @@ export type ParameterTransformer = {
 export type ParameterTransformerMap = Map<string, ParameterTransformer>;
 
 /**
+ * PreExecute function type that allows modifying parameters before tool execution
+ * Can be used for custom document handling, parameter validation, etc.
+ */
+export type PreExecuteFunction = (params: JsonDict) => Promise<JsonDict> | JsonDict;
+
+/**
  * Valid locations for parameters in requests
  */
 export enum ParameterLocation {
@@ -84,6 +90,12 @@ export interface ExecuteOptions {
    * Useful for debugging and testing transformed parameters
    */
   dryRun?: boolean;
+
+  /**
+   * PreExecute function to modify parameters before tool execution
+   * Useful for custom document handling, parameter overrides, etc.
+   */
+  preExecute?: PreExecuteFunction;
 }
 
 /**

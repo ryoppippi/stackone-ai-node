@@ -85,8 +85,18 @@ export class BaseTool {
         );
       }
 
+      // Parse parameters if string
+      const parsedParams =
+        typeof inputParams === 'string' ? JSON.parse(inputParams) : inputParams || {};
+
+      // Apply preExecute function if provided
+      let processedParams = parsedParams;
+      if (options?.preExecute) {
+        processedParams = await options.preExecute(parsedParams);
+      }
+
       // Map parameters from user input to API parameters
-      const mappedParams = this.parameterMapper.mapParameters(inputParams);
+      const mappedParams = this.parameterMapper.mapParameters(processedParams);
 
       // Execute the request
       return await this.requestBuilder.execute(mappedParams, options);
