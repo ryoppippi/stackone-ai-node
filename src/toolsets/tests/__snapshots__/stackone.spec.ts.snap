@@ -49,27 +49,13 @@ Tools {
       },
       "name": "hris_list_companies",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,full_name,display_name,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -188,27 +174,13 @@ Map {
       },
       "name": "hris_get_company",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,full_name,display_name,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -312,27 +284,13 @@ Map {
       },
       "name": "hris_list_employee_custom_field_definitions",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,description,type,options",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -466,27 +424,13 @@ Map {
       },
       "name": "hris_get_employee_custom_field_definition",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,description,type,options",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -635,17 +579,7 @@ Map {
       },
       "name": "hris_list_employees",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -657,10 +591,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,first_name,last_name,name,display_name,gender,ethnicity,date_of_birth,birthday,marital_status,avatar_url,avatar,personal_email,personal_phone_number,work_email,work_phone_number,job_id,remote_job_id,job_title,job_description,department_id,remote_department_id,department,cost_centers,company,manager_id,remote_manager_id,hire_date,start_date,tenure,work_anniversary,employment_type,employment_contract_type,employment_status,termination_date,company_name,company_id,remote_company_id,preferred_language,citizenships,home_location,work_location,employments,custom_fields,documents,created_at,updated_at,benefits,employee_number,national_identity_number,national_identity_numbers,skills",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -962,17 +892,7 @@ Map {
       },
       "name": "hris_create_employee",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -1634,10 +1554,6 @@ Map {
               },
             },
             "type": "object",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
           },
           "first_name": {
             "description": "The employee first name",
@@ -3218,17 +3134,7 @@ Map {
       },
       "name": "hris_get_employee",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -3240,10 +3146,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,first_name,last_name,name,display_name,gender,ethnicity,date_of_birth,birthday,marital_status,avatar_url,avatar,personal_email,personal_phone_number,work_email,work_phone_number,job_id,remote_job_id,job_title,job_description,department_id,remote_department_id,department,cost_centers,company,manager_id,remote_manager_id,hire_date,start_date,tenure,work_anniversary,employment_type,employment_contract_type,employment_status,termination_date,company_name,company_id,remote_company_id,preferred_language,citizenships,home_location,work_location,employments,custom_fields,documents,created_at,updated_at,benefits,employee_number,national_identity_number,national_identity_numbers,skills",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -3512,17 +3414,7 @@ Map {
       },
       "name": "hris_update_employee",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -4162,10 +4054,6 @@ Map {
               },
             },
             "type": "object",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
           },
           "first_name": {
             "description": "The employee first name",
@@ -5731,24 +5619,10 @@ Map {
       },
       "name": "hris_invite_employee",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
-          },
           "id": {
             "type": "string",
           },
@@ -5849,17 +5723,7 @@ Map {
       },
       "name": "hris_list_employee_time_off_requests",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -5871,10 +5735,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,approver_id,remote_approver_id,status,type,start_date,end_date,start_half_day,end_half_day,time_off_policy_id,remote_time_off_policy_id,reason,duration,created_at,updated_at,policy",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -6045,17 +5905,7 @@ Map {
       },
       "name": "hris_create_employee_time_off_request",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -6085,10 +5935,6 @@ Map {
                 "type": "string",
               },
             ],
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
           },
           "id": {
             "type": "string",
@@ -6284,17 +6130,7 @@ Map {
       },
       "name": "hris_get_employees_time_off_request",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -6306,10 +6142,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,approver_id,remote_approver_id,status,type,start_date,end_date,start_half_day,end_half_day,time_off_policy_id,remote_time_off_policy_id,reason,duration,created_at,updated_at,policy",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -6407,24 +6239,10 @@ Map {
       },
       "name": "hris_cancel_employee_time_off_request",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
-          },
           "id": {
             "type": "string",
           },
@@ -6536,17 +6354,7 @@ Map {
       },
       "name": "hris_update_employee_time_off_request",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -6576,10 +6384,6 @@ Map {
                 "type": "string",
               },
             ],
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
           },
           "id": {
             "type": "string",
@@ -6764,24 +6568,10 @@ Map {
       },
       "name": "hris_batch_upload_employee_document",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
-          },
           "id": {
             "type": "string",
           },
@@ -8189,17 +7979,7 @@ Map {
       },
       "name": "hris_upload_employee_document",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -9498,10 +9278,6 @@ Map {
             },
             "type": "object",
           },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
-          },
           "id": {
             "type": "string",
           },
@@ -9614,27 +9390,13 @@ Map {
       },
       "name": "hris_download_employee_document",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "export_format": {
             "description": "The export format of the file",
             "example": "text/plain",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "format": {
@@ -9743,27 +9505,13 @@ Map {
       },
       "name": "hris_list_employee_documents",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,path,type,category,category_id,remote_category_id,contents,created_at,updated_at,remote_url,file_format",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -9897,27 +9645,13 @@ Map {
       },
       "name": "hris_get_employee_document",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,path,type,category,category_id,remote_category_id,contents,created_at,updated_at,remote_url,file_format",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -10030,27 +9764,13 @@ Map {
       },
       "name": "hris_list_employee_categories",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,active",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -10169,27 +9889,13 @@ Map {
       },
       "name": "hris_get_employee_document_category",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,active",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -10298,27 +10004,13 @@ Map {
       },
       "name": "hris_list_employee_work_eligibility",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,type,sub_type,document,valid_from,valid_to,issued_by,number",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -10472,17 +10164,7 @@ Map {
       },
       "name": "hris_create_employee_work_eligibility_request",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -11768,10 +11450,6 @@ Map {
               },
             },
             "type": "object",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
           },
           "id": {
             "type": "string",
@@ -12192,27 +11870,13 @@ Map {
       },
       "name": "hris_get_employees_work_eligibility",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,type,sub_type,document,valid_from,valid_to,issued_by,number",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -12345,17 +12009,7 @@ Map {
       },
       "name": "hris_update_employee_work_eligibility_request",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -13641,10 +13295,6 @@ Map {
               },
             },
             "type": "object",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
           },
           "id": {
             "type": "string",
@@ -14089,17 +13739,7 @@ Map {
       },
       "name": "hris_list_employee_time_off_balances",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -14111,10 +13751,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,policy_id,remote_policy_id,policy,current_balance,initial_balance,balance_unit,balance_start_date,balance_expiry_date,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -14266,17 +13902,7 @@ Map {
       },
       "name": "hris_get_employee_time_off_balance",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -14288,10 +13914,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,policy_id,remote_policy_id,policy,current_balance,initial_balance,balance_unit,balance_start_date,balance_expiry_date,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -14414,17 +14036,7 @@ Map {
       },
       "name": "hris_list_employments",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -14436,10 +14048,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,job_title,pay_rate,pay_period,pay_frequency,pay_currency,effective_date,end_date,employment_type,employment_contract_type,change_reason,grade,work_time,payroll_code,fte,created_at,updated_at,start_date,active,department,team,cost_center,cost_centers,division,job,type,contract_type,manager",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -14568,17 +14176,7 @@ Map {
       },
       "name": "hris_get_employment",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -14590,10 +14188,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,job_title,pay_rate,pay_period,pay_frequency,pay_currency,effective_date,end_date,employment_type,employment_contract_type,change_reason,grade,work_time,payroll_code,fte,created_at,updated_at,start_date,active,department,team,cost_center,cost_centers,division,job,type,contract_type,manager",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -14712,17 +14306,7 @@ Map {
       },
       "name": "hris_list_employee_employments",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -14734,10 +14318,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,job_title,pay_rate,pay_period,pay_frequency,pay_currency,effective_date,end_date,employment_type,employment_contract_type,change_reason,grade,work_time,payroll_code,fte,created_at,updated_at,start_date,active,department,team,cost_center,cost_centers,division,job,type,contract_type,manager",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -14921,17 +14501,7 @@ Map {
       },
       "name": "hris_create_employee_employment",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -14945,10 +14515,6 @@ Map {
             "description": "The end date of employment",
             "example": "2021-01-01T01:01:01.000Z",
             "format": "date-time",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "grade": {
@@ -15243,17 +14809,7 @@ Map {
       },
       "name": "hris_get_employee_employment",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -15265,10 +14821,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,job_title,pay_rate,pay_period,pay_frequency,pay_currency,effective_date,end_date,employment_type,employment_contract_type,change_reason,grade,work_time,payroll_code,fte,created_at,updated_at,start_date,active,department,team,cost_center,cost_centers,division,job,type,contract_type,manager",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -15426,17 +14978,7 @@ Map {
       },
       "name": "hris_update_employee_employment",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -15450,10 +14992,6 @@ Map {
             "description": "The end date of employment",
             "example": "2021-01-01T01:01:01.000Z",
             "format": "date-time",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "grade": {
@@ -15747,27 +15285,13 @@ Map {
       },
       "name": "hris_list_locations",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,name,phone_number,street_1,street_2,city,state,zip_code,country,location_type,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -15886,27 +15410,13 @@ Map {
       },
       "name": "hris_get_location",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,name,phone_number,street_1,street_2,city,state,zip_code,country,location_type,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -16015,17 +15525,7 @@ Map {
       },
       "name": "hris_list_time_off_requests",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -16037,10 +15537,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,approver_id,remote_approver_id,status,type,start_date,end_date,start_half_day,end_half_day,time_off_policy_id,remote_time_off_policy_id,reason,duration,created_at,updated_at,policy",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -16176,17 +15672,7 @@ Map {
       },
       "name": "hris_get_time_off_request",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -16198,10 +15684,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,approver_id,remote_approver_id,status,type,start_date,end_date,start_half_day,end_half_day,time_off_policy_id,remote_time_off_policy_id,reason,duration,created_at,updated_at,policy",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -16310,27 +15792,13 @@ Map {
       },
       "name": "hris_list_time_off_types",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,active",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -16449,27 +15917,13 @@ Map {
       },
       "name": "hris_get_time_off_type",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,active",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -16573,27 +16027,13 @@ Map {
       },
       "name": "hris_list_time_entries",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,start_time,end_time,hours_worked,break_duration,labor_type,location,status,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -16729,27 +16169,13 @@ Map {
       },
       "name": "hris_get_time_entries",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,start_time,end_time,hours_worked,break_duration,labor_type,location,status,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -16853,27 +16279,13 @@ Map {
       },
       "name": "hris_list_benefits",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,benefit_type,provider,description,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -16992,27 +16404,13 @@ Map {
       },
       "name": "hris_get_benefit",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,benefit_type,provider,description,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -17116,27 +16514,13 @@ Map {
       },
       "name": "hris_list_groups",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids,company_id,remote_company_id",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -17265,27 +16649,13 @@ Map {
       },
       "name": "hris_list_department_groups",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -17414,27 +16784,13 @@ Map {
       },
       "name": "hris_list_cost_center_groups",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,distribution_percentage,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids,company_id,remote_company_id",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -17563,27 +16919,13 @@ Map {
       },
       "name": "hris_list_team_groups",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -17702,27 +17044,13 @@ Map {
       },
       "name": "hris_get_group",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids,company_id,remote_company_id",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -17816,27 +17144,13 @@ Map {
       },
       "name": "hris_get_department_group",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -17930,27 +17244,13 @@ Map {
       },
       "name": "hris_get_cost_center_group",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,distribution_percentage,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids,company_id,remote_company_id",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -18044,27 +17344,13 @@ Map {
       },
       "name": "hris_get_team_group",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -18168,27 +17454,13 @@ Map {
       },
       "name": "hris_list_jobs",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids,company_id,remote_company_id",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -18307,27 +17579,13 @@ Map {
       },
       "name": "hris_get_job",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids,company_id,remote_company_id",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -18436,27 +17694,13 @@ Map {
       },
       "name": "hris_list_employee_skills",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,active,language,maximum_proficiency,minimum_proficiency",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -18585,24 +17829,10 @@ Map {
       },
       "name": "hris_create_employee_skill",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
-          },
           "id": {
             "description": "The ID associated with this skill",
             "example": "16873-IT345",
@@ -18763,27 +17993,13 @@ Map {
       },
       "name": "hris_get_employee_skill",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,active,language,maximum_proficiency,minimum_proficiency",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -18896,27 +18112,13 @@ Map {
       },
       "name": "hris_list_time_off_policies",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,description,type,duration_unit,reasons,updated_at,created_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -18939,14 +18141,9 @@ Map {
                   "child_care_leave",
                   "maternity_leave",
                   "jury_duty",
+                  "bereavement_leave",
                   "sabbatical",
                   "accident",
-                  "paid",
-                  "unpaid",
-                  "holiday",
-                  "personal",
-                  "in_lieu",
-                  "bereavement",
                   null,
                 ],
                 "type": "string",
@@ -19064,27 +18261,13 @@ Map {
       },
       "name": "hris_get_time_off_policy",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,description,type,duration_unit,reasons,updated_at,created_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -19193,27 +18376,13 @@ Map {
       },
       "name": "hris_list_employee_time_off_policies",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,description,type,duration_unit,reasons,updated_at,created_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -19236,14 +18405,9 @@ Map {
                   "child_care_leave",
                   "maternity_leave",
                   "jury_duty",
+                  "bereavement_leave",
                   "sabbatical",
                   "accident",
-                  "paid",
-                  "unpaid",
-                  "holiday",
-                  "personal",
-                  "in_lieu",
-                  "bereavement",
                   null,
                 ],
                 "type": "string",
@@ -19391,17 +18555,7 @@ Map {
       },
       "name": "hris_list_employee_tasks",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -19413,10 +18567,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,name,description,type,status,due_date,completion_date,assigned_by_employee_id,remote_assigned_by_employee_id,assigned_by_employee_name,link_to_task,extracted_links,next_task_id,remote_next_task_id,parent_process_name,comments,attachments,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -19560,17 +18710,7 @@ Map {
       },
       "name": "hris_get_employee_task",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
@@ -19582,10 +18722,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,name,description,type,status,due_date,completion_date,assigned_by_employee_id,remote_assigned_by_employee_id,assigned_by_employee_name,link_to_task,extracted_links,next_task_id,remote_next_task_id,parent_process_name,comments,attachments,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -19693,27 +18829,13 @@ Map {
       },
       "name": "hris_complete_employee_task",
       "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
+        "transformers": Map {},
       },
       "parameters": {
         "properties": {
           "comment": {
             "description": "Comment or note about the task completion",
             "example": "All required documents have been submitted",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
