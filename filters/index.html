@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="generator" content="mkdocs-1.6.1, mkdocs-terminal-4.7.0">
+     
+     
+    
+    <link rel="canonical" href="https://stackonehq.github.io/stackone-ai-node§/filters/"><link rel="icon" type="image/png" sizes="192x192" href="../img/android-chrome-192x192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="../img/android-chrome-512x512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
+<link rel="shortcut icon" type="image/png" sizes="48x48" href="../img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png" />
+
+
+    
+ 
+<title>Filters - StackOne AI SDK</title>
+
+
+<link href="../css/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+<link href="../css/fontawesome/css/solid.min.css" rel="stylesheet">
+<link href="../css/normalize.css" rel="stylesheet">
+<link href="../css/terminal.css" rel="stylesheet">
+<link href="../css/theme.css" rel="stylesheet">
+<link href="../css/theme.tile_grid.css" rel="stylesheet">
+<link href="../css/theme.footer.css" rel="stylesheet">
+<!-- default color palette -->
+<link href="../css/palettes/default.css" rel="stylesheet">
+
+<!-- page layout -->
+<style>
+/* initially set page layout to a one column grid */
+.terminal-mkdocs-main-grid {
+    display: grid;
+    grid-column-gap: 1.4em;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+/*  
+*   when side navigation is not hidden, use a two column grid.  
+*   if the screen is too narrow, fall back to the initial one column grid layout.
+*   in this case the main content will be placed under the navigation panel. 
+*/
+@media only screen and (min-width: 70em) {
+    .terminal-mkdocs-main-grid {
+        grid-template-columns: 4fr 9fr;
+    }
+}</style>
+
+<!-- link underline override -->
+<style>
+#terminal-mkdocs-main-content a:not(.headerlink){
+    text-decoration: none;
+}
+</style>
+
+     
+    
+    
+
+    
+    <!-- search css support -->
+<link href="../css/search/bootstrap-modal.css" rel="stylesheet">
+<!-- search scripts -->
+<script>
+    var base_url = "..",
+    shortcuts = "{}";
+</script>
+<script src="../js/jquery/jquery-1.10.1.min.js" defer></script>
+<script src="../js/bootstrap/bootstrap.min.js" defer></script>
+<script src="../js/mkdocs/base.js" defer></script>
+    
+    
+    
+    
+    <script src="../search/main.js"></script>
+    
+
+    
+</head>
+
+<body class="terminal"><div class="container">
+    <div class="terminal-nav">
+        <header class="terminal-logo">
+            <div id="mkdocs-terminal-site-name" class="logo terminal-prompt"><a href="https://stackonehq.github.io/stackone-ai-node§/" class="no-style">StackOne AI SDK</a></div>
+        </header>
+        
+        <nav class="terminal-menu">
+            
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href=".." class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Home</span>
+                    </a>
+                    <meta property="position" content="0">
+                </li>
+                
+                
+                
+                
+                
+                
+                
+                    
+                    
+
+
+<li property="itemListElement" typeof="ListItem">
+    <a href="#" class="menu-item" data-toggle="modal" data-target="#mkdocs_search_modal" property="item" typeof="SearchAction">
+        <i aria-hidden="true" class="fa fa-search"></i> <span property="name">Search</span>
+    </a>
+    <meta property="position" content="1">
+</li>
+                    
+            </ul>
+            
+        </nav>
+    </div>
+</div>
+        
+    <div class="container">
+        <div class="terminal-mkdocs-main-grid"><aside id="terminal-mkdocs-side-panel"><nav>
+  
+    <ul class="terminal-mkdocs-side-nav-items">
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="..">Home</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+            
+                
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+            
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">StackOne Usage</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="..">Home</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../account-id-usage/">Account IDs</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../error-handling/">Error Handling</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../file-uploads/">File Uploads</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../custom-base-url/">Custom Base URL</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+            
+                
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+            
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">Integrations</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openai-integration/">OpenAI</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../ai-sdk-integration/">AI SDK</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+            
+                
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+            
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">OpenAPI Usage</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openapi-toolset/">Getting Started</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openapi-transformations/">Custom Transformations</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+    </ul>
+  
+</nav>
+</aside>
+            <main id="terminal-mkdocs-main-content">
+<section id="mkdocs-terminal-content">
+    <h1 id="filters">Filters<a class="headerlink" href="#filters" title="Anchor link to this section for reference">#</a></h1>
+<p>Filters Example</p>
+<p>This example demonstrates how to use filters with the HRIS list employees endpoint.
+It showcases the deep object serialization implementation that properly converts
+nested filter objects to OpenAPI deepObject style query parameters.</p>
+<p>Key features demonstrated:
+1. Basic filter usage (updated_after, email, employee_number)
+2. Proxy parameter usage for provider-specific filters
+3. Complex nested filter combinations
+4. Proper serialization of filter objects to query parameters</p>
+<p>Usage:</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>bun<span style="color: #A89028"> </span>run<span style="color: #A89028"> </span>examples/filters.ts
+</code></pre></div>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0">import</span><span style="color: #A89028"> </span>assert<span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;node:assert&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;../src&#39;</span><span style="color: #888">;</span>
+
+<span style="color: #2838B0">type</span><span style="color: #A89028"> </span>DryRunResult<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>url<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #A89028"> </span><span style="color: #888">};</span>
+
+<span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>hriseEmployeeFilters<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #388038">Promise</span><span style="color: #666">&lt;</span><span style="color: #A848A8">void</span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Initialize the toolset</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>toolset<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">();</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>accountId<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;test-account-id&#39;</span><span style="color: #888">;</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Get the HRIS tools with account ID</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>tools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getStackOneTools<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>accountId<span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>employeesTool<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>tools<span style="color: #888">.</span>getTool<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_list_employees&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>employeesTool<span style="color: #A89028"> </span><span style="color: #666">!==</span><span style="color: #A89028"> </span><span style="color: #444; font-style: italic">undefined</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Expected to find hris_list_employees tool&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;🧪 Testing HRIS Employee Filters with Deep Object Serialization\n&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">/*</span>
+<span style="color: #888; font-style: italic">   * Example 1: Basic date filter</span>
+<span style="color: #888; font-style: italic">   * Demonstrates filtering employees updated after a specific date</span>
+<span style="color: #888; font-style: italic">   */</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;1️⃣ Basic Date Filter Test&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>basicDateFilter<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>employeesTool<span style="color: #888">.</span>execute<span style="color: #888">(</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>filter<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>updated_after<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;2023-01-01T00:00:00.000Z&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span><span style="color: #A89028"> </span>dryRun<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">true</span><span style="color: #A89028"> </span><span style="color: #888">}</span>
+<span style="color: #A89028">  </span><span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>DryRunResult<span style="color: #888">;</span>
+
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Filter object:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>filter<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>updated_after<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;2023-01-01T00:00:00.000Z&#39;</span><span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #888">});</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Serialized URL:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>basicDateFilter<span style="color: #888">.</span>url<span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Verify that the filter is properly serialized as deepObject style</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>basicDateFilter<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;filter%5Bupdated_after%5D=2023-01-01T00%3A00%3A00.000Z&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain properly serialized date filter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;✅ Date filter serialized correctly\n&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">/*</span>
+<span style="color: #888; font-style: italic">   * Example 2: Email filter</span>
+<span style="color: #888; font-style: italic">   * Demonstrates filtering employees by email address</span>
+<span style="color: #888; font-style: italic">   */</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;2️⃣ Email Filter Test&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>emailFilter<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>employeesTool<span style="color: #888">.</span>execute<span style="color: #888">(</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>filter<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>email<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;john.doe@company.com&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span><span style="color: #A89028"> </span>dryRun<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">true</span><span style="color: #A89028"> </span><span style="color: #888">}</span>
+<span style="color: #A89028">  </span><span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>DryRunResult<span style="color: #888">;</span>
+
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Filter object:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>filter<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>email<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;john.doe@company.com&#39;</span><span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #888">});</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Serialized URL:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>emailFilter<span style="color: #888">.</span>url<span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>emailFilter<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;filter%5Bemail%5D=john.doe%40company.com&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain properly serialized email filter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;✅ Email filter serialized correctly\n&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">/*</span>
+<span style="color: #888; font-style: italic">   * Example 3: Employee number filter</span>
+<span style="color: #888; font-style: italic">   * Demonstrates filtering employees by employee number</span>
+<span style="color: #888; font-style: italic">   */</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;3️⃣ Employee Number Filter Test&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>employeeNumberFilter<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>employeesTool<span style="color: #888">.</span>execute<span style="color: #888">(</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>filter<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>employee_number<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;EMP001&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span><span style="color: #A89028"> </span>dryRun<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">true</span><span style="color: #A89028"> </span><span style="color: #888">}</span>
+<span style="color: #A89028">  </span><span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>DryRunResult<span style="color: #888">;</span>
+
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Filter object:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>filter<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>employee_number<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;EMP001&#39;</span><span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #888">});</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Serialized URL:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>employeeNumberFilter<span style="color: #888">.</span>url<span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>employeeNumberFilter<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;filter%5Bemployee_number%5D=EMP001&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain properly serialized employee number filter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;✅ Employee number filter serialized correctly\n&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">/*</span>
+<span style="color: #888; font-style: italic">   * Example 4: Multiple filters combined</span>
+<span style="color: #888; font-style: italic">   * Demonstrates using multiple filter parameters together</span>
+<span style="color: #888; font-style: italic">   */</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;4️⃣ Multiple Filters Combined Test&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>multipleFilters<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>employeesTool<span style="color: #888">.</span>execute<span style="color: #888">(</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>filter<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>updated_after<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;2023-06-01T00:00:00.000Z&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>email<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;jane.smith@company.com&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>employee_number<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;EMP002&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span><span style="color: #A89028"> </span>dryRun<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">true</span><span style="color: #A89028"> </span><span style="color: #888">}</span>
+<span style="color: #A89028">  </span><span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>DryRunResult<span style="color: #888">;</span>
+
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Filter object:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span>filter<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>updated_after<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;2023-06-01T00:00:00.000Z&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>email<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;jane.smith@company.com&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>employee_number<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;EMP002&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span><span style="color: #888">},</span>
+<span style="color: #A89028">  </span><span style="color: #888">});</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Serialized URL:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888">(</span>multipleFilters<span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>url<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #A89028"> </span><span style="color: #888">}).</span>url<span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Verify all filters are present in the URL</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>multipleFilters<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;filter%5Bupdated_after%5D=2023-06-01T00%3A00%3A00.000Z&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain date filter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>multipleFilters<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;filter%5Bemail%5D=jane.smith%40company.com&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain email filter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>multipleFilters<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;filter%5Bemployee_number%5D=EMP002&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain employee number filter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;✅ Multiple filters serialized correctly\n&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">/*</span>
+<span style="color: #888; font-style: italic">   * Example 5: Proxy parameters for provider-specific filtering</span>
+<span style="color: #888; font-style: italic">   * Demonstrates using proxy parameters which also use deepObject serialization</span>
+<span style="color: #888; font-style: italic">   */</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;5️⃣ Proxy Parameters Test&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>proxyParameters<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>employeesTool<span style="color: #888">.</span>execute<span style="color: #888">(</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>proxy<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>custom_field<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;value123&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>provider_filter<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">          </span>department<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Engineering&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">          </span>status<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;active&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span><span style="color: #888">},</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span><span style="color: #A89028"> </span>dryRun<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">true</span><span style="color: #A89028"> </span><span style="color: #888">}</span>
+<span style="color: #A89028">  </span><span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>DryRunResult<span style="color: #888">;</span>
+
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Proxy object:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span>proxy<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>custom_field<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;value123&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>provider_filter<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>department<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Engineering&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>status<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;active&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">},</span>
+<span style="color: #A89028">  </span><span style="color: #888">});</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Serialized URL:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>proxyParameters<span style="color: #888">.</span>url<span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Verify proxy parameters are properly serialized</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>proxyParameters<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;proxy%5Bcustom_field%5D=value123&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain proxy custom_field parameter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>proxyParameters<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;proxy%5Bprovider_filter%5D%5Bdepartment%5D=Engineering&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain nested proxy department parameter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>proxyParameters<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;proxy%5Bprovider_filter%5D%5Bstatus%5D=active&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain nested proxy status parameter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;✅ Proxy parameters with nested objects serialized correctly\n&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">/*</span>
+<span style="color: #888; font-style: italic">   * Example 6: Complex combined scenario</span>
+<span style="color: #888; font-style: italic">   * Demonstrates combining filters, proxy parameters, and other query parameters</span>
+<span style="color: #888; font-style: italic">   */</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;6️⃣ Complex Combined Scenario Test&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>complexScenario<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>employeesTool<span style="color: #888">.</span>execute<span style="color: #888">(</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>filter<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>updated_after<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;2023-09-01T00:00:00.000Z&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>email<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;admin@company.com&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">      </span>proxy<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>include_terminated<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;false&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>custom_sorting<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">          </span>field<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;hire_date&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">          </span>order<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;desc&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span><span style="color: #888">},</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">      </span>fields<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;id,first_name,last_name,email,hire_date&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>page_size<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;50&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span><span style="color: #A89028"> </span>dryRun<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">true</span><span style="color: #A89028"> </span><span style="color: #888">}</span>
+<span style="color: #A89028">  </span><span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>DryRunResult<span style="color: #888">;</span>
+
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Complex parameters:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span>filter<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>updated_after<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;2023-09-01T00:00:00.000Z&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>email<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;admin@company.com&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span>proxy<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>include_terminated<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;false&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>custom_sorting<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>field<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;hire_date&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>order<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;desc&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span>fields<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;id,first_name,last_name,email,hire_date&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span>page_size<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;50&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">  </span><span style="color: #888">});</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Serialized URL:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>complexScenario<span style="color: #888">.</span>url<span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Verify complex scenario serialization</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>complexScenario<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;filter%5Bupdated_after%5D=2023-09-01T00%3A00%3A00.000Z&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain complex date filter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>complexScenario<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;filter%5Bemail%5D=admin%40company.com&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain complex email filter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>complexScenario<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;proxy%5Binclude_terminated%5D=false&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain proxy boolean parameter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>complexScenario<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;proxy%5Bcustom_sorting%5D%5Bfield%5D=hire_date&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain nested proxy field parameter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>complexScenario<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;proxy%5Bcustom_sorting%5D%5Border%5D=desc&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain nested proxy order parameter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>complexScenario<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;fields=id%2Cfirst_name%2Clast_name%2Cemail%2Chire_date&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain fields parameter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>complexScenario<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;page_size=50&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain page_size parameter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;✅ Complex combined scenario serialized correctly\n&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">/*</span>
+<span style="color: #888; font-style: italic">   * Example 7: Edge case - Empty filter objects</span>
+<span style="color: #888; font-style: italic">   * Demonstrates handling of empty filter objects</span>
+<span style="color: #888; font-style: italic">   */</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;7️⃣ Edge Case - Empty Filter Objects Test&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>emptyFilterTest<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>employeesTool<span style="color: #888">.</span>execute<span style="color: #888">(</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>filter<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{},</span>
+<span style="color: #A89028">      </span>fields<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;id,first_name,last_name&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span><span style="color: #A89028"> </span>dryRun<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">true</span><span style="color: #A89028"> </span><span style="color: #888">}</span>
+<span style="color: #A89028">  </span><span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>DryRunResult<span style="color: #888">;</span>
+
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Empty filter object:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>filter<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{},</span><span style="color: #A89028"> </span>fields<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;id,first_name,last_name&#39;</span><span style="color: #A89028"> </span><span style="color: #888">});</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Serialized URL:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>emptyFilterTest<span style="color: #888">.</span>url<span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Verify that empty filter objects don&#39;t create problematic parameters</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span>emptyFilterTest<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;fields=id%2Cfirst_name%2Clast_name&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to contain fields parameter even with empty filter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Empty objects should not create parameters</span>
+<span style="color: #A89028">  </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">    </span><span style="color: #666">!</span>emptyFilterTest<span style="color: #888">.</span>url<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;filter=&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;Expected URL to not contain empty filter parameter&#39;</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;✅ Empty filter objects handled correctly\n&#39;</span><span style="color: #888">);</span>
+<span style="color: #888">};</span>
+
+<span style="color: #888; font-style: italic">// Run the example</span>
+hriseEmployeeFilters<span style="color: #888">();</span>
+</code></pre></div>
+</section>
+
+            </main>
+        </div>
+        <hr><footer>
+    <div class="terminal-mkdocs-footer-grid">
+        <div id="terminal-mkdocs-footer-copyright-info">
+             Site built with <a href="http://www.mkdocs.org">MkDocs</a> and <a href="https://github.com/ntno/mkdocs-terminal">Terminal for MkDocs</a>.
+        </div>
+    </div>
+</footer>
+    </div>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="alertdialog" aria-modal="true" aria-labelledby="searchModalLabel">
+    <div class="modal-dialog modal-lg" role="search">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchModalLabel">Search</h5>
+                <button type="button" class="close btn btn-default btn-ghost" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p id="searchInputLabel">Type to start searching</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" aria-labelledby="searchInputLabel" placeholder="" id="mkdocs-search-query" title="Please enter search terms here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No document matches found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</body>
+
+</html>
