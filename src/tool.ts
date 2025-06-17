@@ -76,11 +76,8 @@ export class BaseTool {
       // Apply experimental preExecute function (either from tool creation or execution options)
       let processedParams = params;
 
-      // Prioritize tool-level experimental_preExecute over execution-time experimental_PreExecute
-      const preExecuteFunction = this.experimental_preExecute || options?.experimental_PreExecute;
-
-      if (preExecuteFunction) {
-        processedParams = await preExecuteFunction(params);
+      if (this.experimental_preExecute) {
+        processedParams = await this.experimental_preExecute(params);
       }
 
       // Execute the request directly with processed parameters

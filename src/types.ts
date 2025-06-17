@@ -91,13 +91,6 @@ export interface ExecuteOptions {
    * Useful for debugging and testing transformed parameters
    */
   dryRun?: boolean;
-
-  /**
-   * EXPERIMENTAL: Function to preprocess parameters before execution
-   * Allows for document fetching, parameter override, etc.
-   * @deprecated Use experimental_preExecute in tool creation options instead
-   */
-  experimental_PreExecute?: Experimental_PreExecuteFunction;
 }
 
 /**
