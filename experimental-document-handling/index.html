@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="generator" content="mkdocs-1.6.1, mkdocs-terminal-4.7.0">
+     
+     
+    
+    <link rel="canonical" href="https://stackonehq.github.io/stackone-ai-node§/experimental-document-handling/"><link rel="icon" type="image/png" sizes="192x192" href="../img/android-chrome-192x192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="../img/android-chrome-512x512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
+<link rel="shortcut icon" type="image/png" sizes="48x48" href="../img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png" />
+
+
+    
+ 
+<title>Experimental Document Handling - StackOne AI SDK</title>
+
+
+<link href="../css/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+<link href="../css/fontawesome/css/solid.min.css" rel="stylesheet">
+<link href="../css/normalize.css" rel="stylesheet">
+<link href="../css/terminal.css" rel="stylesheet">
+<link href="../css/theme.css" rel="stylesheet">
+<link href="../css/theme.tile_grid.css" rel="stylesheet">
+<link href="../css/theme.footer.css" rel="stylesheet">
+<!-- default color palette -->
+<link href="../css/palettes/default.css" rel="stylesheet">
+
+<!-- page layout -->
+<style>
+/* initially set page layout to a one column grid */
+.terminal-mkdocs-main-grid {
+    display: grid;
+    grid-column-gap: 1.4em;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+/*  
+*   when side navigation is not hidden, use a two column grid.  
+*   if the screen is too narrow, fall back to the initial one column grid layout.
+*   in this case the main content will be placed under the navigation panel. 
+*/
+@media only screen and (min-width: 70em) {
+    .terminal-mkdocs-main-grid {
+        grid-template-columns: 4fr 9fr;
+    }
+}</style>
+
+<!-- link underline override -->
+<style>
+#terminal-mkdocs-main-content a:not(.headerlink){
+    text-decoration: none;
+}
+</style>
+
+     
+    
+    
+
+    
+    <!-- search css support -->
+<link href="../css/search/bootstrap-modal.css" rel="stylesheet">
+<!-- search scripts -->
+<script>
+    var base_url = "..",
+    shortcuts = "{}";
+</script>
+<script src="../js/jquery/jquery-1.10.1.min.js" defer></script>
+<script src="../js/bootstrap/bootstrap.min.js" defer></script>
+<script src="../js/mkdocs/base.js" defer></script>
+    
+    
+    
+    
+    <script src="../search/main.js"></script>
+    
+
+    
+</head>
+
+<body class="terminal"><div class="container">
+    <div class="terminal-nav">
+        <header class="terminal-logo">
+            <div id="mkdocs-terminal-site-name" class="logo terminal-prompt"><a href="https://stackonehq.github.io/stackone-ai-node§/" class="no-style">StackOne AI SDK</a></div>
+        </header>
+        
+        <nav class="terminal-menu">
+            
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href=".." class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Home</span>
+                    </a>
+                    <meta property="position" content="0">
+                </li>
+                
+                
+                
+                
+                
+                
+                
+                    
+                    
+
+
+<li property="itemListElement" typeof="ListItem">
+    <a href="#" class="menu-item" data-toggle="modal" data-target="#mkdocs_search_modal" property="item" typeof="SearchAction">
+        <i aria-hidden="true" class="fa fa-search"></i> <span property="name">Search</span>
+    </a>
+    <meta property="position" content="1">
+</li>
+                    
+            </ul>
+            
+        </nav>
+    </div>
+</div>
+        
+    <div class="container">
+        <div class="terminal-mkdocs-main-grid"><aside id="terminal-mkdocs-side-panel"><nav>
+  
+    <ul class="terminal-mkdocs-side-nav-items">
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="..">Home</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+            
+                
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+            
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">StackOne Usage</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="..">Home</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../account-id-usage/">Account IDs</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../error-handling/">Error Handling</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../file-uploads.md">File Uploads</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../custom-base-url/">Custom Base URL</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+            
+                
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+            
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">Integrations</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openai-integration/">OpenAI</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../ai-sdk-integration/">AI SDK</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+            
+                
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+            
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">OpenAPI Usage</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openapi-toolset/">Getting Started</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openapi-transformations.md">Custom Transformations</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+    </ul>
+  
+</nav>
+</aside>
+            <main id="terminal-mkdocs-main-content">
+<section id="mkdocs-terminal-content">
+    <h1 id="experimental-document-handling">Experimental Document Handling<a class="headerlink" href="#experimental-document-handling" title="Anchor link to this section for reference">#</a></h1>
+<p>EXPERIMENTAL: Document Handling with Schema Override + PreExecute</p>
+<p>This example demonstrates the new experimental schema override + preExecute functionality
+for handling documents from various sources (local files, URLs, databases, etc.)</p>
+<p>The new API provides two-stage transformation:
+1. Schema Override: Changes the tool's input schema at creation time
+2. PreExecute: Transforms from override schema back to original API format at execution time</p>
+<p>This is an experimental feature and the API may change in future versions.</p>
+<p>Run this example with:
+bun run examples/experimental-document-handling.ts</p>
+<p><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0">import</span><span style="color: #A89028"> </span>assert<span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;node:assert&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #666">*</span><span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>fs<span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;node:fs&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #666">*</span><span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>path<span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;node:path&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #2838B0">type</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>JSONSchema7Definition<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;json-schema&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0">type</span><span style="color: #A89028"> </span>Experimental_PreExecuteFunction<span style="color: #888">,</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0">type</span><span style="color: #A89028"> </span>Experimental_SchemaOverride<span style="color: #888">,</span>
+<span style="color: #A89028">  </span>StackOneToolSet<span style="color: #888">,</span>
+<span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;../src&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>ACCOUNT_IDS<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;./constants&#39;</span><span style="color: #888">;</span>
+
+<span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>accountId<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>ACCOUNT_IDS<span style="color: #888">.</span>HRIS<span style="color: #888">;</span>
+
+<span style="color: #2838B0; font-style: italic">interface</span><span style="color: #A89028"> </span>FileFormatParam<span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span>value<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">;</span>
+<span style="color: #888">}</span>
+
+<span style="color: #2838B0; font-style: italic">interface</span><span style="color: #A89028"> </span>DocumentParams<span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span>content<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">;</span>
+<span style="color: #A89028">  </span>name<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">;</span>
+<span style="color: #A89028">  </span>file_format<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">FileFormatParam</span><span style="color: #888">;</span>
+<span style="color: #A89028">  </span><span style="color: #888">[</span>key<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">]</span><span style="color: #666">:</span><span style="color: #A89028"> </span>unknown<span style="color: #888">;</span>
+<span style="color: #888">}</span>
+</code></pre></div>
+EXPERIMENTAL: Schema override for document upload - changes from complex schema to simple doc_id</p>
+<p><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>createDocumentSchemaOverride<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span>Experimental_SchemaOverride<span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #888">(</span>originalSchema<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Extract only the category from original schema, replace file-related params with doc_id</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>newProperties<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">Record</span><span style="color: #666">&lt;</span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">,</span><span style="color: #A89028"> </span>JSONSchema7Definition<span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">{};</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Keep non-file parameters from original schema</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">for</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span><span style="color: #888">[</span>key<span style="color: #888">,</span><span style="color: #A89028"> </span>value<span style="color: #888">]</span><span style="color: #A89028"> </span><span style="color: #2838B0">of</span><span style="color: #A89028"> </span><span style="color: #388038">Object</span><span style="color: #888">.</span>entries<span style="color: #888">(</span>originalSchema<span style="color: #888">.</span>properties<span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #666">!</span><span style="color: #888">[</span><span style="color: #B83838">&#39;content&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;name&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;file_format&#39;</span><span style="color: #888">].</span>includes<span style="color: #888">(</span>key<span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>newProperties<span style="color: #888">[</span>key<span style="color: #888">]</span><span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>value<span style="color: #888">;</span>
+<span style="color: #A89028">      </span><span style="color: #888">}</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Add simplified document ID parameter</span>
+<span style="color: #A89028">    </span>newProperties<span style="color: #888">.</span>doc_id<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">type</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;string&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>description<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Document identifier or file path&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span><span style="color: #888">};</span>
+
+<span style="color: #A89028">    </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">type</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;object&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>properties<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">newProperties</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>required<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">[</span>
+<span style="color: #A89028">        </span><span style="color: #B83838">&#39;doc_id&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span><span style="color: #888">...(</span>originalSchema<span style="color: #888">.</span>required<span style="color: #666">?</span><span style="color: #888">.</span>filter<span style="color: #888">(</span>
+<span style="color: #A89028">          </span><span style="color: #888">(</span>r<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #666">!</span><span style="color: #888">[</span><span style="color: #B83838">&#39;content&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;name&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;file_format&#39;</span><span style="color: #888">].</span>includes<span style="color: #888">(</span>r<span style="color: #888">)</span>
+<span style="color: #A89028">        </span><span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #666">||</span><span style="color: #A89028"> </span><span style="color: #888">[]),</span>
+<span style="color: #A89028">      </span><span style="color: #888">],</span>
+<span style="color: #A89028">    </span><span style="color: #888">};</span>
+<span style="color: #A89028">  </span><span style="color: #888">};</span>
+<span style="color: #888">};</span>
+</code></pre></div>
+EXPERIMENTAL: PreExecute function that transforms doc_id back to original file parameters</p>
+<p><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>createDocumentPreExecute<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">(</span>allowedPaths<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">[])</span><span style="color: #666">:</span><span style="color: #A89028"> </span>Experimental_PreExecuteFunction<span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">(</span>params<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>doc_id<span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888">...</span>otherParams<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>params<span style="color: #888">;</span>
+
+<span style="color: #A89028">    </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #A848A8">typeof</span><span style="color: #A89028"> </span>doc_id<span style="color: #A89028"> </span><span style="color: #666">!==</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;string&#39;</span><span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">throw</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span><span style="color: #908828">Error</span><span style="color: #888">(</span><span style="color: #B83838">&#39;doc_id must be a string&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Security check: only allow certain paths</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>isAllowed<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>allowedPaths<span style="color: #888">.</span>some<span style="color: #888">((</span>allowedPath<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span>doc_id<span style="color: #888">.</span>startsWith<span style="color: #888">(</span>allowedPath<span style="color: #888">));</span>
+
+<span style="color: #A89028">    </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #666">!</span>isAllowed<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">throw</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span><span style="color: #908828">Error</span><span style="color: #888">(</span><span style="color: #B83838">`Document path not allowed: </span><span style="color: #B83838; text-decoration: underline">${</span>doc_id<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">`</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span>
+
+<span style="color: #A89028">    </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #666">!</span>fs<span style="color: #888">.</span>existsSync<span style="color: #888">(</span>doc_id<span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">throw</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span><span style="color: #908828">Error</span><span style="color: #888">(</span><span style="color: #B83838">`Document not found: </span><span style="color: #B83838; text-decoration: underline">${</span>doc_id<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">`</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Read file and convert to base64</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>fileContent<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>fs<span style="color: #888">.</span>readFileSync<span style="color: #888">(</span>doc_id<span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>base64Content<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>fileContent<span style="color: #888">.</span>toString<span style="color: #888">(</span><span style="color: #B83838">&#39;base64&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>fileName<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>path<span style="color: #888">.</span>basename<span style="color: #888">(</span>doc_id<span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>extension<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>path<span style="color: #888">.</span>extname<span style="color: #888">(</span>doc_id<span style="color: #888">).</span>slice<span style="color: #888">(</span><span style="color: #444">1</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Transform back to original API format</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #888">...</span>otherParams<span style="color: #888">,</span>
+<span style="color: #A89028">      </span>content<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">base64Content</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>name<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">fileName</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>file_format<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>value<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">extension</span><span style="color: #A89028"> </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">};</span>
+<span style="color: #A89028">  </span><span style="color: #888">};</span>
+<span style="color: #888">};</span>
+</code></pre></div>
+EXPERIMENTAL: Schema override for external document references</p>
+<p><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>createExternalDocumentSchemaOverride<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span>Experimental_SchemaOverride<span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #888">(</span>originalSchema<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>newProperties<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">Record</span><span style="color: #666">&lt;</span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">,</span><span style="color: #A89028"> </span>JSONSchema7Definition<span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">{};</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Keep non-file parameters from original schema</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">for</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span><span style="color: #888">[</span>key<span style="color: #888">,</span><span style="color: #A89028"> </span>value<span style="color: #888">]</span><span style="color: #A89028"> </span><span style="color: #2838B0">of</span><span style="color: #A89028"> </span><span style="color: #388038">Object</span><span style="color: #888">.</span>entries<span style="color: #888">(</span>originalSchema<span style="color: #888">.</span>properties<span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #666">!</span><span style="color: #888">[</span><span style="color: #B83838">&#39;content&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;name&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;file_format&#39;</span><span style="color: #888">].</span>includes<span style="color: #888">(</span>key<span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>newProperties<span style="color: #888">[</span>key<span style="color: #888">]</span><span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>value<span style="color: #888">;</span>
+<span style="color: #A89028">      </span><span style="color: #888">}</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Add external document reference parameter</span>
+<span style="color: #A89028">    </span>newProperties<span style="color: #888">.</span>document_reference<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">type</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;string&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>description<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;External document reference (S3 key, database ID, etc.)&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span><span style="color: #888">};</span>
+
+<span style="color: #A89028">    </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">type</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;object&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>properties<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">newProperties</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>required<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">[</span>
+<span style="color: #A89028">        </span><span style="color: #B83838">&#39;document_reference&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span><span style="color: #888">...(</span>originalSchema<span style="color: #888">.</span>required<span style="color: #666">?</span><span style="color: #888">.</span>filter<span style="color: #888">(</span>
+<span style="color: #A89028">          </span><span style="color: #888">(</span>r<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #666">!</span><span style="color: #888">[</span><span style="color: #B83838">&#39;content&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;name&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;file_format&#39;</span><span style="color: #888">].</span>includes<span style="color: #888">(</span>r<span style="color: #888">)</span>
+<span style="color: #A89028">        </span><span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #666">||</span><span style="color: #A89028"> </span><span style="color: #888">[]),</span>
+<span style="color: #A89028">      </span><span style="color: #888">],</span>
+<span style="color: #A89028">    </span><span style="color: #888">};</span>
+<span style="color: #A89028">  </span><span style="color: #888">};</span>
+<span style="color: #888">};</span>
+</code></pre></div>
+EXPERIMENTAL: PreExecute function for external document fetching</p>
+<p><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>createExternalDocumentPreExecute<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span>Experimental_PreExecuteFunction<span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">(</span>params<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>document_reference<span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888">...</span>otherParams<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>params<span style="color: #888">;</span>
+
+<span style="color: #A89028">    </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #A848A8">typeof</span><span style="color: #A89028"> </span>document_reference<span style="color: #A89028"> </span><span style="color: #666">!==</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;string&#39;</span><span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">throw</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span><span style="color: #908828">Error</span><span style="color: #888">(</span><span style="color: #B83838">&#39;document_reference must be a string&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Simulate fetching from external source (S3, database, etc.)</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">`Fetching document from external source: </span><span style="color: #B83838; text-decoration: underline">${</span>document_reference<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">`</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// In a real implementation, this would fetch from S3, database, etc.</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>mockDocumentContent<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;This is a mock document fetched from external source&#39;</span><span style="color: #888">;</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>base64Content<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>Buffer<span style="color: #888">.</span><span style="color: #2838B0">from</span><span style="color: #888">(</span>mockDocumentContent<span style="color: #888">).</span>toString<span style="color: #888">(</span><span style="color: #B83838">&#39;base64&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Transform back to original API format</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #888">...</span>otherParams<span style="color: #888">,</span>
+<span style="color: #A89028">      </span>content<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">base64Content</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>name<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">`external-doc-</span><span style="color: #B83838; text-decoration: underline">${</span>document_reference<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">.txt`</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>file_format<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>value<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;txt&#39;</span><span style="color: #A89028"> </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">};</span>
+<span style="color: #A89028">  </span><span style="color: #888">};</span>
+<span style="color: #888">};</span>
+</code></pre></div>
+EXPERIMENTAL: Schema override for multi-source documents (supports both local and external)</p>
+<p><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>createMultiSourceSchemaOverride<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span>Experimental_SchemaOverride<span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #888">(</span>originalSchema<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>newProperties<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">Record</span><span style="color: #666">&lt;</span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">,</span><span style="color: #A89028"> </span>JSONSchema7Definition<span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">{};</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Keep non-file parameters from original schema</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">for</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span><span style="color: #888">[</span>key<span style="color: #888">,</span><span style="color: #A89028"> </span>value<span style="color: #888">]</span><span style="color: #A89028"> </span><span style="color: #2838B0">of</span><span style="color: #A89028"> </span><span style="color: #388038">Object</span><span style="color: #888">.</span>entries<span style="color: #888">(</span>originalSchema<span style="color: #888">.</span>properties<span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #666">!</span><span style="color: #888">[</span><span style="color: #B83838">&#39;content&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;name&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;file_format&#39;</span><span style="color: #888">].</span>includes<span style="color: #888">(</span>key<span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>newProperties<span style="color: #888">[</span>key<span style="color: #888">]</span><span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>value<span style="color: #888">;</span>
+<span style="color: #A89028">      </span><span style="color: #888">}</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Add both document parameters (user can provide either)</span>
+<span style="color: #A89028">    </span>newProperties<span style="color: #888">.</span>doc_id<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">type</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;string&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>description<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Local document path (takes precedence if both provided)&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span><span style="color: #888">};</span>
+
+<span style="color: #A89028">    </span>newProperties<span style="color: #888">.</span>document_reference<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">type</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;string&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>description<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;External document reference (used if doc_id not provided)&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span><span style="color: #888">};</span>
+
+<span style="color: #A89028">    </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">type</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;object&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>properties<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">newProperties</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>required<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">[</span>
+<span style="color: #A89028">        </span><span style="color: #888">...(</span>originalSchema<span style="color: #888">.</span>required<span style="color: #666">?</span><span style="color: #888">.</span>filter<span style="color: #888">(</span>
+<span style="color: #A89028">          </span><span style="color: #888">(</span>r<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #666">!</span><span style="color: #888">[</span><span style="color: #B83838">&#39;content&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;name&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;file_format&#39;</span><span style="color: #888">].</span>includes<span style="color: #888">(</span>r<span style="color: #888">)</span>
+<span style="color: #A89028">        </span><span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #666">||</span><span style="color: #A89028"> </span><span style="color: #888">[]),</span>
+<span style="color: #A89028">      </span><span style="color: #888">],</span>
+<span style="color: #A89028">    </span><span style="color: #888">};</span>
+<span style="color: #A89028">  </span><span style="color: #888">};</span>
+<span style="color: #888">};</span>
+</code></pre></div>
+EXPERIMENTAL: PreExecute function for multi-source document handling with fallback</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>createMultiSourcePreExecute<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">(</span>localPaths<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">[])</span><span style="color: #666">:</span><span style="color: #A89028"> </span>Experimental_PreExecuteFunction<span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>localPreExecute<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>createDocumentPreExecute<span style="color: #888">(</span>localPaths<span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>externalPreExecute<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>createExternalDocumentPreExecute<span style="color: #888">();</span>
+
+<span style="color: #A89028">  </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">(</span>params<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Try local file first if doc_id is provided</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span>params<span style="color: #888">.</span>doc_id<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">try</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>localPreExecute<span style="color: #888">(</span>params<span style="color: #888">);</span>
+<span style="color: #A89028">      </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">catch</span><span style="color: #A89028"> </span><span style="color: #888">(</span>error<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>console<span style="color: #888">.</span>warn<span style="color: #888">(</span><span style="color: #B83838">`Local file handler failed: </span><span style="color: #B83838; text-decoration: underline">${</span>error<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">`</span><span style="color: #888">);</span>
+<span style="color: #A89028">      </span><span style="color: #888">}</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Fallback to external handler if document_reference is provided</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span>params<span style="color: #888">.</span>document_reference<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>externalPreExecute<span style="color: #888">(</span>params<span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// No document parameters provided</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">throw</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span><span style="color: #908828">Error</span><span style="color: #888">(</span><span style="color: #B83838">&#39;Either doc_id or document_reference must be provided&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #888">};</span>
+<span style="color: #888">};</span>
+
+<span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>experimentalDocumentHandling<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #388038">Promise</span><span style="color: #666">&lt;</span><span style="color: #A848A8">void</span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Create a sample file for testing</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>sampleFilePath<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>path<span style="color: #888">.</span>join<span style="color: #888">(</span>__dirname<span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;sample-document.txt&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>fs<span style="color: #888">.</span>writeFileSync<span style="color: #888">(</span>sampleFilePath<span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;This is an experimental document handling test file.&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #2838B0">try</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Initialize the StackOne toolset</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>toolset<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">();</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Get base tools for documents</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>tools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getStackOneTools<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>accountId<span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;🧪 Testing EXPERIMENTAL schema override + preExecute for local files...&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// EXPERIMENTAL: Create a tool with schema override and preExecute for local files</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>localDocumentTool<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>tools<span style="color: #888">.</span>getTool<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_upload_employee_document&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>experimental_schemaOverride<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">createDocumentSchemaOverride</span><span style="color: #888">(),</span>
+<span style="color: #A89028">      </span>experimental_preExecute<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">createDocumentPreExecute</span><span style="color: #888">([</span>__dirname<span style="color: #888">]),</span>
+<span style="color: #A89028">    </span><span style="color: #888">});</span>
+
+<span style="color: #A89028">    </span>assert<span style="color: #888">(</span>localDocumentTool<span style="color: #A89028"> </span><span style="color: #666">!==</span><span style="color: #A89028"> </span><span style="color: #444; font-style: italic">undefined</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Local document tool not found&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Use the new simplified schema (doc_id instead of content/name/file_format)</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>localFileResult<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>localDocumentTool<span style="color: #888">.</span>execute<span style="color: #888">(</span>
+<span style="color: #A89028">      </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>doc_id<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">sampleFilePath</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888; font-style: italic">// Simplified schema - just document ID</span>
+<span style="color: #A89028">        </span>id<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>category<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>value<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;shared&#39;</span><span style="color: #A89028"> </span><span style="color: #888">},</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">      </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>dryRun<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">true</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">}</span>
+<span style="color: #A89028">    </span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;✅ Local file schema override + preExecute successful&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>localParams<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>localFileResult<span style="color: #888">.</span>mappedParams<span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>Record<span style="color: #666">&lt;</span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">,</span><span style="color: #A89028"> </span>unknown<span style="color: #666">&gt;</span><span style="color: #888">;</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>localDocumentParams<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>localParams<span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>DocumentParams<span style="color: #A89028"> </span><span style="color: #666">&amp;</span><span style="color: #A89028"> </span>Record<span style="color: #666">&lt;</span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">,</span><span style="color: #A89028"> </span>unknown<span style="color: #666">&gt;</span><span style="color: #888">;</span>
+<span style="color: #A89028">    </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">      </span>localDocumentParams<span style="color: #888">.</span>file_format<span style="color: #666">?</span><span style="color: #888">.</span>value<span style="color: #A89028"> </span><span style="color: #666">===</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;txt&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #B83838">&#39;File format was not transformed correctly&#39;</span>
+<span style="color: #A89028">    </span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">      </span>localDocumentParams<span style="color: #888">.</span>name<span style="color: #A89028"> </span><span style="color: #666">===</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;sample-document.txt&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #B83838">&#39;File name was not transformed correctly&#39;</span>
+<span style="color: #A89028">    </span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">      </span><span style="color: #A848A8">typeof</span><span style="color: #A89028"> </span>localDocumentParams<span style="color: #888">.</span>content<span style="color: #A89028"> </span><span style="color: #666">===</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;string&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #B83838">&#39;File content was not transformed correctly&#39;</span>
+<span style="color: #A89028">    </span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;🧪 Testing EXPERIMENTAL schema override + preExecute for external documents...&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// EXPERIMENTAL: Create a tool for external document references</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>externalDocumentTool<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>tools<span style="color: #888">.</span>getTool<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_upload_employee_document&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>experimental_schemaOverride<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">createExternalDocumentSchemaOverride</span><span style="color: #888">(),</span>
+<span style="color: #A89028">      </span>experimental_preExecute<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">createExternalDocumentPreExecute</span><span style="color: #888">(),</span>
+<span style="color: #A89028">    </span><span style="color: #888">});</span>
+
+<span style="color: #A89028">    </span>assert<span style="color: #888">(</span>externalDocumentTool<span style="color: #A89028"> </span><span style="color: #666">!==</span><span style="color: #A89028"> </span><span style="color: #444; font-style: italic">undefined</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;External document tool not found&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>externalResult<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>externalDocumentTool<span style="color: #888">.</span>execute<span style="color: #888">(</span>
+<span style="color: #A89028">      </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>document_reference<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;external-doc-123&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888; font-style: italic">// Simplified schema - just reference</span>
+<span style="color: #A89028">        </span>id<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>category<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>value<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;shared&#39;</span><span style="color: #A89028"> </span><span style="color: #888">},</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">      </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>dryRun<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">true</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">}</span>
+<span style="color: #A89028">    </span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;✅ External document schema override + preExecute successful&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>externalParams<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>externalResult<span style="color: #888">.</span>mappedParams<span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>Record<span style="color: #666">&lt;</span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">,</span><span style="color: #A89028"> </span>unknown<span style="color: #666">&gt;</span><span style="color: #888">;</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>externalDocumentParams<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>externalParams<span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>DocumentParams<span style="color: #A89028"> </span><span style="color: #666">&amp;</span><span style="color: #A89028"> </span>Record<span style="color: #666">&lt;</span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">,</span><span style="color: #A89028"> </span>unknown<span style="color: #666">&gt;</span><span style="color: #888">;</span>
+<span style="color: #A89028">    </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">      </span>externalDocumentParams<span style="color: #888">.</span>name<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;external-doc-123&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">      </span><span style="color: #B83838">&#39;External document name was not transformed correctly&#39;</span>
+<span style="color: #A89028">    </span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;🧪 Testing EXPERIMENTAL multi-source schema override + preExecute...&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// EXPERIMENTAL: Create a tool that supports both local and external documents</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>multiSourceTool<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>tools<span style="color: #888">.</span>getTool<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_upload_employee_document&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>experimental_schemaOverride<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">createMultiSourceSchemaOverride</span><span style="color: #888">(),</span>
+<span style="color: #A89028">      </span>experimental_preExecute<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">createMultiSourcePreExecute</span><span style="color: #888">([</span>__dirname<span style="color: #888">]),</span>
+<span style="color: #A89028">    </span><span style="color: #888">});</span>
+
+<span style="color: #A89028">    </span>assert<span style="color: #888">(</span>multiSourceTool<span style="color: #A89028"> </span><span style="color: #666">!==</span><span style="color: #A89028"> </span><span style="color: #444; font-style: italic">undefined</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Multi-source tool not found&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Test with local file</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>multiSourceLocalResult<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>multiSourceTool<span style="color: #888">.</span>execute<span style="color: #888">(</span>
+<span style="color: #A89028">      </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>doc_id<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">sampleFilePath</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888; font-style: italic">// Local file takes precedence</span>
+<span style="color: #A89028">        </span>id<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>category<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>value<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;shared&#39;</span><span style="color: #A89028"> </span><span style="color: #888">},</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">      </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>dryRun<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">true</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">}</span>
+<span style="color: #A89028">    </span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;✅ Multi-source (local) schema override + preExecute successful&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>multiLocalParams<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>multiSourceLocalResult<span style="color: #888">.</span>mappedParams<span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>Record<span style="color: #666">&lt;</span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">,</span><span style="color: #A89028"> </span>unknown<span style="color: #666">&gt;</span><span style="color: #888">;</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>multiLocalDocumentParams<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>multiLocalParams<span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>DocumentParams<span style="color: #A89028"> </span><span style="color: #666">&amp;</span><span style="color: #A89028"> </span>Record<span style="color: #666">&lt;</span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">,</span><span style="color: #A89028"> </span>unknown<span style="color: #666">&gt;</span><span style="color: #888">;</span>
+<span style="color: #A89028">    </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">      </span>multiLocalDocumentParams<span style="color: #888">.</span>name<span style="color: #A89028"> </span><span style="color: #666">===</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;sample-document.txt&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #B83838">&#39;Multi-source local document name was not transformed correctly&#39;</span>
+<span style="color: #A89028">    </span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Test with external reference</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>multiSourceExternalResult<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>multiSourceTool<span style="color: #888">.</span>execute<span style="color: #888">(</span>
+<span style="color: #A89028">      </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>document_reference<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;external-doc-456&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888; font-style: italic">// Fallback to external</span>
+<span style="color: #A89028">        </span>id<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>category<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>value<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;shared&#39;</span><span style="color: #A89028"> </span><span style="color: #888">},</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">      </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>dryRun<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">true</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">}</span>
+<span style="color: #A89028">    </span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;✅ Multi-source (external) schema override + preExecute successful&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>multiExternalParams<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>multiSourceExternalResult<span style="color: #888">.</span>mappedParams<span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>Record<span style="color: #666">&lt;</span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">,</span><span style="color: #A89028"> </span>unknown<span style="color: #666">&gt;</span><span style="color: #888">;</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>multiExternalDocumentParams<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>multiExternalParams<span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span>DocumentParams<span style="color: #A89028"> </span><span style="color: #666">&amp;</span>
+<span style="color: #A89028">      </span>Record<span style="color: #666">&lt;</span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">,</span><span style="color: #A89028"> </span>unknown<span style="color: #666">&gt;</span><span style="color: #888">;</span>
+<span style="color: #A89028">    </span>assert<span style="color: #888">(</span>
+<span style="color: #A89028">      </span>multiExternalDocumentParams<span style="color: #888">.</span>name<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;external-doc-456&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">      </span><span style="color: #B83838">&#39;Multi-source external document name was not transformed correctly&#39;</span>
+<span style="color: #A89028">    </span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;🎉 All EXPERIMENTAL schema override + preExecute tests passed!&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;📋 API Summary:&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;   1. experimental_schemaOverride: Changes tool input schema at creation time&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span>
+<span style="color: #A89028">      </span><span style="color: #B83838">&#39;   2. experimental_preExecute: Transforms from override schema to original API format&#39;</span>
+<span style="color: #A89028">    </span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;   3. Two-stage transformation: Schema definition → Parameter transformation&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;⚠️  IMPORTANT: This is experimental functionality.&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;   The API may change in future versions.&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;   Use at your own risk in production environments.&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">finally</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Clean up the sample file</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span>fs<span style="color: #888">.</span>existsSync<span style="color: #888">(</span>sampleFilePath<span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>fs<span style="color: #888">.</span>unlinkSync<span style="color: #888">(</span>sampleFilePath<span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span>
+<span style="color: #A89028">  </span><span style="color: #888">}</span>
+<span style="color: #888">};</span>
+
+experimentalDocumentHandling<span style="color: #888">();</span>
+</code></pre></div>
+</section>
+
+            </main>
+        </div>
+        <hr><footer>
+    <div class="terminal-mkdocs-footer-grid">
+        <div id="terminal-mkdocs-footer-copyright-info">
+             Site built with <a href="http://www.mkdocs.org">MkDocs</a> and <a href="https://github.com/ntno/mkdocs-terminal">Terminal for MkDocs</a>.
+        </div>
+    </div>
+</footer>
+    </div>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="alertdialog" aria-modal="true" aria-labelledby="searchModalLabel">
+    <div class="modal-dialog modal-lg" role="search">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchModalLabel">Search</h5>
+                <button type="button" class="close btn btn-default btn-ghost" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p id="searchInputLabel">Type to start searching</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" aria-labelledby="searchInputLabel" placeholder="" id="mkdocs-search-query" title="Please enter search terms here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No document matches found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</body>
+
+</html>

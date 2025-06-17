@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="generator" content="mkdocs-1.6.1, mkdocs-terminal-4.7.0">
+     
+     
+    
+    <link rel="canonical" href="https://stackonehq.github.io/stackone-ai-node§/examples.spec/"><link rel="icon" type="image/png" sizes="192x192" href="../img/android-chrome-192x192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="../img/android-chrome-512x512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
+<link rel="shortcut icon" type="image/png" sizes="48x48" href="../img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png" />
+
+
+    
+ 
+<title>Examples.Spec - StackOne AI SDK</title>
+
+
+<link href="../css/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+<link href="../css/fontawesome/css/solid.min.css" rel="stylesheet">
+<link href="../css/normalize.css" rel="stylesheet">
+<link href="../css/terminal.css" rel="stylesheet">
+<link href="../css/theme.css" rel="stylesheet">
+<link href="../css/theme.tile_grid.css" rel="stylesheet">
+<link href="../css/theme.footer.css" rel="stylesheet">
+<!-- default color palette -->
+<link href="../css/palettes/default.css" rel="stylesheet">
+
+<!-- page layout -->
+<style>
+/* initially set page layout to a one column grid */
+.terminal-mkdocs-main-grid {
+    display: grid;
+    grid-column-gap: 1.4em;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+/*  
+*   when side navigation is not hidden, use a two column grid.  
+*   if the screen is too narrow, fall back to the initial one column grid layout.
+*   in this case the main content will be placed under the navigation panel. 
+*/
+@media only screen and (min-width: 70em) {
+    .terminal-mkdocs-main-grid {
+        grid-template-columns: 4fr 9fr;
+    }
+}</style>
+
+<!-- link underline override -->
+<style>
+#terminal-mkdocs-main-content a:not(.headerlink){
+    text-decoration: none;
+}
+</style>
+
+     
+    
+    
+
+    
+    <!-- search css support -->
+<link href="../css/search/bootstrap-modal.css" rel="stylesheet">
+<!-- search scripts -->
+<script>
+    var base_url = "..",
+    shortcuts = "{}";
+</script>
+<script src="../js/jquery/jquery-1.10.1.min.js" defer></script>
+<script src="../js/bootstrap/bootstrap.min.js" defer></script>
+<script src="../js/mkdocs/base.js" defer></script>
+    
+    
+    
+    
+    <script src="../search/main.js"></script>
+    
+
+    
+</head>
+
+<body class="terminal"><div class="container">
+    <div class="terminal-nav">
+        <header class="terminal-logo">
+            <div id="mkdocs-terminal-site-name" class="logo terminal-prompt"><a href="https://stackonehq.github.io/stackone-ai-node§/" class="no-style">StackOne AI SDK</a></div>
+        </header>
+        
+        <nav class="terminal-menu">
+            
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href=".." class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Home</span>
+                    </a>
+                    <meta property="position" content="0">
+                </li>
+                
+                
+                
+                
+                
+                
+                
+                    
+                    
+
+
+<li property="itemListElement" typeof="ListItem">
+    <a href="#" class="menu-item" data-toggle="modal" data-target="#mkdocs_search_modal" property="item" typeof="SearchAction">
+        <i aria-hidden="true" class="fa fa-search"></i> <span property="name">Search</span>
+    </a>
+    <meta property="position" content="1">
+</li>
+                    
+            </ul>
+            
+        </nav>
+    </div>
+</div>
+        
+    <div class="container">
+        <div class="terminal-mkdocs-main-grid"><aside id="terminal-mkdocs-side-panel"><nav>
+  
+    <ul class="terminal-mkdocs-side-nav-items">
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="..">Home</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+            
+                
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+            
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">StackOne Usage</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="..">Home</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../account-id-usage/">Account IDs</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../error-handling/">Error Handling</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../file-uploads.md">File Uploads</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../custom-base-url/">Custom Base URL</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+            
+                
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+            
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">Integrations</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openai-integration/">OpenAI</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../ai-sdk-integration/">AI SDK</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+            
+                
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+            
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">OpenAPI Usage</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openapi-toolset/">Getting Started</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openapi-transformations.md">Custom Transformations</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+    </ul>
+  
+</nav>
+</aside>
+            <main id="terminal-mkdocs-main-content">
+<section id="mkdocs-terminal-content">
+    <h1 id="examplesspec">Examples.Spec<a class="headerlink" href="#examplesspec" title="Anchor link to this section for reference">#</a></h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>describe<span style="color: #888">,</span><span style="color: #A89028"> </span>expect<span style="color: #888">,</span><span style="color: #A89028"> </span>it<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;bun:test&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>$<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;bun&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>directoryExists<span style="color: #888">,</span><span style="color: #A89028"> </span>joinPaths<span style="color: #888">,</span><span style="color: #A89028"> </span>listFilesInDirectory<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;../src/utils/file&#39;</span><span style="color: #888">;</span>
+
+describe<span style="color: #888">(</span><span style="color: #B83838">&#39;Examples&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span>it<span style="color: #888">(</span>
+<span style="color: #A89028">    </span><span style="color: #B83838">&#39;should run all example files without errors&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>examplesDir<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>joinPaths<span style="color: #888">(</span>process<span style="color: #888">.</span>cwd<span style="color: #888">(),</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;examples&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">      </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #666">!</span>directoryExists<span style="color: #888">(</span>examplesDir<span style="color: #888">))</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span><span style="color: #2838B0">throw</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span><span style="color: #908828">Error</span><span style="color: #888">(</span><span style="color: #B83838">&#39;Examples directory not found&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">      </span><span style="color: #888">}</span>
+
+<span style="color: #A89028">      </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>exampleFiles<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>listFilesInDirectory<span style="color: #888">(</span>
+<span style="color: #A89028">        </span>examplesDir<span style="color: #888">,</span>
+<span style="color: #A89028">        </span><span style="color: #888">(</span>fileName<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span>fileName<span style="color: #888">.</span>endsWith<span style="color: #888">(</span><span style="color: #B83838">&#39;.ts&#39;</span><span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #666">&amp;&amp;</span><span style="color: #A89028"> </span><span style="color: #666">!</span>fileName<span style="color: #888">.</span>includes<span style="color: #888">(</span><span style="color: #B83838">&#39;.spec.&#39;</span><span style="color: #888">)</span>
+<span style="color: #A89028">      </span><span style="color: #888">);</span>
+
+<span style="color: #A89028">      </span>expect<span style="color: #888">(</span>exampleFiles<span style="color: #888">.</span>length<span style="color: #888">).</span>toBeGreaterThan<span style="color: #888">(</span><span style="color: #444">0</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">      </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>results<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span><span style="color: #388038">Promise</span><span style="color: #888">.</span>all<span style="color: #888">(</span>
+<span style="color: #A89028">        </span>exampleFiles<span style="color: #888">.</span>map<span style="color: #888">(</span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">(</span>file<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">          </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>filePath<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>joinPaths<span style="color: #888">(</span>examplesDir<span style="color: #888">,</span><span style="color: #A89028"> </span>file<span style="color: #888">);</span>
+
+<span style="color: #A89028">          </span><span style="color: #2838B0">try</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">            </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>result<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>$<span style="color: #B83838">`bun run </span><span style="color: #B83838; text-decoration: underline">${</span>filePath<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">`</span><span style="color: #888">.</span>quiet<span style="color: #888">();</span>
+<span style="color: #A89028">            </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">              </span>file<span style="color: #888">,</span>
+<span style="color: #A89028">              </span>success<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">result.exitCode</span><span style="color: #A89028"> </span><span style="color: #666">===</span><span style="color: #A89028"> </span><span style="color: #444">0</span><span style="color: #888">,</span>
+<span style="color: #A89028">              </span>exitCode<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">result.exitCode</span><span style="color: #888">,</span>
+<span style="color: #A89028">              </span>stdout<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">result.stdout?.toString</span><span style="color: #888">()</span><span style="color: #A89028"> </span><span style="color: #666">||</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">              </span>stderr<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">result.stderr?.toString</span><span style="color: #888">()</span><span style="color: #A89028"> </span><span style="color: #666">||</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">            </span><span style="color: #888">};</span>
+<span style="color: #A89028">          </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">catch</span><span style="color: #A89028"> </span><span style="color: #888">(</span>error<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">            </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">              </span>file<span style="color: #888">,</span>
+<span style="color: #A89028">              </span>success<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">false</span><span style="color: #888">,</span>
+<span style="color: #A89028">              </span>exitCode<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">1</span><span style="color: #888">,</span>
+<span style="color: #A89028">              </span>stdout<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">              </span>stderr<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">error</span><span style="color: #A89028"> </span><span style="color: #A848A8">instanceof</span><span style="color: #A89028"> </span><span style="color: #908828">Error</span><span style="color: #A89028"> </span><span style="color: #666">?</span><span style="color: #A89028"> </span>error.message<span style="color: #A89028"> </span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">String</span><span style="color: #888">(</span>error<span style="color: #888">),</span>
+<span style="color: #A89028">            </span><span style="color: #888">};</span>
+<span style="color: #A89028">          </span><span style="color: #888">}</span>
+<span style="color: #A89028">        </span><span style="color: #888">})</span>
+<span style="color: #A89028">      </span><span style="color: #888">);</span>
+
+<span style="color: #A89028">      </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>failedExamples<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>results<span style="color: #888">.</span>filter<span style="color: #888">((</span>result<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #666">!</span>result<span style="color: #888">.</span>success<span style="color: #888">);</span>
+
+<span style="color: #A89028">      </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span>failedExamples<span style="color: #888">.</span>length<span style="color: #A89028"> </span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #444">0</span><span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>errorMessage<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>failedExamples
+<span style="color: #A89028">          </span><span style="color: #888">.</span>map<span style="color: #888">(({</span><span style="color: #A89028"> </span>file<span style="color: #888">,</span><span style="color: #A89028"> </span>exitCode<span style="color: #888">,</span><span style="color: #A89028"> </span>stderr<span style="color: #A89028"> </span><span style="color: #888">})</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #B83838">`</span><span style="color: #B83838; text-decoration: underline">${</span>file<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838"> (exit code: </span><span style="color: #B83838; text-decoration: underline">${</span>exitCode<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">): </span><span style="color: #B83838; text-decoration: underline">${</span>stderr<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">`</span><span style="color: #888">)</span>
+<span style="color: #A89028">          </span><span style="color: #888">.</span>join<span style="color: #888">(</span><span style="color: #B83838">&#39;\n&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">        </span><span style="color: #2838B0">throw</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span><span style="color: #908828">Error</span><span style="color: #888">(</span><span style="color: #B83838">`Examples failed:\n</span><span style="color: #B83838; text-decoration: underline">${</span>errorMessage<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">`</span><span style="color: #888">);</span>
+<span style="color: #A89028">      </span><span style="color: #888">}</span>
+
+<span style="color: #A89028">      </span>expect<span style="color: #888">(</span>results<span style="color: #888">.</span>every<span style="color: #888">((</span>result<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span>result<span style="color: #888">.</span>success<span style="color: #888">)).</span>toBe<span style="color: #888">(</span><span style="color: #444; font-style: italic">true</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span><span style="color: #A89028"> </span>timeout<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">30000</span><span style="color: #A89028"> </span><span style="color: #888">}</span>
+<span style="color: #A89028">  </span><span style="color: #888">);</span>
+<span style="color: #888">});</span>
+</code></pre></div>
+</section>
+
+            </main>
+        </div>
+        <hr><footer>
+    <div class="terminal-mkdocs-footer-grid">
+        <div id="terminal-mkdocs-footer-copyright-info">
+             Site built with <a href="http://www.mkdocs.org">MkDocs</a> and <a href="https://github.com/ntno/mkdocs-terminal">Terminal for MkDocs</a>.
+        </div>
+    </div>
+</footer>
+    </div>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="alertdialog" aria-modal="true" aria-labelledby="searchModalLabel">
+    <div class="modal-dialog modal-lg" role="search">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchModalLabel">Search</h5>
+                <button type="button" class="close btn btn-default btn-ghost" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p id="searchInputLabel">Type to start searching</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" aria-labelledby="searchInputLabel" placeholder="" id="mkdocs-search-query" title="Please enter search terms here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No document matches found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</body>
+
+</html>

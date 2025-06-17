@@ -249,7 +249,7 @@
         
             <a class="
 
-    terminal-mkdocs-side-nav-item" href="../file-uploads/">File Uploads</a>
+    terminal-mkdocs-side-nav-item" href="../file-uploads.md">File Uploads</a>
         
     
     </li>
@@ -424,7 +424,7 @@
         
             <a class="
 
-    terminal-mkdocs-side-nav-item" href="../openapi-transformations/">Custom Transformations</a>
+    terminal-mkdocs-side-nav-item" href="../openapi-transformations.md">Custom Transformations</a>
         
     
     </li>
@@ -446,6 +446,7 @@
 <p>This example shows how to handle errors when using the StackOne SDK.</p>
 <div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0">import</span><span style="color: #A89028"> </span>assert<span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;node:assert&#39;</span><span style="color: #888">;</span>
 <span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>StackOneAPIError<span style="color: #888">,</span><span style="color: #A89028"> </span>StackOneError<span style="color: #888">,</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">,</span><span style="color: #A89028"> </span>ToolSetConfigError<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;../src&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>ACCOUNT_IDS<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;./constants&#39;</span><span style="color: #888">;</span>
 
 <span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>errorHandling<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #388038">Promise</span><span style="color: #666">&lt;</span><span style="color: #A848A8">void</span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
 <span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Example 1: Handle initialization errors</span>
@@ -472,7 +473,7 @@
 <span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Example 2: Handle API errors</span>
 <span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>testApiErrors<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #388038">Promise</span><span style="color: #666">&lt;</span><span style="color: #A848A8">void</span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
 <span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>toolset<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">();</span>
-<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>accountId<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;invalid-account-id&#39;</span><span style="color: #888">;</span><span style="color: #A89028"> </span><span style="color: #888; font-style: italic">// Invalid account ID to force an error</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>accountId<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>ACCOUNT_IDS<span style="color: #888">.</span>TEST<span style="color: #888">.</span>INVALID<span style="color: #888">;</span><span style="color: #A89028"> </span><span style="color: #888; font-style: italic">// Invalid account ID to force an error</span>
 
 <span style="color: #A89028">    </span><span style="color: #2838B0">try</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
 <span style="color: #A89028">      </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>tools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getStackOneTools<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>accountId<span style="color: #888">);</span>
@@ -550,7 +551,7 @@ errorHandling<span style="color: #888">();</span>
             <nav class="btn-group">
                 <a href="../account-id-usage/" title="Account IDs">Previous</a>
                 |
-                <a href="../file-uploads/" title="File Uploads">Next</a>
+                <a href="../custom-base-url/" title="Custom Base URL">Next</a>
             </nav>
         </div>
     </div>

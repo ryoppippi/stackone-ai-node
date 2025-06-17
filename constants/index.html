@@ -9,7 +9,7 @@
      
      
     
-    <link rel="canonical" href="https://stackonehq.github.io/stackone-ai-node§/planning/"><link rel="icon" type="image/png" sizes="192x192" href="../img/android-chrome-192x192.png" />
+    <link rel="canonical" href="https://stackonehq.github.io/stackone-ai-node§/constants/"><link rel="icon" type="image/png" sizes="192x192" href="../img/android-chrome-192x192.png" />
 <link rel="icon" type="image/png" sizes="512x512" href="../img/android-chrome-512x512.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
 <link rel="shortcut icon" type="image/png" sizes="48x48" href="../img/favicon.ico" />
@@ -19,7 +19,7 @@
 
     
  
-<title>Planning - StackOne AI SDK</title>
+<title>Constants - StackOne AI SDK</title>
 
 
 <link href="../css/fontawesome/css/fontawesome.min.css" rel="stylesheet">
@@ -447,40 +447,30 @@
 </aside>
             <main id="terminal-mkdocs-main-content">
 <section id="mkdocs-terminal-content">
-    <h1 id="planning">Planning<a class="headerlink" href="#planning" title="Anchor link to this section for reference">#</a></h1>
-<p>While building agents you may find that your workflow is too complex for a general purpose agent.</p>
-<p>StackOne AI SDK provides access to a state of the art planning agent which allows you to create, cache, and execute complex workflows on <a href="https://www.stackone.com/integrations">verticals supported by StackOne</a>.</p>
-<p>For example, onboard a new hire from your ATS to your HRIS.</p>
-<p><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>openai<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;@ai-sdk/openai&#39;</span><span style="color: #888">;</span>
-<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>generateText<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;ai&#39;</span><span style="color: #888">;</span>
-<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;../src&#39;</span><span style="color: #888">;</span>
-<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>ACCOUNT_IDS<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;./constants&#39;</span><span style="color: #888">;</span>
+    <h1 id="constants">Constants<a class="headerlink" href="#constants" title="Anchor link to this section for reference">#</a></h1>
+<p>Centralized account IDs for StackOne examples</p>
+<p>These account IDs are organized by vertical and can be reused across examples.
+Update these values with your actual account IDs for each integration.</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0">export</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>ACCOUNT_IDS<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Human Resources Information System</span>
+<span style="color: #A89028">  </span>HRIS<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;46132201201510402136&#39;</span><span style="color: #888">,</span>
 
-<span style="color: #2838B0">export</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>planningModule<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #388038">Promise</span><span style="color: #666">&lt;</span><span style="color: #A848A8">void</span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
-<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>toolset<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">();</span>
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Applicant Tracking System</span>
+<span style="color: #A89028">  </span>ATS<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;46132127373317208518&#39;</span><span style="color: #888">,</span>
 
-<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>onboardWorkflow<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>plan<span style="color: #888">({</span>
-<span style="color: #A89028">    </span>key<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;custom_onboarding&#39;</span><span style="color: #888">,</span>
-<span style="color: #A89028">    </span>input<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Onboard the last new hire from Teamtailor to Workday&#39;</span><span style="color: #888">,</span>
-<span style="color: #A89028">    </span>model<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;stackone-planner-latest&#39;</span><span style="color: #888">,</span>
-<span style="color: #A89028">    </span>tools<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">[</span><span style="color: #B83838">&#39;hris_*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;ats_*&#39;</span><span style="color: #888">],</span>
-<span style="color: #A89028">    </span>accountIds<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">[</span>ACCOUNT_IDS<span style="color: #888">.</span>ATS<span style="color: #888">,</span><span style="color: #A89028"> </span>ACCOUNT_IDS<span style="color: #888">.</span>HRIS<span style="color: #888">],</span>
-<span style="color: #A89028">    </span>cache<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">true</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888; font-style: italic">// saves the plan to $HOME/.stackone/plans</span>
-<span style="color: #A89028">  </span><span style="color: #888">});</span>
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Customer Relationship Management</span>
+<span style="color: #A89028">  </span>CRM<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;46132129512514182883&#39;</span><span style="color: #888">,</span>
 
-<span style="color: #A89028">  </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>onboardWorkflow<span style="color: #888">.</span>execute<span style="color: #888">();</span>
-</code></pre></div>
-or use as part of a larger agent (using AI SDK by Vercel)</p>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>generateText<span style="color: #888">({</span>
-<span style="color: #A89028">    </span>model<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">openai</span><span style="color: #888">(</span><span style="color: #B83838">&#39;gpt-4o&#39;</span><span style="color: #888">),</span>
-<span style="color: #A89028">    </span>prompt<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;You are a workplace agent, onboard the latest hires to our systems&#39;</span><span style="color: #888">,</span>
-<span style="color: #A89028">    </span>tools<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">onboardWorkflow.toAISDK</span><span style="color: #888">(),</span>
-<span style="color: #A89028">    </span>maxSteps<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">3</span><span style="color: #888">,</span>
-<span style="color: #A89028">  </span><span style="color: #888">});</span>
-<span style="color: #888">};</span>
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Document Management System</span>
+<span style="color: #A89028">  </span>DOCUMENTS<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;46132143471913690795&#39;</span><span style="color: #888">,</span>
 
-console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Planning module is in closed beta and only available to design partners.&#39;</span><span style="color: #888">);</span>
-console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Apply for the waitlist [here](https://www.stackone.com/demo).&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span>TEST<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span>VALID<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;test_account_id&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span>OVERRIDE<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;test_account_id_override&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span>DIRECT<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;test_account_id_direct&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span>INVALID<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;invalid_test_account_id&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">  </span><span style="color: #888">},</span>
+<span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #888">;</span>
 </code></pre></div>
 </section>
 

@@ -255,7 +255,7 @@
         
             <a class="
 
-    terminal-mkdocs-side-nav-item" href="../file-uploads/">File Uploads</a>
+    terminal-mkdocs-side-nav-item" href="../file-uploads.md">File Uploads</a>
         
     
     </li>
@@ -430,7 +430,7 @@
         
             <a class="
 
-    terminal-mkdocs-side-nav-item" href="../openapi-transformations/">Custom Transformations</a>
+    terminal-mkdocs-side-nav-item" href="../openapi-transformations.md">Custom Transformations</a>
         
     
     </li>
@@ -457,6 +457,7 @@ bun run examples/human-in-the-loop.ts</p>
 <span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>generateText<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;ai&#39;</span><span style="color: #888">;</span>
 <span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;../src&#39;</span><span style="color: #888">;</span>
 <span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #2838B0">type</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>JsonDict<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;../src/types&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>ACCOUNT_IDS<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;./constants&#39;</span><span style="color: #888">;</span>
 
 <span style="color: #2838B0; font-style: italic">interface</span><span style="color: #A89028"> </span>ToolCall<span style="color: #A89028"> </span><span style="color: #888">{</span>
 <span style="color: #A89028">  </span>toolName<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">;</span>
@@ -466,7 +467,7 @@ bun run examples/human-in-the-loop.ts</p>
 <span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>humanInTheLoopExample<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #388038">Promise</span><span style="color: #666">&lt;</span><span style="color: #A848A8">void</span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
 <span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Create a toolset</span>
 <span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>toolset<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">();</span>
-<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>hrisAccountId<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;workday_account_id&#39;</span><span style="color: #888">;</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>hrisAccountId<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>ACCOUNT_IDS<span style="color: #888">.</span>HRIS<span style="color: #888">;</span>
 
 <span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Get the create employee tool</span>
 <span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>createEmployeeTool<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getTool<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_create_employee&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
