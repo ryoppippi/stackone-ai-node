@@ -47,29 +47,13 @@ Tools {
         ],
         "url": "https://api.stackone.com/unified/hris/companies",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_companies",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,full_name,display_name,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -186,29 +170,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/companies/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_company",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,full_name,display_name,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -310,29 +278,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/custom_field_definitions/employees",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_employee_custom_field_definitions",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,description,type,options",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -464,29 +416,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/custom_field_definitions/employees/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_employee_custom_field_definition",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,description,type,options",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -633,20 +569,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_employees",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "expand": {
@@ -657,10 +581,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,first_name,last_name,name,display_name,gender,ethnicity,date_of_birth,birthday,marital_status,avatar_url,avatar,personal_email,personal_phone_number,work_email,work_phone_number,job_id,remote_job_id,job_title,job_description,department_id,remote_department_id,department,cost_centers,company,manager_id,remote_manager_id,hire_date,start_date,tenure,work_anniversary,employment_type,employment_contract_type,employment_status,termination_date,company_name,company_id,remote_company_id,preferred_language,citizenships,home_location,work_location,employments,custom_fields,documents,created_at,updated_at,benefits,employee_number,national_identity_number,national_identity_numbers,skills",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -960,20 +880,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_create_employee",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "avatar": {
@@ -1634,10 +1542,6 @@ Map {
               },
             },
             "type": "object",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
           },
           "first_name": {
             "description": "The employee first name",
@@ -3216,20 +3120,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_employee",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "expand": {
@@ -3240,10 +3132,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,first_name,last_name,name,display_name,gender,ethnicity,date_of_birth,birthday,marital_status,avatar_url,avatar,personal_email,personal_phone_number,work_email,work_phone_number,job_id,remote_job_id,job_title,job_description,department_id,remote_department_id,department,cost_centers,company,manager_id,remote_manager_id,hire_date,start_date,tenure,work_anniversary,employment_type,employment_contract_type,employment_status,termination_date,company_name,company_id,remote_company_id,preferred_language,citizenships,home_location,work_location,employments,custom_fields,documents,created_at,updated_at,benefits,employee_number,national_identity_number,national_identity_numbers,skills",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -3510,20 +3398,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_update_employee",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "avatar": {
@@ -4162,10 +4038,6 @@ Map {
               },
             },
             "type": "object",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
           },
           "first_name": {
             "description": "The employee first name",
@@ -5729,26 +5601,10 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/invite",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_invite_employee",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
-          },
           "id": {
             "type": "string",
           },
@@ -5847,20 +5703,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/time_off",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_employee_time_off_requests",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "expand": {
@@ -5871,10 +5715,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,approver_id,remote_approver_id,status,type,start_date,end_date,start_half_day,end_half_day,time_off_policy_id,remote_time_off_policy_id,reason,duration,created_at,updated_at,policy",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -6043,20 +5883,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/time_off",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_create_employee_time_off_request",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "approver_id": {
@@ -6085,10 +5913,6 @@ Map {
                 "type": "string",
               },
             ],
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
           },
           "id": {
             "type": "string",
@@ -6282,20 +6106,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/time_off/{subResourceId}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_employees_time_off_request",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "expand": {
@@ -6306,10 +6118,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,approver_id,remote_approver_id,status,type,start_date,end_date,start_half_day,end_half_day,time_off_policy_id,remote_time_off_policy_id,reason,duration,created_at,updated_at,policy",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -6405,26 +6213,10 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/time_off/{subResourceId}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_cancel_employee_time_off_request",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
-          },
           "id": {
             "type": "string",
           },
@@ -6534,20 +6326,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/time_off/{subResourceId}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_update_employee_time_off_request",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "approver_id": {
@@ -6576,10 +6356,6 @@ Map {
                 "type": "string",
               },
             ],
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
           },
           "id": {
             "type": "string",
@@ -6762,26 +6538,10 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/documents/upload/batch",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_batch_upload_employee_document",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
-          },
           "id": {
             "type": "string",
           },
@@ -8187,20 +7947,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/documents/upload",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_upload_employee_document",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "category": {
@@ -9498,10 +9246,6 @@ Map {
             },
             "type": "object",
           },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
-          },
           "id": {
             "type": "string",
           },
@@ -9612,29 +9356,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/documents/{subResourceId}/download",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_download_employee_document",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "export_format": {
             "description": "The export format of the file",
             "example": "text/plain",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "format": {
@@ -9741,29 +9469,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/documents",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_employee_documents",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,path,type,category,category_id,remote_category_id,contents,created_at,updated_at,remote_url,file_format",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -9895,29 +9607,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/documents/{subResourceId}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_employee_document",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,path,type,category,category_id,remote_category_id,contents,created_at,updated_at,remote_url,file_format",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -10028,29 +9724,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/documents/employee_categories",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_employee_categories",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,active",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -10167,29 +9847,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/documents/employee_categories/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_employee_document_category",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,active",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -10296,29 +9960,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/work_eligibility",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_employee_work_eligibility",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,type,sub_type,document,valid_from,valid_to,issued_by,number",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -10470,20 +10118,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/work_eligibility",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_create_employee_work_eligibility_request",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "document": {
@@ -11768,10 +11404,6 @@ Map {
               },
             },
             "type": "object",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
           },
           "id": {
             "type": "string",
@@ -12190,29 +11822,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/work_eligibility/{subResourceId}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_employees_work_eligibility",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,type,sub_type,document,valid_from,valid_to,issued_by,number",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -12343,20 +11959,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/work_eligibility/{subResourceId}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_update_employee_work_eligibility_request",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "document": {
@@ -13641,10 +13245,6 @@ Map {
               },
             },
             "type": "object",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
           },
           "id": {
             "type": "string",
@@ -14087,20 +13687,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/time_off_balances",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_employee_time_off_balances",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "expand": {
@@ -14111,10 +13699,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,policy_id,remote_policy_id,policy,current_balance,initial_balance,balance_unit,balance_start_date,balance_expiry_date,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -14264,20 +13848,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/time_off_balances/{subResourceId}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_employee_time_off_balance",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "expand": {
@@ -14288,10 +13860,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,policy_id,remote_policy_id,policy,current_balance,initial_balance,balance_unit,balance_start_date,balance_expiry_date,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -14412,20 +13980,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employments",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_employments",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "expand": {
@@ -14436,10 +13992,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,job_title,pay_rate,pay_period,pay_frequency,pay_currency,effective_date,end_date,employment_type,employment_contract_type,change_reason,grade,work_time,payroll_code,fte,created_at,updated_at,start_date,active,department,team,cost_center,cost_centers,division,job,type,contract_type,manager",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -14566,20 +14118,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employments/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_employment",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "expand": {
@@ -14590,10 +14130,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,job_title,pay_rate,pay_period,pay_frequency,pay_currency,effective_date,end_date,employment_type,employment_contract_type,change_reason,grade,work_time,payroll_code,fte,created_at,updated_at,start_date,active,department,team,cost_center,cost_centers,division,job,type,contract_type,manager",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -14710,20 +14246,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/employments",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_employee_employments",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "expand": {
@@ -14734,10 +14258,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,job_title,pay_rate,pay_period,pay_frequency,pay_currency,effective_date,end_date,employment_type,employment_contract_type,change_reason,grade,work_time,payroll_code,fte,created_at,updated_at,start_date,active,department,team,cost_center,cost_centers,division,job,type,contract_type,manager",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -14919,20 +14439,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/employments",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_create_employee_employment",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "effective_date": {
@@ -14945,10 +14453,6 @@ Map {
             "description": "The end date of employment",
             "example": "2021-01-01T01:01:01.000Z",
             "format": "date-time",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "grade": {
@@ -15241,20 +14745,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/employments/{subResourceId}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_employee_employment",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "expand": {
@@ -15265,10 +14757,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,job_title,pay_rate,pay_period,pay_frequency,pay_currency,effective_date,end_date,employment_type,employment_contract_type,change_reason,grade,work_time,payroll_code,fte,created_at,updated_at,start_date,active,department,team,cost_center,cost_centers,division,job,type,contract_type,manager",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -15424,20 +14912,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/employments/{subResourceId}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_update_employee_employment",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "effective_date": {
@@ -15450,10 +14926,6 @@ Map {
             "description": "The end date of employment",
             "example": "2021-01-01T01:01:01.000Z",
             "format": "date-time",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "grade": {
@@ -15745,29 +15217,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/locations",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_locations",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,name,phone_number,street_1,street_2,city,state,zip_code,country,location_type,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -15884,29 +15340,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/locations/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_location",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,name,phone_number,street_1,street_2,city,state,zip_code,country,location_type,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -16013,20 +15453,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/time_off",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_time_off_requests",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "expand": {
@@ -16037,10 +15465,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,approver_id,remote_approver_id,status,type,start_date,end_date,start_half_day,end_half_day,time_off_policy_id,remote_time_off_policy_id,reason,duration,created_at,updated_at,policy",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -16174,20 +15598,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/time_off/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_time_off_request",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "expand": {
@@ -16198,10 +15610,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,approver_id,remote_approver_id,status,type,start_date,end_date,start_half_day,end_half_day,time_off_policy_id,remote_time_off_policy_id,reason,duration,created_at,updated_at,policy",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -16308,29 +15716,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/time_off_types",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_time_off_types",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,active",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -16447,29 +15839,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/time_off_types/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_time_off_type",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,active",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -16571,29 +15947,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/time_entries",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_time_entries",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,start_time,end_time,hours_worked,break_duration,labor_type,location,status,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -16727,29 +16087,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/time_entries/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_time_entries",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,start_time,end_time,hours_worked,break_duration,labor_type,location,status,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -16851,29 +16195,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/benefits",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_benefits",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,benefit_type,provider,description,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -16990,29 +16318,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/benefits/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_benefit",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,benefit_type,provider,description,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -17114,29 +16426,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/groups",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_groups",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids,company_id,remote_company_id",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -17263,29 +16559,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/groups/departments",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_department_groups",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -17412,29 +16692,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/groups/cost_centers",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_cost_center_groups",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,distribution_percentage,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids,company_id,remote_company_id",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -17561,29 +16825,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/groups/teams",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_team_groups",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -17700,29 +16948,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/groups/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_group",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids,company_id,remote_company_id",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -17814,29 +17046,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/groups/departments/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_department_group",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -17928,29 +17144,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/groups/cost_centers/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_cost_center_group",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,distribution_percentage,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids,company_id,remote_company_id",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -18042,29 +17242,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/groups/teams/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_team_group",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -18166,29 +17350,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/jobs",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_jobs",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids,company_id,remote_company_id",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -18305,29 +17473,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/jobs/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_job",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,type,parent_ids,remote_parent_ids,owner_ids,remote_owner_ids,company_id,remote_company_id",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -18434,29 +17586,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/skills",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_employee_skills",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,active,language,maximum_proficiency,minimum_proficiency",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -18583,26 +17719,10 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/skills",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_create_employee_skill",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
-            "type": "string",
-          },
           "id": {
             "description": "The ID associated with this skill",
             "example": "16873-IT345",
@@ -18761,29 +17881,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/skills/{subResourceId}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_employee_skill",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,active,language,maximum_proficiency,minimum_proficiency",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -18894,29 +17998,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/time_off_policies",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_time_off_policies",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,description,type,duration_unit,reasons,updated_at,created_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -19062,29 +18150,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/time_off_policies/{id}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_time_off_policy",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,description,type,duration_unit,reasons,updated_at,created_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -19191,29 +18263,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/time_off_policies",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_employee_time_off_policies",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,name,description,type,duration_unit,reasons,updated_at,created_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -19389,20 +18445,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/tasks",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_list_employee_tasks",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "expand": {
@@ -19413,10 +18457,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,name,description,type,status,due_date,completion_date,assigned_by_employee_id,remote_assigned_by_employee_id,assigned_by_employee_name,link_to_task,extracted_links,next_task_id,remote_next_task_id,parent_process_name,comments,attachments,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "filter": {
@@ -19558,20 +18598,8 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/tasks/{subResourceId}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_get_employee_task",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "expand": {
@@ -19582,10 +18610,6 @@ Map {
           "fields": {
             "description": "The comma separated list of fields that will be returned in the response (if empty, all fields are returned)",
             "example": "id,remote_id,employee_id,remote_employee_id,name,description,type,status,due_date,completion_date,assigned_by_employee_id,remote_assigned_by_employee_id,assigned_by_employee_name,link_to_task,extracted_links,next_task_id,remote_next_task_id,parent_process_name,comments,attachments,created_at,updated_at",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
@@ -19691,29 +18715,13 @@ Map {
         ],
         "url": "https://api.stackone.com/unified/hris/employees/{id}/tasks/{subResourceId}",
       },
+      "experimental_preExecute": undefined,
       "name": "hris_complete_employee_task",
-      "parameterMapper": ParameterMapper {
-        "transformers": 
-Map {
-          "file_path" => {
-            "transforms": {
-              "content": [Function],
-              "file_format": [Function],
-              "name": [Function],
-            },
-          },
-        }
-,
-      },
       "parameters": {
         "properties": {
           "comment": {
             "description": "Comment or note about the task completion",
             "example": "All required documents have been submitted",
-            "type": "string",
-          },
-          "file_path": {
-            "description": "Convenience parameter that will be transformed into other parameters. Try and use this parameter in your tool call.",
             "type": "string",
           },
           "id": {
