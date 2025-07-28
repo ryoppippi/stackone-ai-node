@@ -294,4 +294,6 @@ const hriseEmployeeFilters = async (): Promise<void> => {
 };
 
 // Run the example
-hriseEmployeeFilters();
+(async () => {
+  await hriseEmployeeFilters();
+})();

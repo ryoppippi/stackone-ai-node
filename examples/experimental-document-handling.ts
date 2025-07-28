@@ -385,4 +385,6 @@ const experimentalDocumentHandling = async (): Promise<void> => {
   }
 };
 
-experimentalDocumentHandling();
+(async () => {
+  await experimentalDocumentHandling();
+})();

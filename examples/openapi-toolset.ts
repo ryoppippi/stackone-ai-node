@@ -101,4 +101,6 @@ async function main(): Promise<void> {
   }
 }
 
-main();
+(async () => {
+  await main();
+})();

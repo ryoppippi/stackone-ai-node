@@ -60,4 +60,6 @@ const customBaseUrl = async (): Promise<void> => {
   }
 };
 
-customBaseUrl();
+(async () => {
+  await customBaseUrl();
+})();

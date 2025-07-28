@@ -30,4 +30,6 @@ const aiSdkIntegration = async (): Promise<void> => {
   assert(text.includes('Michael'), 'Expected employee name to be included in the response');
 };
 
-aiSdkIntegration();
+(async () => {
+  await aiSdkIntegration();
+})();

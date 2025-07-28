@@ -96,4 +96,6 @@ const errorHandling = async (): Promise<void> => {
 };
 
 // Run the example
-errorHandling();
+(async () => {
+  await errorHandling();
+})();

@@ -54,4 +54,6 @@ const accountIdUsage = async (): Promise<void> => {
   );
 };
 
-accountIdUsage();
+(async () => {
+  await accountIdUsage();
+})();

@@ -86,4 +86,6 @@ const simulateHumanValidation = async (toolCall: ToolCall): Promise<boolean> => 
   return true;
 };
 
-humanInTheLoopExample();
+(async () => {
+  await humanInTheLoopExample();
+})();

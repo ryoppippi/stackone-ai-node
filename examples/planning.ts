@@ -38,3 +38,8 @@ export const planningModule = async (): Promise<void> => {
 
 console.log('Planning module is in closed beta and only available to design partners.');
 console.log('Apply for the waitlist [here](https://www.stackone.com/demo).');
+
+// Run the example
+(async () => {
+  await planningModule();
+})();
