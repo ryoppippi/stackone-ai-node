@@ -1,5 +1,6 @@
+import { ExecuteToolChain, GetRelevantTools } from '../meta-tools';
 import { loadStackOneSpecs } from '../openapi/loader';
-import { StackOneTool, type Tools } from '../tool';
+import { StackOneTool, Tools } from '../tool';
 import type { ToolDefinition } from '../types';
 import { removeJsonSchemaProperty } from '../utils/schema';
 import { type BaseToolSetConfig, ToolSet, ToolSetConfigError } from './base';
@@ -12,6 +13,7 @@ export interface StackOneToolSetConfig extends BaseToolSetConfig {
   accountId?: string;
   strict?: boolean;
   removedParams?: string[]; // List of parameters to remove from all tools
+  includeMetaTools?: boolean; // Whether to include meta tools (default: true)
 }
 
 /**
@@ -35,6 +37,7 @@ export class StackOneToolSet extends ToolSet {
    */
   private accountId?: string;
   private readonly _removedParams: string[];
+  private readonly includeMetaTools: boolean;
 
   /**
    * Initialize StackOne toolset with API key and optional account ID
@@ -79,6 +82,7 @@ export class StackOneToolSet extends ToolSet {
 
     this.accountId = accountId;
     this._removedParams = ['source_value'];
+    this.includeMetaTools = config?.includeMetaTools !== false; // Default to true
 
     // Load tools
     this.loadTools();
@@ -100,7 +104,20 @@ export class StackOneToolSet extends ToolSet {
       : {};
 
     // Get tools with headers
-    return this.getTools(filterPattern, headers);
+    const tools = this.getTools(filterPattern, headers);
+
+    // If meta tools are included and no specific filter is provided or filter matches meta tools
+    if (this.includeMetaTools && this.shouldIncludeMetaTools(filterPattern)) {
+      const allTools = tools.toArray();
+
+      // Add meta tools
+      const metaTools = [new GetRelevantTools(allTools), new ExecuteToolChain(tools)];
+
+      // Return combined tools
+      return new Tools([...allTools, ...metaTools]);
+    }
+
+    return tools;
   }
 
   /**
@@ -158,5 +175,40 @@ export class StackOneToolSet extends ToolSet {
         (param) => param !== 'x-account-id'
       );
     }
+  }
+
+  /**
+   * Check if meta tools should be included based on filter pattern
+   * @param filterPattern Filter pattern to check
+   * @returns Whether meta tools should be included
+   */
+  private shouldIncludeMetaTools(filterPattern?: string | string[]): boolean {
+    // If no filter, include meta tools
+    if (!filterPattern) {
+      return true;
+    }
+
+    // Check if any pattern would match meta tool names
+    const metaToolNames = ['get_relevant_tools', 'execute_tool_chain'];
+    const patterns = Array.isArray(filterPattern) ? filterPattern : [filterPattern];
+
+    for (const pattern of patterns) {
+      // If pattern starts with !, it's a negative pattern
+      if (pattern.startsWith('!')) {
+        const negPattern = pattern.substring(1);
+        // If any meta tool matches negative pattern, exclude meta tools
+        if (metaToolNames.some((name) => this._matchGlob(name, negPattern))) {
+          return false;
+        }
+      } else {
+        // If any meta tool matches positive pattern, include meta tools
+        if (metaToolNames.some((name) => this._matchGlob(name, pattern))) {
+          return true;
+        }
+      }
+    }
+
+    // If only positive patterns and no match, exclude meta tools
+    return patterns.every((p) => p.startsWith('!'));
   }
 }
