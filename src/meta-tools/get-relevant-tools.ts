@@ -3,11 +3,11 @@
  * @beta This is a beta feature and may change in future versions
  */
 
-import { toArray } from '@antfu/utils';
 import createFuzzySearch from '@nozbe/microfuzz';
 import type { Arrayable } from 'type-fest';
 import { BaseTool } from '../tool';
 import type { ExecuteConfig, JsonDict, ToolParameters } from '../types';
+import { toArray } from '../utils/array';
 import { StackOneError } from '../utils/errors';
 import { BETA_WARNING } from './consts';
 import type { ToolSearchConfig, ToolSearchResult } from './types';
