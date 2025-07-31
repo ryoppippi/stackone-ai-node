@@ -1,4 +1,4 @@
-import { create, insert, search } from '@orama/orama';
+import * as orama from '@orama/orama';
 import { ExecuteToolChain, GetRelevantTools } from '../meta-tools';
 import { loadStackOneSpecs } from '../openapi/loader';
 import { StackOneTool, Tools } from '../tool';
@@ -187,7 +187,7 @@ export class StackOneToolSet extends ToolSet {
     if (this.metaSearchDbInitialized) return;
 
     // Create Orama database schema with BM25 scoring
-    this.metaSearchDb = await create({
+    this.metaSearchDb = orama.create({
       schema: {
         name: 'string' as const,
         description: 'string' as const,
@@ -212,7 +212,7 @@ export class StackOneToolSet extends ToolSet {
       const actions = parts.filter((p) => actionTypes.includes(p));
 
       if (!this.metaSearchDb) throw new Error('Meta search DB not initialized');
-      await insert(this.metaSearchDb as Parameters<typeof insert>[0], {
+      await orama.insert(this.metaSearchDb as Parameters<typeof orama.insert>[0], {
         name: tool.name,
         description: tool.description,
         category: category,
@@ -246,16 +246,19 @@ export class StackOneToolSet extends ToolSet {
 
     // Perform semantic search using Orama
     if (!this.metaSearchDb) throw new Error('Meta search DB not initialized');
-    const searchResults = await search(this.metaSearchDb as Parameters<typeof search>[0], {
-      term: query,
-      limit: limit * 2, // Get more results to filter later
-      properties: ['name', 'description', 'tags'],
-      boost: {
-        name: 2, // Prioritize name matches
-        tags: 1.5, // Tags are also important
-        description: 1, // Description is baseline
-      },
-    });
+    const searchResults = await orama.search(
+      this.metaSearchDb as Parameters<typeof orama.search>[0],
+      {
+        term: query,
+        limit: limit * 2, // Get more results to filter later
+        properties: ['name', 'description', 'tags'],
+        boost: {
+          name: 2, // Prioritize name matches
+          tags: 1.5, // Tags are also important
+          description: 1, // Description is baseline
+        },
+      }
+    );
 
     // Collect matching tools
     const matchingTools: StackOneTool[] = [];
