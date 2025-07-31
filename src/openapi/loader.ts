@@ -1,13 +1,12 @@
+// Import the OpenAPIDocument type
+import type { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
+// Import all specs from the generated index file
+import * as specs from '../openapi/generated';
 import { ToolSetLoadError } from '../toolsets/base';
 import type { ToolDefinition } from '../types';
 import { readJsonFile } from '../utils/file';
 import { OpenAPIParser } from './parser';
 
-// Import all specs from the generated index file
-import * as specs from '../openapi/generated';
-
-// Import the OpenAPIDocument type
-import type { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
 type OpenAPIDocument = OpenAPIV3.Document | OpenAPIV3_1.Document;
 
 /**

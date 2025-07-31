@@ -1,8 +1,5 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "organizeImports": {
-    "enabled": true
-  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -42,7 +39,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "ignore": ["dist/**", "node_modules/**"],
-    "include": ["src/**/*.ts", "examples/**/*.ts", "./tsdown.config.ts"]
+    "experimentalScannerIgnores": ["dist/**", "node_modules/**"],
+    "includes": ["src/**/*.ts", "examples/**/*.ts", "./tsdown.config.ts"]
   }
 }

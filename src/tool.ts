@@ -1,4 +1,4 @@
-import { type ToolSet, jsonSchema } from 'ai';
+import { jsonSchema, type ToolSet } from 'ai';
 import type { ChatCompletionTool } from 'openai/resources/chat/completions';
 import { RequestBuilder } from './modules/requestBuilder';
 import type {
