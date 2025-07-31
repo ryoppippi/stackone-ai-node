@@ -1,3 +1,4 @@
+import { create, insert, search } from '@orama/orama';
 import { ExecuteToolChain, GetRelevantTools } from '../meta-tools';
 import { loadStackOneSpecs } from '../openapi/loader';
 import { StackOneTool, Tools } from '../tool';
@@ -38,6 +39,8 @@ export class StackOneToolSet extends ToolSet {
   private accountId?: string;
   private readonly _removedParams: string[];
   private readonly includeMetaTools: boolean;
+  private metaSearchDb: unknown;
+  private metaSearchDbInitialized = false;
 
   /**
    * Initialize StackOne toolset with API key and optional account ID
@@ -175,6 +178,114 @@ export class StackOneToolSet extends ToolSet {
         (param) => param !== 'x-account-id'
       );
     }
+  }
+
+  /**
+   * Initialize Orama database for meta search
+   */
+  private async initializeMetaSearchDb(): Promise<void> {
+    if (this.metaSearchDbInitialized) return;
+
+    // Create Orama database schema with BM25 scoring
+    this.metaSearchDb = await create({
+      schema: {
+        name: 'string' as const,
+        description: 'string' as const,
+        category: 'string' as const,
+        tags: 'string[]' as const,
+      },
+      components: {
+        tokenizer: {
+          stemming: true,
+        },
+      },
+    });
+
+    // Index all tools
+    for (const tool of this.tools) {
+      // Extract category from tool name (e.g., 'hris_create_employee' -> 'hris')
+      const parts = tool.name.split('_');
+      const category = parts[0];
+
+      // Extract action type
+      const actionTypes = ['create', 'update', 'delete', 'get', 'list', 'search'];
+      const actions = parts.filter((p) => actionTypes.includes(p));
+
+      if (!this.metaSearchDb) throw new Error('Meta search DB not initialized');
+      await insert(this.metaSearchDb as Parameters<typeof insert>[0], {
+        name: tool.name,
+        description: tool.description,
+        category: category,
+        tags: [...parts, ...actions],
+      });
+    }
+
+    this.metaSearchDbInitialized = true;
+  }
+
+  /**
+   * Meta search for tools using natural language query
+   * @param query Natural language query describing desired tools
+   * @param options Search options
+   * @returns Filtered collection of tools matching the query
+   */
+  async metaSearchTools(
+    query: string,
+    options?: {
+      limit?: number;
+      minScore?: number;
+      accountId?: string;
+    }
+  ): Promise<Tools> {
+    // Initialize meta search DB if needed
+    await this.initializeMetaSearchDb();
+
+    const limit = options?.limit || 10;
+    const minScore = options?.minScore || 0.3;
+    const effectiveAccountId = options?.accountId || this.accountId;
+
+    // Perform semantic search using Orama
+    if (!this.metaSearchDb) throw new Error('Meta search DB not initialized');
+    const searchResults = await search(this.metaSearchDb as Parameters<typeof search>[0], {
+      term: query,
+      limit: limit * 2, // Get more results to filter later
+      properties: ['name', 'description', 'tags'],
+      boost: {
+        name: 2, // Prioritize name matches
+        tags: 1.5, // Tags are also important
+        description: 1, // Description is baseline
+      },
+    });
+
+    // Collect matching tools
+    const matchingTools: StackOneTool[] = [];
+
+    for (const hit of searchResults.hits) {
+      const toolName = hit.document.name as string;
+      const tool = this.tools.find((t) => t.name === toolName);
+
+      if (!tool || !(tool instanceof StackOneTool)) continue;
+
+      // Normalize Orama score
+      const oramaScore = hit.score || 0;
+      const normalizedScore = Math.min(1, oramaScore / 20); // Normalize to 0-1
+
+      if (normalizedScore >= minScore) {
+        // Clone tool with account ID if provided
+        const toolWithAccount = effectiveAccountId
+          ? new StackOneTool(tool.name, tool.description, tool.parameters, tool.executeConfig, {
+              ...tool.getHeaders(),
+              'x-account-id': effectiveAccountId,
+            })
+          : tool;
+
+        matchingTools.push(toolWithAccount);
+
+        if (matchingTools.length >= limit) break;
+      }
+    }
+
+    return new Tools(matchingTools);
   }
 
   /**

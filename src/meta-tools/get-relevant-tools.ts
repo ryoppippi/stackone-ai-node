@@ -3,7 +3,7 @@
  * @beta This is a beta feature and may change in future versions
  */
 
-import createFuzzySearch from '@nozbe/microfuzz';
+import { create, insert, search } from '@orama/orama';
 import type { Arrayable } from 'type-fest';
 import { BaseTool } from '../tool';
 import type { ExecuteConfig, JsonDict, ToolParameters } from '../types';
@@ -18,6 +18,8 @@ import type { ToolSearchConfig, ToolSearchResult } from './types';
  */
 export class GetRelevantTools extends BaseTool {
   private availableTools: BaseTool[];
+  private oramaDb: unknown;
+  private dbInitialized = false;
 
   constructor(tools: BaseTool[]) {
     const parameters: ToolParameters = {
@@ -73,6 +75,49 @@ export class GetRelevantTools extends BaseTool {
   }
 
   /**
+   * Initialize Orama database with tools
+   */
+  private async initializeOramaDb(): Promise<void> {
+    if (this.dbInitialized) return;
+
+    // Create Orama database schema with BM25 scoring
+    this.oramaDb = create({
+      schema: {
+        name: 'string' as const,
+        description: 'string' as const,
+        category: 'string' as const,
+        tags: 'string[]' as const,
+      },
+      components: {
+        tokenizer: {
+          stemming: true,
+        },
+      },
+    });
+
+    // Index all tools
+    for (const tool of this.availableTools) {
+      // Extract category from tool name (e.g., 'hris_create_employee' -> 'hris')
+      const parts = tool.name.split('_');
+      const category = parts[0];
+
+      // Extract action type
+      const actionTypes = ['create', 'update', 'delete', 'get', 'list', 'search'];
+      const actions = parts.filter((p) => actionTypes.includes(p));
+
+      if (!this.oramaDb) throw new Error('Orama DB not initialized');
+      await insert(this.oramaDb as Parameters<typeof insert>[0], {
+        name: tool.name,
+        description: tool.description,
+        category: category,
+        tags: [...parts, ...actions],
+      });
+    }
+
+    this.dbInitialized = true;
+  }
+
+  /**
    * Execute the tool search
    */
   async execute(inputParams?: JsonDict | string): Promise<JsonDict> {
@@ -84,8 +129,11 @@ export class GetRelevantTools extends BaseTool {
         throw new StackOneError('Query parameter is required');
       }
 
+      // Initialize Orama DB if needed
+      await this.initializeOramaDb();
+
       // Perform the search
-      const results = this.searchTools(config);
+      const results = await this.searchTools(config);
 
       // Format results for output
       const formattedResults = results.map((result) => ({
@@ -117,67 +165,76 @@ export class GetRelevantTools extends BaseTool {
   /**
    * Search for tools based on the configuration
    */
-  private searchTools(config: ToolSearchConfig): ToolSearchResult[] {
+  private async searchTools(config: ToolSearchConfig): Promise<ToolSearchResult[]> {
     const { query, limit = 10, minScore = 0.3, filterPatterns } = config;
 
-    // Filter tools based on patterns first
-    const candidateTools = filterPatterns
-      ? this.availableTools.filter((tool) => this.matchesFilter(tool.name, filterPatterns))
-      : this.availableTools;
-
-    // Create a fuzzy search function
-    const fuzzySearch = createFuzzySearch(candidateTools, {
-      // Index on both name and description
-      getText: (tool) => [tool.name, tool.description],
+    // Perform semantic search using Orama
+    if (!this.oramaDb) throw new Error('Orama DB not initialized');
+    const searchResults = await search(this.oramaDb as Parameters<typeof search>[0], {
+      term: query,
+      limit: limit * 2, // Get more results to filter later
+      properties: ['name', 'description', 'tags'],
+      boost: {
+        name: 2, // Prioritize name matches
+        tags: 1.5, // Tags are also important
+        description: 1, // Description is baseline
+      },
     });
 
-    // Search for matches
-    const results = fuzzySearch(query);
+    // Convert Orama results to our format
+    const scoredTools: ToolSearchResult[] = [];
 
-    // Convert results to our format
-    // Note: microfuzz uses lower scores for better matches, so we need to invert
-    const scoredTools: ToolSearchResult[] = results
-      .map((result) => {
-        const tool = result.item;
-        const microfuzzScore = result.score;
+    for (const hit of searchResults.hits) {
+      const toolName = hit.document.name as string;
+      const tool = this.availableTools.find((t) => t.name === toolName);
 
-        // Convert microfuzz score (lower is better) to our score (higher is better)
-        // microfuzz scores: 0 = exact, 0.1 = full match, 0.5 = starts with, etc.
-        // We'll map these to 0-1 where 1 is best
-        let normalizedScore: number;
-        let matchReason: string;
+      if (!tool) continue;
 
-        if (microfuzzScore === 0) {
-          normalizedScore = 1.0;
-          matchReason = 'exact name match';
-        } else if (microfuzzScore <= 0.1) {
-          normalizedScore = 0.95;
-          matchReason = 'full match (case-insensitive)';
-        } else if (microfuzzScore <= 0.5) {
-          normalizedScore = 0.9;
-          matchReason = 'starts with query';
-        } else if (microfuzzScore <= 1) {
-          normalizedScore = 0.8;
-          matchReason = 'contains query at word boundary';
-        } else if (microfuzzScore <= 1.5) {
-          normalizedScore = 0.7;
-          matchReason = 'contains query words';
-        } else if (microfuzzScore <= 2) {
-          normalizedScore = 0.6;
-          matchReason = 'contains query';
-        } else {
-          // Fuzzy match - map score 2-10 to 0.5-0.1
-          normalizedScore = Math.max(0.1, 0.5 - (microfuzzScore - 2) * 0.05);
-          matchReason = 'fuzzy match';
-        }
+      // Apply filter patterns if provided
+      if (filterPatterns && !this.matchesFilter(tool.name, filterPatterns)) {
+        continue;
+      }
 
-        return {
+      // Normalize Orama score (typically 0-20+) to 0-1 range
+      const oramaScore = hit.score || 0;
+      let normalizedScore: number;
+      let matchReason: string;
+
+      // Determine match quality based on score ranges
+      if (oramaScore >= 15) {
+        normalizedScore = 0.95 + Math.min(oramaScore - 15, 5) * 0.01; // 0.95-1.0
+        matchReason = 'excellent match';
+      } else if (oramaScore >= 10) {
+        normalizedScore = 0.8 + ((oramaScore - 10) / 5) * 0.15; // 0.8-0.95
+        matchReason = 'strong match';
+      } else if (oramaScore >= 5) {
+        normalizedScore = 0.6 + ((oramaScore - 5) / 5) * 0.2; // 0.6-0.8
+        matchReason = 'good match';
+      } else if (oramaScore >= 2) {
+        normalizedScore = 0.4 + ((oramaScore - 2) / 3) * 0.2; // 0.4-0.6
+        matchReason = 'partial match';
+      } else {
+        normalizedScore = Math.max(0.1, oramaScore * 0.2); // 0.1-0.4
+        matchReason = 'weak match';
+      }
+
+      // Check for exact matches and boost score
+      if (tool.name.toLowerCase() === query.toLowerCase()) {
+        normalizedScore = 1.0;
+        matchReason = 'exact name match';
+      } else if (tool.name.toLowerCase().includes(query.toLowerCase())) {
+        normalizedScore = Math.max(normalizedScore, 0.85);
+        matchReason = matchReason === 'exact name match' ? matchReason : 'name contains query';
+      }
+
+      if (normalizedScore >= minScore) {
+        scoredTools.push({
           tool,
           score: normalizedScore,
           matchReason,
-        };
-      })
-      .filter((result) => result.score >= minScore);
+        });
+      }
+    }
 
     // Sort by score (descending) and limit results
     scoredTools.sort((a, b) => b.score - a.score);

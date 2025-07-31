@@ -34,7 +34,7 @@
     "format": "biome format --write ."
   },
   "dependencies": {
-    "@nozbe/microfuzz": "^1.0.0",
+    "@orama/orama": "^3.1.11",
     "json-schema": "^0.4.0"
   },
   "devDependencies": {
