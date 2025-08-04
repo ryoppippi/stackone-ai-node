@@ -10,9 +10,9 @@
 StackOne provides two toolsets:
 
 - `OpenAPIToolSet`: A toolset generated from supplied OpenAPI specifications
-- `StackOneToolSet`: A toolset preloaded with StackOne APIs
+- `StackOneToolSet`: A toolset preloaded with StackOne Unified Tools (every [StackOne Unified API endpoints](https://docs.stackone.com/hris/introduction) has its tool equivalent in this toolset)
 
-These toolsets provide functionality to filter, transform, and execute tools and have integrations to common AI Agent libraries.
+These toolsets provide functionality to filter, transform, and execute tools. The toolsets can be easily used via common AI Agent libraries.
 
 Under the hood the StackOneToolSet uses the same OpenAPIParser as the OpenAPIToolSet, but provides some convenience methods for using StackOne API keys and account IDs.
 
@@ -155,32 +155,29 @@ bun add @stackone/ai
 
 The OpenAPIToolSet and StackOneToolSet make it super easy to use these APIs as tools in your AI applications.
 
-### OpenAI
+### With Open AI library
 
 ```typescript
 import { OpenAI } from "openai";
 import { StackOneToolSet } from "@stackone/ai";
-// or
-import { OpenAPIToolSet } from "@stackone/ai";
 
 const toolset = new StackOneToolSet();
-// or
-const toolset = new OpenAPIToolSet({ filePath: "path/to/openapi.json" });
 
-const openAITools = toolset.getTools("hris_*").toOpenAI();
+const tools = toolset.getTools("hris_*", "<stackone-account-id>").toOpenAI();
+
 await openai.chat.completions.create({
   model: "gpt-4o",
   messages: [
     {
       role: "system",
-      content: "You are a helpful assistant.",
+      content: "You are a helpful HR assistant.",
     },
     {
       role: "user",
-      content: "What is the name of the employee with id 123?",
+      content: "Create a time-off request for employee id cxIQ5764hj2",
     },
   ],
-  tools: openAITools,
+  tools: tools,
 });
 ```
 
@@ -204,6 +201,71 @@ await generateText({
 ```
 
 [View full example](examples/ai-sdk-integration.ts)
+
+## StackOneToolSet
+
+The StackOneToolSet is an extension of the OpenAPIToolSet that adds some convenience methods for using StackOne API keys and account IDs and some other features.
+
+```typescript
+import { StackOneToolSet } from "@stackone/ai";
+
+const toolset = new StackOneToolSet();
+const tools = toolset.getTools("hris_*", "your-account-id");
+const employeeTool = tools.getTool("hris_list_employees");
+const employees = await employeeTool.execute();
+```
+
+[View full example](examples/index.ts)
+
+### Authentication
+
+Set the `STACKONE_API_KEY` environment variable:
+
+```bash
+export STACKONE_API_KEY=<your-api-key>
+```
+
+or load from a .env file using your preferred environment variable library.
+
+### Account IDs
+
+StackOne uses account IDs to identify different integrations. You can specify the account ID at different levels:
+
+```typescript
+import { StackOneToolSet } from "@stackone/ai";
+
+// Method 1: Set at toolset initialization
+const toolset = new StackOneToolSet({ accountId: "your-account-id" });
+
+// Method 2: Set when getting tools (overrides toolset account ID)
+const tools = toolset.getTools("hris_*", "override-account-id");
+
+// Method 3: Set directly on a tool instance
+tools.setAccountId("direct-account-id");
+const currentAccountId = tools.getAccountId(); // Get the current account ID
+```
+
+[View full example](examples/account-id-usage.ts)
+
+### File Upload
+
+The `StackOneToolSet` comes with built-in transformations for file uploads:
+
+```typescript
+import { StackOneToolSet } from "@stackone/ai";
+
+const toolset = new StackOneToolSet();
+const tools = toolset.getTools("*file_upload*");
+const fileUploadTool = tools.getTool("storage_file_upload");
+
+// Execute with just the file_path parameter
+// The file_content, file_name, and file_format will be derived automatically
+const result = await fileUploadTool.execute({ file_path: "/path/to/file.pdf" });
+```
+
+[View full example](examples/file-uploads.ts)
+
+> Note: you can build your own custom transformations using both toolset classes. See the [Parameter Transformations](#parameter-transformations) section for more information.
 
 ## OpenAPIToolSet
 
@@ -279,71 +341,6 @@ const toolsetWithHeaders = new OpenAPIToolSet({
 ```
 
 [View full example](examples/openapi-toolset.ts)
-
-## StackOneToolSet
-
-The StackOneToolSet is an extension of the OpenAPIToolSet that adds some convenience methods for using StackOne API keys and account IDs and some other features.
-
-```typescript
-import { StackOneToolSet } from "@stackone/ai";
-
-const toolset = new StackOneToolSet();
-const tools = toolset.getTools("hris_*", "your-account-id");
-const employeeTool = tools.getTool("hris_list_employees");
-const employees = await employeeTool.execute();
-```
-
-[View full example](examples/index.ts)
-
-### Authentication
-
-Set the `STACKONE_API_KEY` environment variable:
-
-```bash
-export STACKONE_API_KEY=<your-api-key>
-```
-
-or load from a .env file using your preferred environment variable library.
-
-### Account IDs
-
-StackOne uses account IDs to identify different integrations. You can specify the account ID at different levels:
-
-```typescript
-import { StackOneToolSet } from "@stackone/ai";
-
-// Method 1: Set at toolset initialization
-const toolset = new StackOneToolSet({ accountId: "your-account-id" });
-
-// Method 2: Set when getting tools (overrides toolset account ID)
-const tools = toolset.getTools("hris_*", "override-account-id");
-
-// Method 3: Set directly on a tool instance
-tool.setAccountId("direct-account-id");
-const currentAccountId = tool.getAccountId(); // Get the current account ID
-```
-
-[View full example](examples/account-id-usage.ts)
-
-### File Upload
-
-The `StackOneToolSet` comes with built-in transformations for file uploads:
-
-```typescript
-import { StackOneToolSet } from "@stackone/ai";
-
-const toolset = new StackOneToolSet();
-const tools = toolset.getTools("*file_upload*");
-const fileUploadTool = tools.getTool("storage_file_upload");
-
-// Execute with just the file_path parameter
-// The file_content, file_name, and file_format will be derived automatically
-const result = await fileUploadTool.execute({ file_path: "/path/to/file.pdf" });
-```
-
-[View full example](examples/file-uploads.ts)
-
-> Note: you can build your own custom transformations using both toolset classes. See the [Parameter Transformations](#parameter-transformations) section for more information.
 
 ## Unified Features
 
