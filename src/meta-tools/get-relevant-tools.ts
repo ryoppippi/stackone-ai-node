@@ -49,10 +49,6 @@ export class GetRelevantTools extends BaseTool {
           ],
           description: 'Optional glob patterns to filter results (e.g., "hris_*", "!*_delete_*")',
         },
-        accountId: {
-          type: 'string',
-          description: 'Account ID to use for StackOne tools',
-        },
       },
       required: ['query'],
     };
@@ -265,7 +261,11 @@ export class GetRelevantTools extends BaseTool {
    * Simple glob pattern matching
    */
   private matchGlob(str: string, pattern: string): boolean {
-    const regexPattern = pattern.replace(/\./g, '\\.').replace(/\*/g, '.*').replace(/\?/g, '.');
+    // Escape all RegExp metacharacters except * and ?
+    const regexPattern = pattern
+      .replace(/[.+^${}()|[\]\\]/g, '\\$&') // Escape all regex special chars
+      .replace(/\*/g, '.*') // Convert * to .*
+      .replace(/\?/g, '.'); // Convert ? to .
     const regex = new RegExp(`^${regexPattern}$`);
     return regex.test(str);
   }
