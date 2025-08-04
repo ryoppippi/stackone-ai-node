@@ -23,22 +23,22 @@ Under the hood the StackOneToolSet uses the same OpenAPIParser as the OpenAPIToo
 
 StackOne AI SDK includes two powerful meta tools that enable AI agents to discover and orchestrate tool usage intelligently:
 
-#### GetRelevantTools
+#### Discovering Relevant Tools
 
-Discover relevant tools based on natural language queries:
+Use the `metaRelevantTool()` method to get a tool that discovers other tools based on natural language queries:
 
 ```typescript
 import { StackOneToolSet } from "@stackone/ai";
 
 const toolset = new StackOneToolSet();
-const tools = toolset.getStackOneTools();
+const tools = toolset.getTools("hris_*", "account-id");
 
-// Get the meta tool
-const relevantToolsFinder = tools.getTool("get_relevant_tools");
+// Get the meta tool for finding relevant tools
+const relevantToolsFinder = tools.metaRelevantTool();
 
 // Find tools for specific tasks
 const result = await relevantToolsFinder.execute({
-  query: "read jira ticket",
+  query: "list employees",
   limit: 5,
   minScore: 0.5
 });
@@ -46,25 +46,15 @@ const result = await relevantToolsFinder.execute({
 // Returns tools ranked by relevance with scores and match reasons
 ```
 
-**Alternative API**: You can also get a pre-configured GetRelevantTools instance with specific filters:
+#### Executing Tool Chains
+
+Use the `metaExecuteTool()` method to orchestrate multiple tool executions with parameter passing:
 
 ```typescript
-// Get a tool finder pre-filtered for HRIS tools
-const relevantToolsFinder = toolset.getRelevantMetaTool("hris_*");
+const tools = toolset.getTools("hris_*", "account-id");
 
-// Use it to search within the filtered set
-const result = await relevantToolsFinder.execute({
-  query: "create employee",
-  limit: 5
-});
-```
-
-#### ExecuteToolChain
-
-Orchestrate multiple tool executions with parameter passing:
-
-```typescript
-const toolChain = tools.getTool("execute_tool_chain");
+// Get the meta tool for executing tool chains
+const toolChain = tools.metaExecuteTool();
 
 // Execute a complex workflow
 const result = await toolChain.execute({
@@ -87,14 +77,21 @@ const result = await toolChain.execute({
 });
 ```
 
-Meta tools are included by default but can be disabled:
+#### Getting Both Meta Tools
+
+You can get both meta tools at once using the `metaTools()` method:
 
 ```typescript
-// Disable meta tools
-const toolset = new StackOneToolSet({ includeMetaTools: false });
+const tools = toolset.getTools("hris_*", "account-id");
 
-// Filter meta tools
-const tools = toolset.getStackOneTools(["*", "!get_relevant_tools", "!execute_tool_chain"]);
+// Get both meta tools
+const { metaRelevantTool, metaExecuteTool } = tools.metaTools();
+
+// Use them in your AI agent
+const aiTools = new Tools([
+  metaRelevantTool,
+  metaExecuteTool
+]).toAISDK();
 ```
 
 [View full examples](examples/meta-tools.ts)

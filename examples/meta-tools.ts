@@ -9,23 +9,18 @@
 
 import { openai } from '@ai-sdk/openai';
 import { generateText } from 'ai';
-import { StackOneToolSet } from '../src';
+import { StackOneToolSet, Tools } from '../src';
 import { ACCOUNT_IDS } from './constants';
 
-// Example 1: Using GetRelevantTools to discover tools
+// Example 1: Using metaRelevantTool to discover tools
 async function discoverToolsExample() {
   console.log('\n=== Example 1: Discovering Relevant Tools ===');
 
   const toolset = new StackOneToolSet();
-  const tools = toolset.getStackOneTools(['*']); // Use wildcard to avoid warning
+  const tools = toolset.getTools('hris_*', ACCOUNT_IDS.HRIS);
 
-  // Get the get_relevant_tools meta tool
-  const relevantToolsFinder = tools.getTool('get_relevant_tools');
-
-  if (!relevantToolsFinder) {
-    console.error('get_relevant_tools not found');
-    return;
-  }
+  // Get the meta tool for finding relevant tools
+  const relevantToolsFinder = tools.metaRelevantTool();
 
   // Example queries for different use cases
   const queries = [
@@ -56,20 +51,15 @@ async function discoverToolsExample() {
   }
 }
 
-// Example 2: Using ExecuteToolChain for complex workflows
+// Example 2: Using metaExecuteTool for complex workflows
 async function toolChainExample() {
   console.log('\n=== Example 2: Executing Tool Chains ===');
 
   const toolset = new StackOneToolSet();
-  const tools = toolset.getStackOneTools(['*'], ACCOUNT_IDS.HRIS); // Use wildcard to avoid warning
+  const tools = toolset.getTools('hris_*', ACCOUNT_IDS.HRIS);
 
-  // Get the execute_tool_chain meta tool
-  const toolChain = tools.getTool('execute_tool_chain');
-
-  if (!toolChain) {
-    console.error('execute_tool_chain not found');
-    return;
-  }
+  // Get the meta tool for executing tool chains
+  const toolChain = tools.metaExecuteTool();
 
   // Example: Employee onboarding workflow
   console.log('\nExecuting employee onboarding workflow...');
@@ -130,22 +120,21 @@ async function aiAgentExample() {
   }
 
   const toolset = new StackOneToolSet();
-  // Limit tools to HRIS tools only (plus meta tools) to stay under 128 limit
-  const tools = toolset.getStackOneTools(
-    ['hris_*', 'get_relevant_tools', 'execute_tool_chain'],
-    ACCOUNT_IDS.HRIS
-  );
+  const tools = toolset.getTools('hris_*', ACCOUNT_IDS.HRIS);
 
-  // Convert tools to AI SDK format (includes meta tools)
-  const aiTools = tools.toAISDK();
+  // Get both meta tools
+  const { metaRelevantTool, metaExecuteTool } = tools.metaTools();
+
+  // Convert meta tools to AI SDK format
+  const aiTools = new Tools([metaRelevantTool, metaExecuteTool]).toAISDK();
 
   try {
     // Use with AI agent
     const { text, toolCalls } = await generateText({
       model: openai('gpt-4o-mini'),
       tools: aiTools,
-      prompt: `You are an HR assistant. First, use get_relevant_tools to find tools 
-               related to listing employees. Then use execute_tool_chain to get the 
+      prompt: `You are an HR assistant. First, use meta_relevant_tool to find tools 
+               related to listing employees. Then use meta_execute_tool to get the 
                list of employees and fetch details for the first one.`,
       maxSteps: 5,
     });
@@ -162,31 +151,25 @@ async function aiAgentExample() {
   }
 }
 
-// Example 4: Filtering with meta tools
-async function filteringExample() {
-  console.log('\n=== Example 4: Filtering with Meta Tools ===');
+// Example 4: Different ways to use meta tools
+async function usageExample() {
+  console.log('\n=== Example 4: Different Ways to Use Meta Tools ===');
 
   const toolset = new StackOneToolSet();
 
-  // Include only HRIS tools and meta tools
-  const hrisAndMetaTools = toolset.getStackOneTools([
-    'hris_*',
-    'get_relevant_tools',
-    'execute_tool_chain',
-  ]);
+  // Method 1: Get tools and then get meta tools
+  const tools = toolset.getTools('hris_*', ACCOUNT_IDS.HRIS);
 
-  console.log(`\nTotal tools available: ${hrisAndMetaTools.length}`);
+  // Get individual meta tools
+  const relevantTool = tools.metaRelevantTool();
+  console.log(`Got meta tool: ${relevantTool.name}`);
 
-  // Exclude meta tools
-  const noMetaTools = toolset.getStackOneTools(['*', '!get_relevant_tools', '!execute_tool_chain']);
+  const executeTool = tools.metaExecuteTool();
+  console.log(`Got meta tool: ${executeTool.name}`);
 
-  console.log(`Tools without meta tools: ${noMetaTools.length}`);
-
-  // Disable meta tools entirely
-  const toolsetNoMeta = new StackOneToolSet({ includeMetaTools: false });
-  const allToolsNoMeta = toolsetNoMeta.getStackOneTools();
-
-  console.log(`Tools with meta tools disabled: ${allToolsNoMeta.length}`);
+  // Get both meta tools at once
+  const { metaRelevantTool, metaExecuteTool } = tools.metaTools();
+  console.log(`Got both meta tools: ${metaRelevantTool.name}, ${metaExecuteTool.name}`);
 }
 
 // Main execution
@@ -199,7 +182,7 @@ async function main() {
     await discoverToolsExample();
     await toolChainExample();
     await aiAgentExample();
-    await filteringExample();
+    await usageExample();
   } catch (error) {
     console.error('Error in examples:', error);
   }

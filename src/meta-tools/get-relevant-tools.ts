@@ -61,7 +61,7 @@ export class GetRelevantTools extends BaseTool {
     };
 
     super(
-      'get_relevant_tools',
+      'meta_relevant_tool',
       `Search for relevant tools based on natural language query. ${BETA_WARNING}`,
       parameters,
       executeConfig

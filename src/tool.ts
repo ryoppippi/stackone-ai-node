@@ -308,4 +308,35 @@ export class Tools implements Iterable<BaseTool> {
   forEach(callback: (tool: BaseTool) => void): void {
     this.tools.forEach(callback);
   }
+
+  /**
+   * Get the GetRelevantTools meta tool for finding relevant tools
+   * @returns GetRelevantTools instance
+   */
+  metaRelevantTool(): BaseTool {
+    // Lazy import to avoid circular dependency
+    const { GetRelevantTools } = require('./meta-tools');
+    return new GetRelevantTools(this.tools);
+  }
+
+  /**
+   * Get the ExecuteToolChain meta tool for executing tools
+   * @returns ExecuteToolChain instance
+   */
+  metaExecuteTool(): BaseTool {
+    // Lazy import to avoid circular dependency
+    const { ExecuteToolChain } = require('./meta-tools');
+    return new ExecuteToolChain(this);
+  }
+
+  /**
+   * Get both meta tools
+   * @returns Object with both meta tools
+   */
+  metaTools(): { metaRelevantTool: BaseTool; metaExecuteTool: BaseTool } {
+    return {
+      metaRelevantTool: this.metaRelevantTool(),
+      metaExecuteTool: this.metaExecuteTool(),
+    };
+  }
 }

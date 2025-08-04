@@ -79,7 +79,7 @@ export class ExecuteToolChain extends BaseTool {
     };
 
     super(
-      'execute_tool_chain',
+      'meta_execute_tool',
       `Execute multiple tools in sequence with parameter passing between steps. ${BETA_WARNING}`,
       parameters,
       executeConfig
