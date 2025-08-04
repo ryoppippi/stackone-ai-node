@@ -46,6 +46,19 @@ const result = await relevantToolsFinder.execute({
 // Returns tools ranked by relevance with scores and match reasons
 ```
 
+**Alternative API**: You can also get a pre-configured GetRelevantTools instance with specific filters:
+
+```typescript
+// Get a tool finder pre-filtered for HRIS tools
+const relevantToolsFinder = toolset.getRelevantMetaTool("hris_*");
+
+// Use it to search within the filtered set
+const result = await relevantToolsFinder.execute({
+  query: "create employee",
+  limit: 5
+});
+```
+
 #### ExecuteToolChain
 
 Orchestrate multiple tool executions with parameter passing:

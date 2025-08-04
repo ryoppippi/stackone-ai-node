@@ -292,6 +292,23 @@ export class StackOneToolSet extends ToolSet {
   }
 
   /**
+   * Get the GetRelevantTools meta tool configured with specific filter patterns
+   * @param filterPattern Glob pattern(s) to filter tools (e.g., "hris_*")
+   * @returns GetRelevantTools instance pre-configured with the filter pattern
+   */
+  getRelevantMetaTool(filterPattern: string | string[]): GetRelevantTools {
+    // Create a new GetRelevantTools instance with filtered tools
+    const filteredTools = this.tools.filter((tool) => {
+      if (typeof filterPattern === 'string') {
+        return this._matchGlob(tool.name, filterPattern);
+      }
+      return filterPattern.some((pattern) => this._matchGlob(tool.name, pattern));
+    });
+
+    return new GetRelevantTools(filteredTools);
+  }
+
+  /**
    * Check if meta tools should be included based on filter pattern
    * @param filterPattern Filter pattern to check
    * @returns Whether meta tools should be included
