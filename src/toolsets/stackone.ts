@@ -1,6 +1,7 @@
 import { loadStackOneSpecs } from '../openapi/loader';
 import { StackOneTool, type Tools } from '../tool';
 import type { ToolDefinition } from '../types';
+import { unimplemtentedError } from '../utils/errors';
 import { removeJsonSchemaProperty } from '../utils/schema';
 import { type BaseToolSetConfig, ToolSet, ToolSetConfigError } from './base';
 
@@ -108,8 +109,8 @@ export class StackOneToolSet extends ToolSet {
    * @param config Configuration object containing workflow details
    * @returns Workflow object
    */
-  plan(_: WorkflowConfig): Promise<StackOneTool> {
-    throw new Error('Not implemented yet');
+  plan(_: WorkflowConfig): never {
+    unimplemtentedError('StackOneToolSet.plan');
   }
 
   /**
