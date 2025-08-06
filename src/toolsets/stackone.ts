@@ -107,7 +107,7 @@ export class StackOneToolSet extends ToolSet {
   /**
    * Plan a workflow
    * @param config Configuration object containing workflow details
-   * @returns Workflow object
+   * unimplemented
    */
   plan(_: WorkflowConfig): never {
     unimplemtentedError('StackOneToolSet.plan');
