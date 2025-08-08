@@ -1,3 +1,4 @@
+import * as orama from '@orama/orama';
 import { type ToolSet, jsonSchema } from 'ai';
 import type { ChatCompletionTool } from 'openai/resources/chat/completions';
 import { RequestBuilder } from './modules/requestBuilder';
@@ -272,6 +273,17 @@ export class Tools implements Iterable<BaseTool> {
   }
 
   /**
+   * Return meta tools for tool discovery and execution
+   * @beta This feature is in beta and may change in future versions
+   */
+  async metaTools(): Promise<Tools> {
+    const oramaDb = await initializeOramaDb(this.tools);
+    const baseTools = [metaFilterRelevantTools(oramaDb, this.tools), metaExecuteTool(this)];
+    const tools = new Tools(baseTools);
+    return tools;
+  }
+
+  /**
    * Iterator implementation
    */
   [Symbol.iterator](): Iterator<BaseTool> {
@@ -308,4 +320,224 @@ export class Tools implements Iterable<BaseTool> {
   forEach(callback: (tool: BaseTool) => void): void {
     this.tools.forEach(callback);
   }
+}
+
+/**
+ * Result from meta_filter_relevant_tools
+ */
+export interface MetaToolSearchResult {
+  name: string;
+  description: string;
+  parameters: ToolParameters;
+  score: number;
+}
+
+type OramaDb = ReturnType<typeof orama.create>;
+
+/**
+ * Initialize Orama database with BM25 algorithm for tool search
+ * Using Orama's BM25 scoring algorithm for relevance ranking
+ * @see https://docs.orama.com/open-source/usage/create
+ * @see https://docs.orama.com/open-source/usage/search/bm25-algorithm/
+ */
+async function initializeOramaDb(tools: BaseTool[]): Promise<OramaDb> {
+  // Create Orama database schema with BM25 scoring algorithm
+  // BM25 provides better relevance ranking for natural language queries
+  const oramaDb = orama.create({
+    schema: {
+      name: 'string' as const,
+      description: 'string' as const,
+      category: 'string' as const,
+      tags: 'string[]' as const,
+    },
+    components: {
+      tokenizer: {
+        stemming: true,
+      },
+    },
+  });
+
+  // Index all tools
+  for (const tool of tools) {
+    // Extract category from tool name (e.g., 'hris_create_employee' -> 'hris')
+    const parts = tool.name.split('_');
+    const category = parts[0];
+
+    // Extract action type
+    const actionTypes = ['create', 'update', 'delete', 'get', 'list', 'search'];
+    const actions = parts.filter((p) => actionTypes.includes(p));
+
+    orama.insert(oramaDb, {
+      name: tool.name,
+      description: tool.description,
+      category: category,
+      tags: [...parts, ...actions],
+    });
+  }
+
+  return oramaDb;
+}
+
+export function metaFilterRelevantTools(oramaDb: OramaDb, allTools: BaseTool[]): BaseTool {
+  const name = 'meta_filter_relevant_tools' as const;
+  const description =
+    'Searches for relevant tools based on a natural language query. This tool should be called first to discover available tools before executing them.' as const;
+  const parameters = {
+    type: 'object',
+    properties: {
+      query: {
+        type: 'string',
+        description:
+          'Natural language query describing what tools you need (e.g., "tools for managing employees", "create time off request")',
+      },
+      limit: {
+        type: 'number',
+        description: 'Maximum number of tools to return (default: 5)',
+        default: 5,
+      },
+      minScore: {
+        type: 'number',
+        description: 'Minimum relevance score (0-1) for results (default: 0.3)',
+        default: 0.3,
+      },
+    },
+    required: ['query'],
+  } as const satisfies ToolParameters;
+
+  const executeConfig = {
+    method: 'LOCAL',
+    url: 'local://get-relevant-tools',
+    bodyType: 'json',
+    params: [],
+  } as const satisfies ExecuteConfig;
+
+  const tool = new BaseTool(name, description, parameters, executeConfig);
+  tool.execute = async (inputParams?: JsonDict | string): Promise<JsonDict> => {
+    try {
+      // Validate params is either undefined, string, or object
+      if (
+        inputParams !== undefined &&
+        typeof inputParams !== 'string' &&
+        typeof inputParams !== 'object'
+      ) {
+        throw new StackOneError(
+          `Invalid parameters type. Expected object or string, got ${typeof inputParams}. Parameters: ${JSON.stringify(inputParams)}`
+        );
+      }
+
+      // Convert string params to object
+      const params = typeof inputParams === 'string' ? JSON.parse(inputParams) : inputParams || {};
+
+      // Perform search using Orama
+      // Type assertion needed due to TypeScript deep instantiation issue with Orama types
+      const results = await orama.search(oramaDb, {
+        term: params.query || '',
+        limit: params.limit || 5,
+      } as Parameters<typeof orama.search>[1]);
+
+      // filter results by minimum score
+      const minScore = params.minScore ?? 0.3;
+      const filteredResults = results.hits.filter((hit) => hit.score >= minScore);
+
+      // Map the results to include tool configurations
+      const toolConfigs = filteredResults
+        .map((hit) => {
+          const doc = hit.document as { name: string };
+          const tool = allTools.find((t) => t.name === doc.name);
+          if (!tool) return null;
+
+          const result: MetaToolSearchResult = {
+            name: tool.name,
+            description: tool.description,
+            parameters: tool.parameters,
+            score: hit.score,
+          };
+          return result;
+        })
+        .filter(Boolean);
+
+      return { tools: toolConfigs } satisfies JsonDict;
+    } catch (error) {
+      if (error instanceof StackOneError) {
+        throw error;
+      }
+      throw new StackOneError(
+        `Error executing tool: ${error instanceof Error ? error.message : String(error)}`
+      );
+    }
+  };
+  return tool;
+}
+
+export function metaExecuteTool(tools: Tools): BaseTool {
+  const name = 'meta_execute_tool' as const;
+  const description =
+    'Executes a specific tool by name with the provided parameters. Use this after discovering tools with meta_filter_relevant_tools.' as const;
+  const parameters = {
+    type: 'object',
+    properties: {
+      toolName: {
+        type: 'string',
+        description: 'Name of the tool to execute',
+      },
+      params: {
+        type: 'object',
+        description: 'Parameters to pass to the tool',
+      },
+    },
+    required: ['toolName', 'params'],
+  } as const satisfies ToolParameters;
+
+  const executeConfig = {
+    method: 'LOCAL',
+    url: 'local://execute-tool',
+    bodyType: 'json',
+    params: [],
+  } as const satisfies ExecuteConfig;
+
+  // Create the tool instance
+  const tool = new BaseTool(name, description, parameters, executeConfig);
+
+  // Override the execute method to handle tool execution
+  // receives tool name and parameters and executes the tool
+  tool.execute = async (
+    inputParams?: JsonDict | string,
+    options?: ExecuteOptions
+  ): Promise<JsonDict> => {
+    try {
+      // Validate params is either undefined, string, or object
+      if (
+        inputParams !== undefined &&
+        typeof inputParams !== 'string' &&
+        typeof inputParams !== 'object'
+      ) {
+        throw new StackOneError(
+          `Invalid parameters type. Expected object or string, got ${typeof inputParams}. Parameters: ${JSON.stringify(inputParams)}`
+        );
+      }
+
+      // Convert string params to object
+      const params = typeof inputParams === 'string' ? JSON.parse(inputParams) : inputParams || {};
+
+      // Extract tool name and parameters
+      const { toolName, params: toolParams } = params;
+
+      // Find the tool by name
+      const toolToExecute = tools.getTool(toolName);
+      if (!toolToExecute) {
+        throw new StackOneError(`Tool ${toolName} not found`);
+      }
+
+      // Execute the tool with the provided parameters
+      return await toolToExecute.execute(toolParams, options);
+    } catch (error) {
+      if (error instanceof StackOneError) {
+        throw error;
+      }
+      throw new StackOneError(
+        `Error executing tool: ${error instanceof Error ? error.message : String(error)}`
+      );
+    }
+  };
+  return tool;
 }
