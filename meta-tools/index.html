@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="generator" content="mkdocs-1.6.1, mkdocs-terminal-4.7.0">
+     
+     
+    
+    <link rel="canonical" href="https://stackonehq.github.io/stackone-ai-node§/meta-tools/"><link rel="icon" type="image/png" sizes="192x192" href="../img/android-chrome-192x192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="../img/android-chrome-512x512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
+<link rel="shortcut icon" type="image/png" sizes="48x48" href="../img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png" />
+
+
+    
+ 
+<title>Meta Tools - StackOne AI SDK</title>
+
+
+<link href="../css/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+<link href="../css/fontawesome/css/solid.min.css" rel="stylesheet">
+<link href="../css/normalize.css" rel="stylesheet">
+<link href="../css/terminal.css" rel="stylesheet">
+<link href="../css/theme.css" rel="stylesheet">
+<link href="../css/theme.tile_grid.css" rel="stylesheet">
+<link href="../css/theme.footer.css" rel="stylesheet">
+<!-- default color palette -->
+<link href="../css/palettes/default.css" rel="stylesheet">
+
+<!-- page layout -->
+<style>
+/* initially set page layout to a one column grid */
+.terminal-mkdocs-main-grid {
+    display: grid;
+    grid-column-gap: 1.4em;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+/*  
+*   when side navigation is not hidden, use a two column grid.  
+*   if the screen is too narrow, fall back to the initial one column grid layout.
+*   in this case the main content will be placed under the navigation panel. 
+*/
+@media only screen and (min-width: 70em) {
+    .terminal-mkdocs-main-grid {
+        grid-template-columns: 4fr 9fr;
+    }
+}</style>
+
+<!-- link underline override -->
+<style>
+#terminal-mkdocs-main-content a:not(.headerlink){
+    text-decoration: none;
+}
+</style>
+
+     
+    
+    
+
+    
+    <!-- search css support -->
+<link href="../css/search/bootstrap-modal.css" rel="stylesheet">
+<!-- search scripts -->
+<script>
+    var base_url = "..",
+    shortcuts = "{}";
+</script>
+<script src="../js/jquery/jquery-1.10.1.min.js" defer></script>
+<script src="../js/bootstrap/bootstrap.min.js" defer></script>
+<script src="../js/mkdocs/base.js" defer></script>
+    
+    
+    
+    
+    <script src="../search/main.js"></script>
+    
+
+    
+</head>
+
+<body class="terminal"><div class="container">
+    <div class="terminal-nav">
+        <header class="terminal-logo">
+            <div id="mkdocs-terminal-site-name" class="logo terminal-prompt"><a href="https://stackonehq.github.io/stackone-ai-node§/" class="no-style">StackOne AI SDK</a></div>
+        </header>
+        
+        <nav class="terminal-menu">
+            
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href=".." class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Home</span>
+                    </a>
+                    <meta property="position" content="0">
+                </li>
+                
+                
+                
+                
+                
+                
+                
+                    
+                    
+
+
+<li property="itemListElement" typeof="ListItem">
+    <a href="#" class="menu-item" data-toggle="modal" data-target="#mkdocs_search_modal" property="item" typeof="SearchAction">
+        <i aria-hidden="true" class="fa fa-search"></i> <span property="name">Search</span>
+    </a>
+    <meta property="position" content="1">
+</li>
+                    
+            </ul>
+            
+        </nav>
+    </div>
+</div>
+        
+    <div class="container">
+        <div class="terminal-mkdocs-main-grid"><aside id="terminal-mkdocs-side-panel"><nav>
+  
+    <ul class="terminal-mkdocs-side-nav-items">
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="..">Home</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+            
+                
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+            
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">StackOne Usage</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="..">Home</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../account-id-usage/">Account IDs</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../error-handling/">Error Handling</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../file-uploads.md">File Uploads</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../custom-base-url/">Custom Base URL</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+            
+                
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+            
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">Integrations</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openai-integration/">OpenAI</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../ai-sdk-integration/">AI SDK</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+            
+                
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+            
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">OpenAPI Usage</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openapi-toolset/">Getting Started</a>
+        
+    
+    </li>
+            
+        
+            
+            
+                
+                
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../openapi-transformations.md">Custom Transformations</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+    </ul>
+  
+</nav>
+</aside>
+            <main id="terminal-mkdocs-main-content">
+<section id="mkdocs-terminal-content">
+    <h1 id="meta-tools">Meta Tools<a class="headerlink" href="#meta-tools" title="Anchor link to this section for reference">#</a></h1>
+<p>This example demonstrates how to use meta tools for dynamic tool discovery and execution.
+Meta tools allow AI agents to search for relevant tools based on natural language queries
+and execute them dynamically without hardcoding tool names.</p>
+<p>@beta Meta tools are in beta and may change in future versions</p>
+<p><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0">import</span><span style="color: #A89028"> </span>process<span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;node:process&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>openai<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;@ai-sdk/openai&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>generateText<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;ai&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;../src&#39;</span><span style="color: #888">;</span>
+<span style="color: #2838B0">import</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>ACCOUNT_IDS<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">from</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;./constants&#39;</span><span style="color: #888">;</span>
+</code></pre></div>
+Example 1: Using meta tools with AI SDK for dynamic tool discovery</p>
+<p><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>metaToolsWithAISDK<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #388038">Promise</span><span style="color: #666">&lt;</span><span style="color: #A848A8">void</span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;🔍 Example 1: Dynamic tool discovery with AI SDK\n&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Initialize StackOne toolset with all available tools</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>toolset<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">();</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>accountId<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>ACCOUNT_IDS<span style="color: #888">.</span>HRIS<span style="color: #888">;</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Get all available tools for the account</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>allTools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getStackOneTools<span style="color: #888">(</span><span style="color: #B83838">&#39;*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>accountId<span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Get meta tools for dynamic discovery and execution</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>metaTools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>allTools<span style="color: #888">.</span>metaTools<span style="color: #888">();</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>aiSdkMetaTools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>metaTools<span style="color: #888">.</span>toAISDK<span style="color: #888">();</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Use meta tools to dynamically find and execute relevant tools</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>text<span style="color: #888">,</span><span style="color: #A89028"> </span>toolCalls<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>generateText<span style="color: #888">({</span>
+<span style="color: #A89028">    </span>model<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">openai</span><span style="color: #888">(</span><span style="color: #B83838">&#39;gpt-4o-mini&#39;</span><span style="color: #888">),</span>
+<span style="color: #A89028">    </span>tools<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">aiSdkMetaTools</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span>prompt<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">`I need to create a time off request for an employee. </span>
+<span style="color: #B83838">    First, find the right tool for this task, then use it to create a time off request </span>
+<span style="color: #B83838">    for employee ID &quot;emp_123&quot; from January 15, 2024 to January 19, 2024.`</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span>maxSteps<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">3</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #888; font-style: italic">// Allow multiple tool calls</span>
+<span style="color: #A89028">  </span><span style="color: #888">});</span>
+
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;AI Response:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>text<span style="color: #888">);</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;\nTool calls made:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>toolCalls<span style="color: #666">?</span><span style="color: #888">.</span>map<span style="color: #888">((</span>call<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span>call<span style="color: #888">.</span>toolName<span style="color: #888">).</span>join<span style="color: #888">(</span><span style="color: #B83838">&#39;, &#39;</span><span style="color: #888">));</span>
+<span style="color: #888">};</span>
+</code></pre></div>
+Example 2: Using meta tools with OpenAI for HR assistant</p>
+<p><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>metaToolsWithOpenAI<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #388038">Promise</span><span style="color: #666">&lt;</span><span style="color: #A848A8">void</span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;\n🤖 Example 2: HR Assistant with OpenAI\n&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>OpenAI<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span><span style="color: #2838B0">import</span><span style="color: #888">(</span><span style="color: #B83838">&#39;openai&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>openaiClient<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span>OpenAI<span style="color: #888">({</span>
+<span style="color: #A89028">    </span>apiKey<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">process.env.OPENAI_API_KEY</span><span style="color: #888">,</span>
+<span style="color: #A89028">  </span><span style="color: #888">});</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Initialize StackOne toolset</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>toolset<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">();</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>accountId<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>ACCOUNT_IDS<span style="color: #888">.</span>HRIS<span style="color: #888">;</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Get all HRIS tools</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>hrisTools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getStackOneTools<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>accountId<span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Get meta tools</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>metaTools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>hrisTools<span style="color: #888">.</span>metaTools<span style="color: #888">();</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>openAIMetaTools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>metaTools<span style="color: #888">.</span>toOpenAI<span style="color: #888">();</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Create an HR assistant that can discover and use tools dynamically</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>response<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>openaiClient<span style="color: #888">.</span>chat<span style="color: #888">.</span>completions<span style="color: #888">.</span>create<span style="color: #888">({</span>
+<span style="color: #A89028">    </span>model<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;gpt-4o-mini&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span>messages<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">[</span>
+<span style="color: #A89028">      </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>role<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;system&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>content<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">`You are an HR assistant with access to various HR tools. </span>
+<span style="color: #B83838">        Use the meta_filter_relevant_tools to find appropriate tools for user requests,</span>
+<span style="color: #B83838">        then use meta_execute_tool to execute them.`</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">      </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>role<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;user&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>content<span style="color: #666">:</span>
+<span style="color: #A89028">          </span><span style="color: #B83838">&#39;Can you help me find tools for managing employee records and then list current employees?&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">],</span>
+<span style="color: #A89028">    </span>tools<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">openAIMetaTools</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span>tool_choice<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;auto&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">  </span><span style="color: #888">});</span>
+
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Assistant response:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>response<span style="color: #888">.</span>choices<span style="color: #888">[</span><span style="color: #444">0</span><span style="color: #888">].</span>message<span style="color: #888">.</span>content<span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Handle tool calls if any</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span>response<span style="color: #888">.</span>choices<span style="color: #888">[</span><span style="color: #444">0</span><span style="color: #888">].</span>message<span style="color: #888">.</span>tool_calls<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;\nTool calls:&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">for</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>toolCall<span style="color: #A89028"> </span><span style="color: #2838B0">of</span><span style="color: #A89028"> </span>response<span style="color: #888">.</span>choices<span style="color: #888">[</span><span style="color: #444">0</span><span style="color: #888">].</span>message<span style="color: #888">.</span>tool_calls<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">`- </span><span style="color: #B83838; text-decoration: underline">${</span>toolCall<span style="color: #888">.</span><span style="color: #2838B0; font-style: italic">function</span><span style="color: #888">.</span>name<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">: </span><span style="color: #B83838; text-decoration: underline">${</span>toolCall<span style="color: #888">.</span><span style="color: #2838B0; font-style: italic">function</span><span style="color: #888">.</span>arguments<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">`</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span>
+<span style="color: #A89028">  </span><span style="color: #888">}</span>
+<span style="color: #888">};</span>
+</code></pre></div>
+Example 3: Direct usage of meta tools without AI</p>
+<p><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>directMetaToolUsage<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #388038">Promise</span><span style="color: #666">&lt;</span><span style="color: #A848A8">void</span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;\n🛠️  Example 3: Direct meta tool usage\n&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Initialize toolset</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>toolset<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">();</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>accountId<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>ACCOUNT_IDS<span style="color: #888">.</span>HRIS<span style="color: #888">;</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Get all available tools</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>allTools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getStackOneTools<span style="color: #888">(</span><span style="color: #B83838">&#39;*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>accountId<span style="color: #888">);</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">`Total available tools: </span><span style="color: #B83838; text-decoration: underline">${</span>allTools<span style="color: #888">.</span>length<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">`</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Get meta tools</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>metaTools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>allTools<span style="color: #888">.</span>metaTools<span style="color: #888">();</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Step 1: Search for relevant tools</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>filterTool<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>metaTools<span style="color: #888">.</span>getTool<span style="color: #888">(</span><span style="color: #B83838">&#39;meta_filter_relevant_tools&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #666">!</span>filterTool<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #2838B0">throw</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span><span style="color: #908828">Error</span><span style="color: #888">(</span><span style="color: #B83838">&#39;meta_filter_relevant_tools not found&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>searchResult<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>filterTool<span style="color: #888">.</span>execute<span style="color: #888">({</span>
+<span style="color: #A89028">    </span>query<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;employee management create update list&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span>limit<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">5</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span>minScore<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">0.3</span><span style="color: #888">,</span>
+<span style="color: #A89028">  </span><span style="color: #888">});</span>
+
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Found relevant tools:&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>foundTools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>searchResult<span style="color: #888">.</span>tools<span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span><span style="color: #388038">Array</span><span style="color: #666">&lt;</span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span>name<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">;</span>
+<span style="color: #A89028">    </span>description<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">;</span>
+<span style="color: #A89028">    </span>score<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">number</span><span style="color: #888">;</span>
+<span style="color: #A89028">  </span><span style="color: #888">}</span><span style="color: #666">&gt;</span><span style="color: #888">;</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0">for</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>tool<span style="color: #A89028"> </span><span style="color: #2838B0">of</span><span style="color: #A89028"> </span>foundTools<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">`- </span><span style="color: #B83838; text-decoration: underline">${</span>tool<span style="color: #888">.</span>name<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838"> (score: </span><span style="color: #B83838; text-decoration: underline">${</span>tool<span style="color: #888">.</span>score<span style="color: #888">.</span>toFixed<span style="color: #888">(</span><span style="color: #444">2</span><span style="color: #888">)</span><span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">): </span><span style="color: #B83838; text-decoration: underline">${</span>tool<span style="color: #888">.</span>description<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">`</span><span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #888">}</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Step 2: Execute one of the found tools</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span>foundTools<span style="color: #888">.</span>length<span style="color: #A89028"> </span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #444">0</span><span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>executeTool<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>metaTools<span style="color: #888">.</span>getTool<span style="color: #888">(</span><span style="color: #B83838">&#39;meta_execute_tool&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #666">!</span>executeTool<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #2838B0">throw</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span><span style="color: #908828">Error</span><span style="color: #888">(</span><span style="color: #B83838">&#39;meta_execute_tool not found&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>firstTool<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>foundTools<span style="color: #888">[</span><span style="color: #444">0</span><span style="color: #888">];</span>
+
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">`\nExecuting </span><span style="color: #B83838; text-decoration: underline">${</span>firstTool<span style="color: #888">.</span>name<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">...`</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span><span style="color: #2838B0">try</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #888; font-style: italic">// Prepare parameters based on the tool&#39;s schema</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0; font-style: italic">let</span><span style="color: #A89028"> </span>params<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">Record</span><span style="color: #666">&lt;</span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">,</span><span style="color: #A89028"> </span>unknown<span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">{};</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span>firstTool<span style="color: #888">.</span>name<span style="color: #A89028"> </span><span style="color: #666">===</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;hris_list_employees&#39;</span><span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>params<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>limit<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">5</span><span style="color: #A89028"> </span><span style="color: #888">};</span>
+<span style="color: #A89028">      </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">else</span><span style="color: #A89028"> </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span>firstTool<span style="color: #888">.</span>name<span style="color: #A89028"> </span><span style="color: #666">===</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;hris_create_employee&#39;</span><span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">        </span>params<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">          </span>name<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;John Doe&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">          </span>email<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;john.doe@example.com&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">          </span>title<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Software Engineer&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span><span style="color: #888">};</span>
+<span style="color: #A89028">      </span><span style="color: #888">}</span>
+
+<span style="color: #A89028">      </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>result<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>executeTool<span style="color: #888">.</span>execute<span style="color: #888">({</span>
+<span style="color: #A89028">        </span>toolName<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">firstTool.name</span><span style="color: #888">,</span>
+<span style="color: #A89028">        </span>params<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">params</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span><span style="color: #888">});</span>
+
+<span style="color: #A89028">      </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Execution result:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #388038">JSON</span><span style="color: #888">.</span>stringify<span style="color: #888">(</span>result<span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #444; font-style: italic">null</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #444">2</span><span style="color: #888">));</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">catch</span><span style="color: #A89028"> </span><span style="color: #888">(</span>error<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>console<span style="color: #888">.</span>error<span style="color: #888">(</span><span style="color: #B83838">&#39;Execution failed:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>error<span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span>
+<span style="color: #A89028">  </span><span style="color: #888">}</span>
+<span style="color: #888">};</span>
+</code></pre></div>
+Example 4: Building a dynamic tool router</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>dynamicToolRouter<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #388038">Promise</span><span style="color: #666">&lt;</span><span style="color: #A848A8">void</span><span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;\n🔄 Example 4: Dynamic tool router\n&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>toolset<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span>StackOneToolSet<span style="color: #888">();</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>accountId<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>ACCOUNT_IDS<span style="color: #888">.</span>HRIS<span style="color: #888">;</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Get tools from multiple categories</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>hrisTools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getStackOneTools<span style="color: #888">(</span><span style="color: #B83838">&#39;hris_*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>accountId<span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>atsTools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>toolset<span style="color: #888">.</span>getStackOneTools<span style="color: #888">(</span><span style="color: #B83838">&#39;ats_*&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>accountId<span style="color: #888">);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Combine tools</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>combinedTools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span><span style="color: #2838B0">import</span><span style="color: #888">(</span><span style="color: #B83838">&#39;../src&#39;</span><span style="color: #888">)).</span>Tools<span style="color: #888">([</span>
+<span style="color: #A89028">    </span><span style="color: #888">...</span>hrisTools<span style="color: #888">.</span>toArray<span style="color: #888">(),</span>
+<span style="color: #A89028">    </span><span style="color: #888">...</span>atsTools<span style="color: #888">.</span>toArray<span style="color: #888">(),</span>
+<span style="color: #A89028">  </span><span style="color: #888">]);</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Get meta tools for the combined set</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>metaTools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>combinedTools<span style="color: #888">.</span>metaTools<span style="color: #888">();</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Create a router function that finds and executes tools based on intent</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>routeAndExecute<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">(</span>intent<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">,</span><span style="color: #A89028"> </span>params<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">Record</span><span style="color: #666">&lt;</span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">,</span><span style="color: #A89028"> </span>unknown<span style="color: #666">&gt;</span><span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">{})</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>filterTool<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>metaTools<span style="color: #888">.</span>getTool<span style="color: #888">(</span><span style="color: #B83838">&#39;meta_filter_relevant_tools&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>executeTool<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>metaTools<span style="color: #888">.</span>getTool<span style="color: #888">(</span><span style="color: #B83838">&#39;meta_execute_tool&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #666">!</span>filterTool<span style="color: #A89028"> </span><span style="color: #666">||</span><span style="color: #A89028"> </span><span style="color: #666">!</span>executeTool<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #2838B0">throw</span><span style="color: #A89028"> </span><span style="color: #A848A8">new</span><span style="color: #A89028"> </span><span style="color: #908828">Error</span><span style="color: #888">(</span><span style="color: #B83838">&#39;Meta tools not found&#39;</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Find relevant tools</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>searchResult<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>filterTool<span style="color: #888">.</span>execute<span style="color: #888">({</span>
+<span style="color: #A89028">      </span>query<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">intent</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>limit<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">1</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>minScore<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">0.5</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span><span style="color: #888">});</span>
+
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>tools<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>searchResult<span style="color: #888">.</span>tools<span style="color: #A89028"> </span><span style="color: #2838B0">as</span><span style="color: #A89028"> </span><span style="color: #388038">Array</span><span style="color: #666">&lt;</span><span style="color: #888">{</span><span style="color: #A89028"> </span>name<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">string</span><span style="color: #888">;</span><span style="color: #A89028"> </span>score<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">number</span><span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #666">&gt;</span><span style="color: #888">;</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span>tools<span style="color: #888">.</span>length<span style="color: #A89028"> </span><span style="color: #666">===</span><span style="color: #A89028"> </span><span style="color: #444">0</span><span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>error<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;No relevant tools found for the given intent&#39;</span><span style="color: #A89028"> </span><span style="color: #888">};</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span>
+
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>selectedTool<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span>tools<span style="color: #888">[</span><span style="color: #444">0</span><span style="color: #888">];</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">`Routing to: </span><span style="color: #B83838; text-decoration: underline">${</span>selectedTool<span style="color: #888">.</span>name<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838"> (score: </span><span style="color: #B83838; text-decoration: underline">${</span>selectedTool<span style="color: #888">.</span>score<span style="color: #888">.</span>toFixed<span style="color: #888">(</span><span style="color: #444">2</span><span style="color: #888">)</span><span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">)`</span><span style="color: #888">);</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Execute the selected tool</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">return</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>executeTool<span style="color: #888">.</span>execute<span style="color: #888">({</span>
+<span style="color: #A89028">      </span>toolName<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">selectedTool.name</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>params<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">params</span><span style="color: #888">,</span>
+<span style="color: #A89028">    </span><span style="color: #888">});</span>
+<span style="color: #A89028">  </span><span style="color: #888">};</span>
+
+<span style="color: #A89028">  </span><span style="color: #888; font-style: italic">// Test the router with different intents</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>intents<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #888">[</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span><span style="color: #A89028"> </span>intent<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;I want to see all employees&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>params<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>limit<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #2838B0; font-style: italic">10</span><span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>intent<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Create a new job candidate&#39;</span><span style="color: #888">,</span>
+<span style="color: #A89028">      </span>params<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>name<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Jane Smith&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>email<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;jane@example.com&#39;</span><span style="color: #A89028"> </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">},</span>
+<span style="color: #A89028">    </span><span style="color: #888">{</span><span style="color: #A89028"> </span>intent<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;Find recruitment candidates&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>params<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>status<span style="color: #666">:</span><span style="color: #A89028"> </span><span style="color: #B83838">&#39;active&#39;</span><span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #888">},</span>
+<span style="color: #A89028">  </span><span style="color: #888">];</span>
+
+<span style="color: #A89028">  </span><span style="color: #2838B0">for</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>intent<span style="color: #888">,</span><span style="color: #A89028"> </span>params<span style="color: #A89028"> </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">of</span><span style="color: #A89028"> </span>intents<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">`\nIntent: &quot;</span><span style="color: #B83838; text-decoration: underline">${</span>intent<span style="color: #B83838; text-decoration: underline">}</span><span style="color: #B83838">&quot;`</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>result<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>routeAndExecute<span style="color: #888">(</span>intent<span style="color: #888">,</span><span style="color: #A89028"> </span>params<span style="color: #888">);</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;Result:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #388038">JSON</span><span style="color: #888">.</span>stringify<span style="color: #888">(</span>result<span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #444; font-style: italic">null</span><span style="color: #888">,</span><span style="color: #A89028"> </span><span style="color: #444">2</span><span style="color: #888">));</span>
+<span style="color: #A89028">  </span><span style="color: #888">}</span>
+<span style="color: #888">};</span>
+
+<span style="color: #888; font-style: italic">// Main execution</span>
+<span style="color: #2838B0; font-style: italic">const</span><span style="color: #A89028"> </span>main<span style="color: #A89028"> </span><span style="color: #666">=</span><span style="color: #A89028"> </span><span style="color: #2838B0">async</span><span style="color: #A89028"> </span><span style="color: #888">()</span><span style="color: #A89028"> </span><span style="color: #888">=&gt;</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span><span style="color: #2838B0">try</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// Run examples based on environment setup</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span>process<span style="color: #888">.</span>env<span style="color: #888">.</span>OPENAI_API_KEY<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>metaToolsWithAISDK<span style="color: #888">();</span>
+<span style="color: #A89028">      </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>metaToolsWithOpenAI<span style="color: #888">();</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">else</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">      </span>console<span style="color: #888">.</span>log<span style="color: #888">(</span><span style="color: #B83838">&#39;⚠️  OPENAI_API_KEY not found, skipping AI examples\n&#39;</span><span style="color: #888">);</span>
+<span style="color: #A89028">    </span><span style="color: #888">}</span>
+
+<span style="color: #A89028">    </span><span style="color: #888; font-style: italic">// These examples work without AI</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>directMetaToolUsage<span style="color: #888">();</span>
+<span style="color: #A89028">    </span><span style="color: #2838B0">await</span><span style="color: #A89028"> </span>dynamicToolRouter<span style="color: #888">();</span>
+<span style="color: #A89028">  </span><span style="color: #888">}</span><span style="color: #A89028"> </span><span style="color: #2838B0">catch</span><span style="color: #A89028"> </span><span style="color: #888">(</span>error<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">    </span>console<span style="color: #888">.</span>error<span style="color: #888">(</span><span style="color: #B83838">&#39;Error running examples:&#39;</span><span style="color: #888">,</span><span style="color: #A89028"> </span>error<span style="color: #888">);</span>
+<span style="color: #A89028">  </span><span style="color: #888">}</span>
+<span style="color: #888">};</span>
+
+<span style="color: #888; font-style: italic">// Run if this file is executed directly</span>
+<span style="color: #2838B0">if</span><span style="color: #A89028"> </span><span style="color: #888">(</span><span style="color: #2838B0">import</span><span style="color: #888">.</span>meta<span style="color: #888">.</span>main<span style="color: #888">)</span><span style="color: #A89028"> </span><span style="color: #888">{</span>
+<span style="color: #A89028">  </span>main<span style="color: #888">();</span>
+<span style="color: #888">}</span>
+
+<span style="color: #2838B0">export</span><span style="color: #A89028"> </span><span style="color: #888">{</span><span style="color: #A89028"> </span>metaToolsWithAISDK<span style="color: #888">,</span><span style="color: #A89028"> </span>metaToolsWithOpenAI<span style="color: #888">,</span><span style="color: #A89028"> </span>directMetaToolUsage<span style="color: #888">,</span><span style="color: #A89028"> </span>dynamicToolRouter<span style="color: #A89028"> </span><span style="color: #888">};</span>
+</code></pre></div>
+</section>
+
+            </main>
+        </div>
+        <hr><footer>
+    <div class="terminal-mkdocs-footer-grid">
+        <div id="terminal-mkdocs-footer-copyright-info">
+             Site built with <a href="http://www.mkdocs.org">MkDocs</a> and <a href="https://github.com/ntno/mkdocs-terminal">Terminal for MkDocs</a>.
+        </div>
+    </div>
+</footer>
+    </div>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="alertdialog" aria-modal="true" aria-labelledby="searchModalLabel">
+    <div class="modal-dialog modal-lg" role="search">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchModalLabel">Search</h5>
+                <button type="button" class="close btn btn-default btn-ghost" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p id="searchInputLabel">Type to start searching</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" aria-labelledby="searchInputLabel" placeholder="" id="mkdocs-search-query" title="Please enter search terms here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No document matches found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</body>
+
+</html>
