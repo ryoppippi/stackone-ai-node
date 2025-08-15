@@ -82,14 +82,14 @@ export { cosineSimilarity };
  * Combine and normalize scores from different search modes
  */
 export function combineScores(
-  textScore: number,
-  vectorScore: number,
-  weights: { text: number; vector: number } = { text: 0.5, vector: 0.5 }
+  bm25Score: number,
+  embeddingScore: number,
+  weights: { bm25: number; embeddings: number } = { bm25: 0.5, embeddings: 0.5 }
 ): number {
   // Normalize weights to sum to 1
-  const totalWeight = weights.text + weights.vector;
-  const normalizedTextWeight = weights.text / totalWeight;
-  const normalizedVectorWeight = weights.vector / totalWeight;
+  const totalWeight = weights.bm25 + weights.embeddings;
+  const normalizedBm25Weight = weights.bm25 / totalWeight;
+  const normalizedEmbeddingWeight = weights.embeddings / totalWeight;
 
-  return textScore * normalizedTextWeight + vectorScore * normalizedVectorWeight;
+  return bm25Score * normalizedBm25Weight + embeddingScore * normalizedEmbeddingWeight;
 }

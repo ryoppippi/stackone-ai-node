@@ -333,7 +333,7 @@ export class Tools implements Iterable<BaseTool> {
 }
 
 /**
- * Result from meta_filter_relevant_tools
+ * Result from meta_search_tools
  */
 export interface MetaToolSearchResult {
   name: string;
@@ -463,18 +463,18 @@ export function metaFilterRelevantTools(
         mode: {
           type: 'string',
           description:
-            'Search mode: "text" (BM25 only), "vector" (semantic only), "hybrid" (combined) (default: "hybrid")',
-          enum: ['text', 'vector', 'hybrid'],
+            'Search mode: "bm25" (BM25 only), "embeddings" (semantic only), "hybrid" (combined) (default: "hybrid")',
+          enum: ['bm25', 'embeddings', 'hybrid'],
           default: 'hybrid',
         },
         hybridWeights: {
           type: 'object',
-          description: 'Weights for hybrid search (default: { text: 0.5, vector: 0.5 })',
+          description: 'Weights for hybrid search (default: { bm25: 0.5, embeddings: 0.5 })',
           properties: {
-            text: { type: 'number', minimum: 0, maximum: 1 },
-            vector: { type: 'number', minimum: 0, maximum: 1 },
+            bm25: { type: 'number', minimum: 0, maximum: 1 },
+            embeddings: { type: 'number', minimum: 0, maximum: 1 },
           },
-          default: { text: 0.5, vector: 0.5 },
+          default: { bm25: 0.5, embeddings: 0.5 },
         },
       }),
     },
@@ -505,9 +505,17 @@ export function metaFilterRelevantTools(
       // Convert string params to object
       const params = typeof inputParams === 'string' ? JSON.parse(inputParams) : inputParams || {};
 
-      // Determine search mode
-      const mode = params.mode || (hasVectorSearch ? 'hybrid' : 'text');
-      const hybridWeights = params.hybridWeights || { text: 0.5, vector: 0.5 };
+      // Determine search mode (support both old and new names for backward compatibility)
+      let mode = params.mode || (hasVectorSearch ? 'hybrid' : 'bm25');
+      // Map old names to new names
+      if (mode === 'text') mode = 'bm25';
+      if (mode === 'vector') mode = 'embeddings';
+      // Support both old and new property names for backward compatibility
+      const rawWeights = params.hybridWeights || {};
+      const hybridWeights = {
+        bm25: rawWeights.bm25 ?? rawWeights.text ?? 0.5,
+        embeddings: rawWeights.embeddings ?? rawWeights.vector ?? 0.5,
+      };
       const limit = params.limit || 5;
       const minScore = params.minScore ?? 0.3;
       const query = params.query || '';
@@ -515,14 +523,14 @@ export function metaFilterRelevantTools(
       type SearchResult = Awaited<ReturnType<typeof orama.search>>;
       let results: SearchResult;
 
-      if (mode === 'text' || !hasVectorSearch || !embeddingManager) {
+      if (mode === 'bm25' || !hasVectorSearch || !embeddingManager) {
         // Text-only search using BM25
         results = await orama.search(oramaDb, {
           term: query,
           limit,
         } as Parameters<typeof orama.search>[1]);
-      } else if (mode === 'vector') {
-        // Vector-only search
+      } else if (mode === 'embeddings') {
+        // Embeddings-only search
         let queryEmbedding: number[] | null = null;
         try {
           queryEmbedding = await embeddingManager.generateEmbedding(query);
@@ -546,24 +554,24 @@ export function metaFilterRelevantTools(
           limit,
         } as Parameters<typeof orama.search>[1]);
       } else {
-        // Hybrid search: combine text and vector results
+        // Hybrid search: combine BM25 and embeddings results
         let queryEmbedding: number[] | null = null;
         try {
           queryEmbedding = await embeddingManager.generateEmbedding(query);
         } catch (_error) {
-          // Embedding generation failed, will fall back to text-only search
+          // Embedding generation failed, will fall back to BM25-only search
           queryEmbedding = null;
         }
 
         if (!queryEmbedding) {
-          // Fall back to text-only if embedding fails
+          // Fall back to BM25-only if embedding fails
           results = await orama.search(oramaDb, {
             term: query,
             limit,
           } as Parameters<typeof orama.search>[1]);
         } else {
           // Perform both searches in parallel
-          const [textResults, vectorResults] = await Promise.all([
+          const [bm25Results, embeddingResults] = await Promise.all([
             orama.search(oramaDb, {
               term: query,
               limit: Math.min(limit * 2, 20), // Get more results for better hybridization
@@ -581,37 +589,37 @@ export function metaFilterRelevantTools(
 
           // Combine results by document ID and compute hybrid scores
           type CombinedResultItem = {
-            hit: (typeof textResults.hits)[0];
-            textScore: number;
-            vectorScore: number;
+            hit: (typeof bm25Results.hits)[0];
+            bm25Score: number;
+            embeddingScore: number;
             combinedScore: number;
           };
           const combinedResults = new Map<string, CombinedResultItem>();
 
-          // Process text results
-          for (const hit of textResults.hits) {
+          // Process BM25 results
+          for (const hit of bm25Results.hits) {
             const id = (hit.document as { name: string }).name;
             combinedResults.set(id, {
               hit,
-              textScore: hit.score,
-              vectorScore: 0,
-              combinedScore: hit.score * hybridWeights.text,
+              bm25Score: hit.score,
+              embeddingScore: 0,
+              combinedScore: hit.score * hybridWeights.bm25,
             });
           }
 
-          // Process vector results and combine scores
-          for (const hit of vectorResults.hits) {
+          // Process embedding results and combine scores
+          for (const hit of embeddingResults.hits) {
             const id = (hit.document as { name: string }).name;
             const existing = combinedResults.get(id);
             if (existing) {
-              existing.vectorScore = hit.score;
-              existing.combinedScore = combineScores(existing.textScore, hit.score, hybridWeights);
+              existing.embeddingScore = hit.score;
+              existing.combinedScore = combineScores(existing.bm25Score, hit.score, hybridWeights);
             } else {
               combinedResults.set(id, {
                 hit,
-                textScore: 0,
-                vectorScore: hit.score,
-                combinedScore: hit.score * hybridWeights.vector,
+                bm25Score: 0,
+                embeddingScore: hit.score,
+                combinedScore: hit.score * hybridWeights.embeddings,
               });
             }
           }
