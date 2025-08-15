@@ -105,19 +105,19 @@ describe('combineScores', () => {
   });
 
   it('should combine scores with custom weights', () => {
-    const result = combineScores(0.8, 0.6, { text: 0.7, vector: 0.3 });
+    const result = combineScores(0.8, 0.6, { bm25: 0.7, embeddings: 0.3 });
     expect(result).toBe(0.74); // (0.8 * 0.7) + (0.6 * 0.3)
   });
 
   it('should normalize weights that do not sum to 1', () => {
-    const result = combineScores(0.8, 0.6, { text: 2, vector: 1 });
-    // Normalized weights: text = 2/3, vector = 1/3
+    const result = combineScores(0.8, 0.6, { bm25: 2, embeddings: 1 });
+    // Normalized weights: bm25 = 2/3, embeddings = 1/3
     expect(result).toBeCloseTo(0.733); // (0.8 * 2/3) + (0.6 * 1/3)
   });
 
   it('should handle zero weights', () => {
-    const result = combineScores(0.8, 0.6, { text: 1, vector: 0 });
-    expect(result).toBe(0.8); // Only text score
+    const result = combineScores(0.8, 0.6, { bm25: 1, embeddings: 0 });
+    expect(result).toBe(0.8); // Only BM25 score
   });
 });
 

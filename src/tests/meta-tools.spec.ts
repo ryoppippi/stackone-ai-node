@@ -477,13 +477,13 @@ describe('Meta Tools', () => {
       expect(params.properties.hybridWeights).toBeDefined();
     });
 
-    it('should perform text-only search when mode is "text"', async () => {
+    it('should perform BM25-only search when mode is "bm25"', async () => {
       const filterTool = vectorMetaTools.getTool('meta_filter_relevant_tools');
       if (!filterTool) throw new Error('Filter tool not found');
 
       const result = await filterTool.execute({
         query: 'employee management',
-        mode: 'text',
+        mode: 'bm25',
         limit: 3,
       });
 
@@ -491,13 +491,13 @@ describe('Meta Tools', () => {
       expect(Array.isArray(toolResults)).toBe(true);
     });
 
-    it('should perform vector search when mode is "vector"', async () => {
+    it('should perform embeddings search when mode is "embeddings"', async () => {
       const filterTool = vectorMetaTools.getTool('meta_filter_relevant_tools');
       if (!filterTool) throw new Error('Filter tool not found');
 
       const result = await filterTool.execute({
         query: 'employee management',
-        mode: 'vector',
+        mode: 'embeddings',
         limit: 3,
       });
 
@@ -525,7 +525,7 @@ describe('Meta Tools', () => {
       const result = await filterTool.execute({
         query: 'employee management',
         mode: 'hybrid',
-        hybridWeights: { text: 0.3, vector: 0.7 },
+        hybridWeights: { bm25: 0.3, embeddings: 0.7 },
         limit: 3,
       });
 

@@ -505,17 +505,16 @@ export function metaFilterRelevantTools(
       // Convert string params to object
       const params = typeof inputParams === 'string' ? JSON.parse(inputParams) : inputParams || {};
 
-      // Determine search mode (support both old and new names for backward compatibility)
-      let mode = params.mode || (hasVectorSearch ? 'hybrid' : 'bm25');
-      // Map old names to new names
-      if (mode === 'text') mode = 'bm25';
-      if (mode === 'vector') mode = 'embeddings';
-      // Support both old and new property names for backward compatibility
-      const rawWeights = params.hybridWeights || {};
-      const hybridWeights = {
-        bm25: rawWeights.bm25 ?? rawWeights.text ?? 0.5,
-        embeddings: rawWeights.embeddings ?? rawWeights.vector ?? 0.5,
-      };
+      // Determine search mode with type validation
+      const mode = params.mode || (hasVectorSearch ? 'hybrid' : 'bm25');
+
+      // Validate mode is one of the expected values
+      if (!['bm25', 'embeddings', 'hybrid'].includes(mode)) {
+        throw new StackOneError(
+          `Invalid search mode: ${mode}. Must be one of: bm25, embeddings, hybrid`
+        );
+      }
+      const hybridWeights = params.hybridWeights || { bm25: 0.5, embeddings: 0.5 };
       const limit = params.limit || 5;
       const minScore = params.minScore ?? 0.3;
       const query = params.query || '';
@@ -523,118 +522,152 @@ export function metaFilterRelevantTools(
       type SearchResult = Awaited<ReturnType<typeof orama.search>>;
       let results: SearchResult;
 
-      if (mode === 'bm25' || !hasVectorSearch || !embeddingManager) {
-        // Text-only search using BM25
-        results = await orama.search(oramaDb, {
-          term: query,
-          limit,
-        } as Parameters<typeof orama.search>[1]);
-      } else if (mode === 'embeddings') {
-        // Embeddings-only search
-        let queryEmbedding: number[] | null = null;
-        try {
-          queryEmbedding = await embeddingManager.generateEmbedding(query);
-        } catch (error) {
-          throw new StackOneError(
-            `Failed to generate query embedding: ${error instanceof Error ? error.message : String(error)}`
-          );
-        }
-
-        if (!queryEmbedding) {
-          throw new StackOneError('Failed to generate query embedding');
-        }
-
-        results = await orama.search(oramaDb, {
-          mode: 'vector',
-          vector: {
-            value: queryEmbedding,
-            property: 'embedding',
-          },
-          similarity: minScore,
-          limit,
-        } as Parameters<typeof orama.search>[1]);
-      } else {
-        // Hybrid search: combine BM25 and embeddings results
-        let queryEmbedding: number[] | null = null;
-        try {
-          queryEmbedding = await embeddingManager.generateEmbedding(query);
-        } catch (_error) {
-          // Embedding generation failed, will fall back to BM25-only search
-          queryEmbedding = null;
-        }
-
-        if (!queryEmbedding) {
-          // Fall back to BM25-only if embedding fails
+      switch (mode) {
+        case 'bm25':
+          // BM25-only search
           results = await orama.search(oramaDb, {
             term: query,
             limit,
           } as Parameters<typeof orama.search>[1]);
-        } else {
-          // Perform both searches in parallel
-          const [bm25Results, embeddingResults] = await Promise.all([
-            orama.search(oramaDb, {
+          break;
+
+        case 'embeddings': {
+          if (!hasVectorSearch || !embeddingManager) {
+            // Fall back to BM25 if vector search is not available
+            results = await orama.search(oramaDb, {
               term: query,
-              limit: Math.min(limit * 2, 20), // Get more results for better hybridization
-            } as Parameters<typeof orama.search>[1]),
-            orama.search(oramaDb, {
-              mode: 'vector',
-              vector: {
-                value: queryEmbedding,
-                property: 'embedding',
-              },
-              similarity: Math.max(minScore - 0.2, 0), // Lower threshold for vector to get more candidates
-              limit: Math.min(limit * 2, 20),
-            } as Parameters<typeof orama.search>[1]),
-          ]);
-
-          // Combine results by document ID and compute hybrid scores
-          type CombinedResultItem = {
-            hit: (typeof bm25Results.hits)[0];
-            bm25Score: number;
-            embeddingScore: number;
-            combinedScore: number;
-          };
-          const combinedResults = new Map<string, CombinedResultItem>();
-
-          // Process BM25 results
-          for (const hit of bm25Results.hits) {
-            const id = (hit.document as { name: string }).name;
-            combinedResults.set(id, {
-              hit,
-              bm25Score: hit.score,
-              embeddingScore: 0,
-              combinedScore: hit.score * hybridWeights.bm25,
-            });
+              limit,
+            } as Parameters<typeof orama.search>[1]);
+            break;
+          }
+          // Embeddings-only search
+          let queryEmbedding: number[] | null = null;
+          try {
+            queryEmbedding = await embeddingManager.generateEmbedding(query);
+          } catch (error) {
+            throw new StackOneError(
+              `Failed to generate query embedding: ${error instanceof Error ? error.message : String(error)}`
+            );
           }
 
-          // Process embedding results and combine scores
-          for (const hit of embeddingResults.hits) {
-            const id = (hit.document as { name: string }).name;
-            const existing = combinedResults.get(id);
-            if (existing) {
-              existing.embeddingScore = hit.score;
-              existing.combinedScore = combineScores(existing.bm25Score, hit.score, hybridWeights);
-            } else {
+          if (!queryEmbedding) {
+            throw new StackOneError('Failed to generate query embedding');
+          }
+
+          results = await orama.search(oramaDb, {
+            mode: 'vector',
+            vector: {
+              value: queryEmbedding,
+              property: 'embedding',
+            },
+            similarity: minScore,
+            limit,
+          } as Parameters<typeof orama.search>[1]);
+          break;
+        }
+
+        case 'hybrid': {
+          if (!hasVectorSearch || !embeddingManager) {
+            // Fall back to BM25 if vector search is not available
+            results = await orama.search(oramaDb, {
+              term: query,
+              limit,
+            } as Parameters<typeof orama.search>[1]);
+            break;
+          }
+          // Hybrid search: combine BM25 and embeddings results
+          let queryEmbedding: number[] | null = null;
+          try {
+            queryEmbedding = await embeddingManager.generateEmbedding(query);
+          } catch (_error) {
+            // Embedding generation failed, will fall back to BM25-only search
+            queryEmbedding = null;
+          }
+
+          if (!queryEmbedding) {
+            // Fall back to BM25-only if embedding fails
+            results = await orama.search(oramaDb, {
+              term: query,
+              limit,
+            } as Parameters<typeof orama.search>[1]);
+          } else {
+            // Perform both searches in parallel
+            const [bm25Results, embeddingResults] = await Promise.all([
+              orama.search(oramaDb, {
+                term: query,
+                limit: Math.min(limit * 2, 20), // Get more results for better hybridization
+              } as Parameters<typeof orama.search>[1]),
+              orama.search(oramaDb, {
+                mode: 'vector',
+                vector: {
+                  value: queryEmbedding,
+                  property: 'embedding',
+                },
+                similarity: Math.max(minScore - 0.2, 0), // Lower threshold for vector to get more candidates
+                limit: Math.min(limit * 2, 20),
+              } as Parameters<typeof orama.search>[1]),
+            ]);
+
+            // Combine results by document ID and compute hybrid scores
+            type CombinedResultItem = {
+              hit: (typeof bm25Results.hits)[0];
+              bm25Score: number;
+              embeddingScore: number;
+              combinedScore: number;
+            };
+            const combinedResults = new Map<string, CombinedResultItem>();
+
+            // Process BM25 results
+            for (const hit of bm25Results.hits) {
+              const id = (hit.document as { name: string }).name;
               combinedResults.set(id, {
                 hit,
-                bm25Score: 0,
-                embeddingScore: hit.score,
-                combinedScore: hit.score * hybridWeights.embeddings,
+                bm25Score: hit.score,
+                embeddingScore: 0,
+                combinedScore: hit.score * hybridWeights.bm25,
               });
             }
+
+            // Process embedding results and combine scores
+            for (const hit of embeddingResults.hits) {
+              const id = (hit.document as { name: string }).name;
+              const existing = combinedResults.get(id);
+              if (existing) {
+                existing.embeddingScore = hit.score;
+                existing.combinedScore = combineScores(
+                  existing.bm25Score,
+                  hit.score,
+                  hybridWeights
+                );
+              } else {
+                combinedResults.set(id, {
+                  hit,
+                  bm25Score: 0,
+                  embeddingScore: hit.score,
+                  combinedScore: hit.score * hybridWeights.embeddings,
+                });
+              }
+            }
+
+            // Convert back to search results format
+            const sortedResults = Array.from(combinedResults.values())
+              .sort((a, b) => b.combinedScore - a.combinedScore)
+              .slice(0, limit)
+              .map((item) => ({ ...item.hit, score: item.combinedScore }));
+
+            results = {
+              count: sortedResults.length,
+              elapsed: bm25Results.elapsed,
+              hits: sortedResults,
+            };
           }
+          break;
+        }
 
-          // Convert back to search results format
-          const sortedResults = Array.from(combinedResults.values())
-            .sort((a, b) => b.combinedScore - a.combinedScore)
-            .slice(0, limit)
-            .map((item) => ({ ...item.hit, score: item.combinedScore }));
-
-          results = {
-            count: sortedResults.length,
-            elapsed: textResults.elapsed,
-            hits: sortedResults,
-          };
+        default: {
+          // Exhaustive check - this should never happen due to validation above
+          const _exhaustiveCheck: never = mode;
+          throw new StackOneError(`Unhandled search mode: ${_exhaustiveCheck}`);
         }
       }
 
