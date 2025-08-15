@@ -3,8 +3,8 @@ import { type EmbeddingModel, cosineSimilarity, embed, embedMany } from 'ai';
 /**
  * Configuration for embedding generation
  */
-export interface EmbeddingConfig {
-  model: EmbeddingModel<string>;
+export interface EmbeddingConfig<VALUE = string> {
+  model: EmbeddingModel<VALUE>;
   dimensions?: number;
 }
 
