@@ -342,6 +342,16 @@ export interface MetaToolSearchResult {
   score: number;
 }
 
+/**
+ * Available search modes as const array for validation
+ */
+const META_TOOL_SEARCH_MODES = ['bm25', 'embeddings', 'hybrid'] as const;
+
+/**
+ * Search modes for meta tools
+ */
+export type MetaToolSearchMode = (typeof META_TOOL_SEARCH_MODES)[number];
+
 type OramaDb = ReturnType<typeof orama.create>;
 
 /**
@@ -464,7 +474,7 @@ export function metaFilterRelevantTools(
           type: 'string',
           description:
             'Search mode: "bm25" (BM25 only), "embeddings" (semantic only), "hybrid" (combined) (default: "hybrid")',
-          enum: ['bm25', 'embeddings', 'hybrid'],
+          enum: [...META_TOOL_SEARCH_MODES],
           default: 'hybrid',
         },
         hybridWeights: {
@@ -506,12 +516,12 @@ export function metaFilterRelevantTools(
       const params = typeof inputParams === 'string' ? JSON.parse(inputParams) : inputParams || {};
 
       // Determine search mode with type validation
-      const mode = params.mode || (hasVectorSearch ? 'hybrid' : 'bm25');
+      const mode: MetaToolSearchMode = params.mode || (hasVectorSearch ? 'hybrid' : 'bm25');
 
       // Validate mode is one of the expected values
-      if (!['bm25', 'embeddings', 'hybrid'].includes(mode)) {
+      if (!META_TOOL_SEARCH_MODES.includes(mode)) {
         throw new StackOneError(
-          `Invalid search mode: ${mode}. Must be one of: bm25, embeddings, hybrid`
+          `Invalid search mode: ${mode}. Must be one of: ${META_TOOL_SEARCH_MODES.join(', ')}`
         );
       }
       const hybridWeights = params.hybridWeights || { bm25: 0.5, embeddings: 0.5 };
