@@ -666,8 +666,8 @@ export function metaFilterRelevantTools(
 
         default: {
           // Exhaustive check - this should never happen due to validation above
-          const _exhaustiveCheck: never = mode;
-          throw new StackOneError(`Unhandled search mode: ${_exhaustiveCheck}`);
+          mode satisfies never;
+          throw new StackOneError(`Unhandled search mode: ${mode}`);
         }
       }
 
