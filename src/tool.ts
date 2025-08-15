@@ -357,7 +357,7 @@ async function initializeOramaDb(
   embeddingManager?: EmbeddingManager
 ): Promise<OramaDb> {
   // Determine schema based on whether embeddings are enabled
-  const hasEmbeddings = embeddingManager?.isEnabled;
+  let hasEmbeddings = embeddingManager?.isEnabled;
 
   const schema = {
     name: 'string' as const,
@@ -381,8 +381,15 @@ async function initializeOramaDb(
   // Generate embeddings if needed
   let embeddings: (number[] | null)[] = [];
   if (hasEmbeddings && embeddingManager) {
-    const descriptions = tools.map((tool) => tool.description);
-    embeddings = await embeddingManager.generateEmbeddings(descriptions);
+    try {
+      const descriptions = tools.map((tool) => tool.description);
+      embeddings = await embeddingManager.generateEmbeddings(descriptions);
+    } catch (_error) {
+      // If embedding generation fails during indexing, continue without embeddings
+      // This will disable vector search but allow text search to work
+      embeddings = tools.map(() => null);
+      hasEmbeddings = false;
+    }
   }
 
   // Index all tools

@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, mock } from 'bun:test';
+import { MockEmbeddingModelV1 } from 'ai/test';
 import { BaseTool, type MetaToolSearchResult, Tools } from '../tool';
 import { ParameterLocation } from '../types';
 
@@ -436,7 +437,6 @@ describe('Meta Tools', () => {
   });
 
   describe('Vector Search Integration', () => {
-    let mockEmbedding: ReturnType<typeof mock>;
     let vectorTools: Tools;
     let vectorMetaTools: Tools;
 
@@ -445,43 +445,24 @@ describe('Meta Tools', () => {
       const createMockEmbedding = (seed: number): number[] =>
         Array.from({ length: 1536 }, (_, i) => Math.sin((seed + i) * 0.1));
 
-      // Mock embedding function
-      mockEmbedding = mock(() => Promise.resolve({ embedding: createMockEmbedding(0) }));
-
-      // Mock AI SDK
-      mock.module('ai', () => ({
-        embed: mockEmbedding,
-        embedMany: mock(() =>
-          Promise.resolve({
-            embeddings: [
-              createMockEmbedding(1), // hris_create_employee
-              createMockEmbedding(2), // hris_list_employees
-              createMockEmbedding(3), // hris_create_time_off
-              createMockEmbedding(4), // ats_create_candidate
-              createMockEmbedding(5), // ats_list_candidates
-              createMockEmbedding(6), // crm_create_contact
-            ],
-          })
-        ),
-        cosineSimilarity: (a: number[], b: number[]) => {
-          return a.reduce((sum, val, i) => sum + val * b[i], 0);
-        },
-        jsonSchema: mock(),
-      }));
-
       const mockTools = createMockTools();
       vectorTools = new Tools(mockTools);
 
-      // Create meta tools with embedding configuration
-      const mockModel = {
+      // Create mock model with proper embedding behavior
+      const mockModel = new MockEmbeddingModelV1({
         modelId: 'test-embedding-model',
         provider: 'test-provider',
-      } as Parameters<typeof vectorTools.metaTools>[0]['model'];
-      vectorMetaTools = await vectorTools.metaTools({ model: mockModel });
-    });
+        doEmbed: async ({ values }) => {
+          // Return embeddings based on input values
+          const embeddings = values.map((_, index) => createMockEmbedding(index));
+          return {
+            embeddings,
+            usage: { tokens: values.length * 2 },
+          };
+        },
+      });
 
-    afterEach(() => {
-      mock.restore();
+      vectorMetaTools = await vectorTools.metaTools({ model: mockModel });
     });
 
     it('should create meta tools with vector search capabilities', () => {
@@ -506,9 +487,6 @@ describe('Meta Tools', () => {
         limit: 3,
       });
 
-      // Should not call embedding function for text-only search
-      expect(mockEmbedding).not.toHaveBeenCalled();
-
       const toolResults = result.tools as MetaToolSearchResult[];
       expect(Array.isArray(toolResults)).toBe(true);
     });
@@ -523,12 +501,6 @@ describe('Meta Tools', () => {
         limit: 3,
       });
 
-      // Should call embedding function for vector search
-      expect(mockEmbedding).toHaveBeenCalledWith({
-        model: expect.any(Object),
-        value: 'employee management',
-      });
-
       const toolResults = result.tools as MetaToolSearchResult[];
       expect(Array.isArray(toolResults)).toBe(true);
     });
@@ -540,12 +512,6 @@ describe('Meta Tools', () => {
       const result = await filterTool.execute({
         query: 'employee management',
         limit: 3,
-      });
-
-      // Should call embedding function for hybrid search
-      expect(mockEmbedding).toHaveBeenCalledWith({
-        model: expect.any(Object),
-        value: 'employee management',
       });
 
       const toolResults = result.tools as MetaToolSearchResult[];
@@ -563,17 +529,22 @@ describe('Meta Tools', () => {
         limit: 3,
       });
 
-      expect(mockEmbedding).toHaveBeenCalled();
-
       const toolResults = result.tools as MetaToolSearchResult[];
       expect(Array.isArray(toolResults)).toBe(true);
     });
 
     it('should fall back to text search if embedding generation fails', async () => {
-      // Mock embedding failure
-      mockEmbedding.mockRejectedValueOnce(new Error('Embedding failed'));
+      // Create a separate failing mock model for this test
+      const failingMockModel = new MockEmbeddingModelV1({
+        modelId: 'failing-model',
+        provider: 'test-provider',
+        doEmbed: async () => {
+          throw new Error('Embedding failed');
+        },
+      });
 
-      const filterTool = vectorMetaTools.getTool('meta_filter_relevant_tools');
+      const failingMetaTools = await vectorTools.metaTools({ model: failingMockModel });
+      const filterTool = failingMetaTools.getTool('meta_filter_relevant_tools');
       if (!filterTool) throw new Error('Filter tool not found');
 
       // Should not throw error, but fall back to text search

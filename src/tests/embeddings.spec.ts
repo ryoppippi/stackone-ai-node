@@ -1,36 +1,19 @@
-import { beforeEach, describe, expect, it, mock } from 'bun:test';
-import type { EmbeddingModel } from 'ai';
+import { describe, expect, it } from 'bun:test';
+import { cosineSimilarity } from 'ai';
+import { MockEmbeddingModelV1 } from 'ai/test';
 import { EmbeddingManager, combineScores } from '../modules/embeddings';
 
-// Mock AI SDK embedding functions
-const mockEmbed = mock();
-const mockEmbedMany = mock();
-
-// Mock model type
-type MockEmbeddingModel = EmbeddingModel<string>;
-
-mock.module('ai', () => ({
-  embed: mockEmbed,
-  embedMany: mockEmbedMany,
-  cosineSimilarity: (a: number[], b: number[]) => {
-    // Simple dot product for testing
-    return a.reduce((sum, val, i) => sum + val * b[i], 0);
-  },
-}));
-
 describe('EmbeddingManager', () => {
-  beforeEach(() => {
-    mockEmbed.mockClear();
-    mockEmbedMany.mockClear();
-  });
-
   it('should be disabled without config', () => {
     const manager = new EmbeddingManager();
     expect(manager.isEnabled).toBe(false);
   });
 
   it('should be enabled with model config', () => {
-    const mockModel = { modelId: 'test-model' } as MockEmbeddingModel;
+    const mockModel = new MockEmbeddingModelV1({
+      modelId: 'test-model',
+      provider: 'test-provider',
+    });
     const manager = new EmbeddingManager({ model: mockModel });
     expect(manager.isEnabled).toBe(true);
   });
@@ -48,47 +31,69 @@ describe('EmbeddingManager', () => {
   });
 
   it('should generate single embedding when enabled', async () => {
-    const mockModel = { modelId: 'test-model' } as MockEmbeddingModel;
-    const manager = new EmbeddingManager({ model: mockModel });
-
     const mockEmbedding = [0.1, 0.2, 0.3];
-    mockEmbed.mockResolvedValueOnce({ embedding: mockEmbedding });
+    const mockModel = new MockEmbeddingModelV1({
+      modelId: 'test-model',
+      provider: 'test-provider',
+      doEmbed: async ({ values }) => {
+        expect(values).toEqual(['test text']);
+        return {
+          embeddings: [mockEmbedding],
+          usage: { tokens: 2 },
+        };
+      },
+    });
 
+    const manager = new EmbeddingManager({ model: mockModel });
     const result = await manager.generateEmbedding('test text');
 
-    expect(mockEmbed).toHaveBeenCalledWith({
-      model: mockModel,
-      value: 'test text',
-    });
     expect(result).toEqual(mockEmbedding);
   });
 
   it('should generate batch embeddings when enabled', async () => {
-    const mockModel = { modelId: 'test-model' } as MockEmbeddingModel;
-    const manager = new EmbeddingManager({ model: mockModel });
-
     const mockEmbeddings = [
       [0.1, 0.2],
       [0.3, 0.4],
     ];
-    mockEmbedMany.mockResolvedValueOnce({ embeddings: mockEmbeddings });
+    let callCount = 0;
+    const expectedValues = ['test1', 'test2'];
 
+    const mockModel = new MockEmbeddingModelV1({
+      modelId: 'test-model',
+      provider: 'test-provider',
+      doEmbed: async ({ values }) => {
+        // MockEmbeddingModelV1 calls doEmbed for each batch, may process individually
+        // Just verify we get the correct values in any order
+        expect(values.length).toBeGreaterThan(0);
+        expect(expectedValues).toContainEqual(values[0]);
+
+        callCount++;
+        const startIndex = callCount - 1;
+        return {
+          embeddings: [mockEmbeddings[startIndex]],
+          usage: { tokens: 2 },
+        };
+      },
+    });
+
+    const manager = new EmbeddingManager({ model: mockModel });
     const result = await manager.generateEmbeddings(['test1', 'test2']);
 
-    expect(mockEmbedMany).toHaveBeenCalledWith({
-      model: mockModel,
-      values: ['test1', 'test2'],
-    });
     expect(result).toEqual(mockEmbeddings);
   });
 
   it('should handle empty array for batch embeddings', async () => {
-    const mockModel = { modelId: 'test-model' } as MockEmbeddingModel;
-    const manager = new EmbeddingManager({ model: mockModel });
+    const mockModel = new MockEmbeddingModelV1({
+      modelId: 'test-model',
+      provider: 'test-provider',
+      doEmbed: async () => {
+        throw new Error('Should not be called for empty array');
+      },
+    });
 
+    const manager = new EmbeddingManager({ model: mockModel });
     const result = await manager.generateEmbeddings([]);
 
-    expect(mockEmbedMany).not.toHaveBeenCalled();
     expect(result).toEqual([]);
   });
 });
@@ -113,5 +118,19 @@ describe('combineScores', () => {
   it('should handle zero weights', () => {
     const result = combineScores(0.8, 0.6, { text: 1, vector: 0 });
     expect(result).toBe(0.8); // Only text score
+  });
+});
+
+describe('cosineSimilarity re-export', () => {
+  it('should calculate cosine similarity correctly', () => {
+    const vec1 = [1, 0, 0];
+    const vec2 = [0, 1, 0];
+    const vec3 = [1, 0, 0];
+
+    // Perpendicular vectors should have similarity of 0
+    expect(cosineSimilarity(vec1, vec2)).toBe(0);
+
+    // Identical vectors should have similarity of 1
+    expect(cosineSimilarity(vec1, vec3)).toBe(1);
   });
 });
