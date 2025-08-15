@@ -515,15 +515,8 @@ export function metaFilterRelevantTools(
       // Convert string params to object
       const params = typeof inputParams === 'string' ? JSON.parse(inputParams) : inputParams || {};
 
-      // Determine search mode with type validation
+      // Determine search mode
       const mode: MetaToolSearchMode = params.mode || (hasVectorSearch ? 'hybrid' : 'bm25');
-
-      // Validate mode is one of the expected values
-      if (!META_TOOL_SEARCH_MODES.includes(mode)) {
-        throw new StackOneError(
-          `Invalid search mode: ${mode}. Must be one of: ${META_TOOL_SEARCH_MODES.join(', ')}`
-        );
-      }
       const hybridWeights = params.hybridWeights || { bm25: 0.5, embeddings: 0.5 };
       const limit = params.limit || 5;
       const minScore = params.minScore ?? 0.3;
