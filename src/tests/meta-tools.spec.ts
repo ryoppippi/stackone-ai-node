@@ -434,4 +434,186 @@ describe('Meta Tools', () => {
       expect(toolNames).toContain('ats_create_candidate');
     });
   });
+
+  describe('Vector Search Integration', () => {
+    let mockEmbedding: ReturnType<typeof mock>;
+    let vectorTools: Tools;
+    let vectorMetaTools: Tools;
+
+    beforeEach(async () => {
+      // Create 1536-dimensional embeddings for testing
+      const createMockEmbedding = (seed: number): number[] =>
+        Array.from({ length: 1536 }, (_, i) => Math.sin((seed + i) * 0.1));
+
+      // Mock embedding function
+      mockEmbedding = mock(() => Promise.resolve({ embedding: createMockEmbedding(0) }));
+
+      // Mock AI SDK
+      mock.module('ai', () => ({
+        embed: mockEmbedding,
+        embedMany: mock(() =>
+          Promise.resolve({
+            embeddings: [
+              createMockEmbedding(1), // hris_create_employee
+              createMockEmbedding(2), // hris_list_employees
+              createMockEmbedding(3), // hris_create_time_off
+              createMockEmbedding(4), // ats_create_candidate
+              createMockEmbedding(5), // ats_list_candidates
+              createMockEmbedding(6), // crm_create_contact
+            ],
+          })
+        ),
+        cosineSimilarity: (a: number[], b: number[]) => {
+          return a.reduce((sum, val, i) => sum + val * b[i], 0);
+        },
+        jsonSchema: mock(),
+      }));
+
+      const mockTools = createMockTools();
+      vectorTools = new Tools(mockTools);
+
+      // Create meta tools with embedding configuration
+      const mockModel = {
+        modelId: 'test-embedding-model',
+        provider: 'test-provider',
+      } as Parameters<typeof vectorTools.metaTools>[0]['model'];
+      vectorMetaTools = await vectorTools.metaTools({ model: mockModel });
+    });
+
+    afterEach(() => {
+      mock.restore();
+    });
+
+    it('should create meta tools with vector search capabilities', () => {
+      expect(vectorMetaTools.length).toBe(2);
+
+      const filterTool = vectorMetaTools.getTool('meta_filter_relevant_tools');
+      expect(filterTool).toBeDefined();
+
+      // Should have additional vector search parameters
+      const params = filterTool?.parameters as { properties: Record<string, unknown> };
+      expect(params.properties.mode).toBeDefined();
+      expect(params.properties.hybridWeights).toBeDefined();
+    });
+
+    it('should perform text-only search when mode is "text"', async () => {
+      const filterTool = vectorMetaTools.getTool('meta_filter_relevant_tools');
+      if (!filterTool) throw new Error('Filter tool not found');
+
+      const result = await filterTool.execute({
+        query: 'employee management',
+        mode: 'text',
+        limit: 3,
+      });
+
+      // Should not call embedding function for text-only search
+      expect(mockEmbedding).not.toHaveBeenCalled();
+
+      const toolResults = result.tools as MetaToolSearchResult[];
+      expect(Array.isArray(toolResults)).toBe(true);
+    });
+
+    it('should perform vector search when mode is "vector"', async () => {
+      const filterTool = vectorMetaTools.getTool('meta_filter_relevant_tools');
+      if (!filterTool) throw new Error('Filter tool not found');
+
+      const result = await filterTool.execute({
+        query: 'employee management',
+        mode: 'vector',
+        limit: 3,
+      });
+
+      // Should call embedding function for vector search
+      expect(mockEmbedding).toHaveBeenCalledWith({
+        model: expect.any(Object),
+        value: 'employee management',
+      });
+
+      const toolResults = result.tools as MetaToolSearchResult[];
+      expect(Array.isArray(toolResults)).toBe(true);
+    });
+
+    it('should perform hybrid search by default', async () => {
+      const filterTool = vectorMetaTools.getTool('meta_filter_relevant_tools');
+      if (!filterTool) throw new Error('Filter tool not found');
+
+      const result = await filterTool.execute({
+        query: 'employee management',
+        limit: 3,
+      });
+
+      // Should call embedding function for hybrid search
+      expect(mockEmbedding).toHaveBeenCalledWith({
+        model: expect.any(Object),
+        value: 'employee management',
+      });
+
+      const toolResults = result.tools as MetaToolSearchResult[];
+      expect(Array.isArray(toolResults)).toBe(true);
+    });
+
+    it('should use custom hybrid weights', async () => {
+      const filterTool = vectorMetaTools.getTool('meta_filter_relevant_tools');
+      if (!filterTool) throw new Error('Filter tool not found');
+
+      const result = await filterTool.execute({
+        query: 'employee management',
+        mode: 'hybrid',
+        hybridWeights: { text: 0.3, vector: 0.7 },
+        limit: 3,
+      });
+
+      expect(mockEmbedding).toHaveBeenCalled();
+
+      const toolResults = result.tools as MetaToolSearchResult[];
+      expect(Array.isArray(toolResults)).toBe(true);
+    });
+
+    it('should fall back to text search if embedding generation fails', async () => {
+      // Mock embedding failure
+      mockEmbedding.mockRejectedValueOnce(new Error('Embedding failed'));
+
+      const filterTool = vectorMetaTools.getTool('meta_filter_relevant_tools');
+      if (!filterTool) throw new Error('Filter tool not found');
+
+      // Should not throw error, but fall back to text search
+      const result = await filterTool.execute({
+        query: 'employee management',
+        mode: 'hybrid',
+        limit: 3,
+      });
+
+      const toolResults = result.tools as MetaToolSearchResult[];
+      expect(Array.isArray(toolResults)).toBe(true);
+    });
+  });
+
+  describe('Backward Compatibility', () => {
+    it('should work without embedding configuration (existing behavior)', async () => {
+      const mockTools = createMockTools();
+      const tools = new Tools(mockTools);
+
+      // Create meta tools without embedding config (legacy behavior)
+      const metaTools = await tools.metaTools();
+
+      expect(metaTools.length).toBe(2);
+
+      const filterTool = metaTools.getTool('meta_filter_relevant_tools');
+      expect(filterTool).toBeDefined();
+
+      // Should only have basic parameters (no vector search params)
+      const params = filterTool?.parameters as { properties: Record<string, unknown> };
+      expect(params.properties.mode).toBeUndefined();
+      expect(params.properties.hybridWeights).toBeUndefined();
+
+      // Should still work for text search
+      const result = await filterTool.execute({
+        query: 'employee management',
+        limit: 3,
+      });
+
+      const toolResults = result.tools as MetaToolSearchResult[];
+      expect(Array.isArray(toolResults)).toBe(true);
+    });
+  });
 });
