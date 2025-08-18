@@ -72,7 +72,7 @@ const metaToolsWithOpenAI = async (): Promise<void> => {
       {
         role: 'system',
         content: `You are an HR assistant with access to various HR tools. 
-        Use the meta_filter_relevant_tools to find appropriate tools for user requests,
+        Use the meta_search_tools to find appropriate tools for user requests,
         then use meta_execute_tool to execute them.`,
       },
       {
@@ -114,8 +114,8 @@ const directMetaToolUsage = async (): Promise<void> => {
   const metaTools = await allTools.metaTools();
 
   // Step 1: Search for relevant tools
-  const filterTool = metaTools.getTool('meta_filter_relevant_tools');
-  if (!filterTool) throw new Error('meta_filter_relevant_tools not found');
+  const filterTool = metaTools.getTool('meta_search_tools');
+  if (!filterTool) throw new Error('meta_search_tools not found');
   const searchResult = await filterTool.execute({
     query: 'employee management create update list',
     limit: 5,
@@ -189,7 +189,7 @@ const dynamicToolRouter = async (): Promise<void> => {
 
   // Create a router function that finds and executes tools based on intent
   const routeAndExecute = async (intent: string, params: Record<string, unknown> = {}) => {
-    const filterTool = metaTools.getTool('meta_filter_relevant_tools');
+    const filterTool = metaTools.getTool('meta_search_tools');
     const executeTool = metaTools.getTool('meta_execute_tool');
     if (!filterTool || !executeTool) throw new Error('Meta tools not found');
 
