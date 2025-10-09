@@ -223,7 +223,7 @@ export class BaseTool {
       [this.name]: {
         ...toolDefinition,
       },
-    } as ToolSet;
+    };
   }
 }
 
