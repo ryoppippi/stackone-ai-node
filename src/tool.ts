@@ -1,5 +1,4 @@
 import * as orama from '@orama/orama';
-import { jsonSchema } from 'ai';
 import type { ChatCompletionTool } from 'openai/resources/chat/completions';
 import { RequestBuilder } from './modules/requestBuilder';
 import type {
@@ -181,7 +180,7 @@ export class BaseTool {
   /**
    * Convert the tool to AI SDK format
    */
-  toAISDK(
+  async toAISDK(
     options: { executable?: boolean; execution?: ToolExecution | false } = {
       executable: true,
     }
@@ -192,6 +191,17 @@ export class BaseTool {
       required: this.parameters.required || [],
       additionalProperties: false,
     };
+
+    /** AI SDK is optional dependency, import only when needed */
+    let jsonSchema: typeof import('ai').jsonSchema;
+    try {
+      const ai = await import('ai');
+      jsonSchema = ai.jsonSchema;
+    } catch {
+      throw new StackOneError(
+        'AI SDK is not installed. Please install it with: npm install ai@4.x|5.x or bun add ai@4.x|5.x'
+      );
+    }
 
     const schemaObject = jsonSchema(schema);
     const toolDefinition: Record<string, unknown> = {
@@ -346,14 +356,14 @@ export class Tools implements Iterable<BaseTool> {
   /**
    * Convert all tools to AI SDK format
    */
-  toAISDK(
+  async toAISDK(
     options: { executable?: boolean; execution?: ToolExecution | false } = {
       executable: true,
     }
   ) {
     const result: Record<string, unknown> = {};
     for (const tool of this.tools) {
-      Object.assign(result, tool.toAISDK(options));
+      Object.assign(result, await tool.toAISDK(options));
     }
     return result;
   }

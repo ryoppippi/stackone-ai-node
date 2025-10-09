@@ -67,6 +67,14 @@
     "ai": "4.x|5.x",
     "openai": "5.x|6.x"
   },
+  "peerDependenciesMeta": {
+    "ai": {
+      "optional": true
+    },
+    "openai": {
+      "optional": true
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/StackOneHQ/stackone-ai-node.git"

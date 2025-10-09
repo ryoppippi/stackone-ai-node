@@ -29,6 +29,21 @@ yarn add @stackone/ai
 bun add @stackone/ai
 ```
 
+### Optional: AI SDK Integration
+
+If you plan to use the AI SDK integration (Vercel AI SDK), install it separately:
+
+```bash
+# Using npm
+npm install ai
+
+# Using yarn
+yarn add ai
+
+# Using bun
+bun add ai
+```
+
 ## Integrations
 
 The OpenAPIToolSet and StackOneToolSet make it super easy to use these APIs as tools in your AI applications.
@@ -70,7 +85,7 @@ import { StackOneToolSet } from "@stackone/ai";
 
 const toolset = new StackOneToolSet();
 
-const aiSdkTools = toolset.getTools("hris_*").toAISDK();
+const aiSdkTools = await toolset.getTools("hris_*").toAISDK();
 await generateText({
   model: openai("gpt-5"),
   tools: aiSdkTools,
@@ -274,7 +289,7 @@ const metaTools = await tools.metaTools();
 const openAITools = metaTools.toOpenAI();
 
 // Use with AI SDK
-const aiSdkTools = metaTools.toAISDK();
+const aiSdkTools = await metaTools.toAISDK();
 ```
 
 #### Example: Dynamic Tool Discovery with AI SDK
