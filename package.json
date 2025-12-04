@@ -17,7 +17,6 @@
     "LICENSE"
   ],
   "scripts": {
-    "preinstall": "bun x only-allow bun",
     "prepare": "bun prepare:git",
     "prepare:git": "git config --local core.hooksPath .githooks",
     "build": "bun -b tsdown",
@@ -39,7 +38,7 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.19.1",
     "@orama/orama": "^3.1.11",
-    "@stackone/stackone-client-ts": "^4.28.0",
+    "@stackone/stackone-client-ts": "4.32.2",
     "json-schema": "^0.4.0"
   },
   "devDependencies": {
