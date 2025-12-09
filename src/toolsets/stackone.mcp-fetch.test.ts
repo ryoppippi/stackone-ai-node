@@ -5,8 +5,8 @@
 import { http } from 'msw';
 import { type McpToolDefinition, createMcpApp } from '../../mocks/mcp-server';
 import { server } from '../../mocks/node';
-import { ToolSet } from '../toolsets/base';
-import { StackOneToolSet } from '../toolsets/stackone';
+import { ToolSet } from './base';
+import { StackOneToolSet } from './stackone';
 
 describe('ToolSet.fetchTools (MCP + RPC integration)', () => {
   it('creates tools from MCP catalog and wires RPC execution', async () => {
