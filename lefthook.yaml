@@ -1,14 +1,19 @@
 pre-commit:
   parallel: true
-  commands:
-    typecheck:
-      glob: "*.{ts,tsx,js,jsx,mts,cts}"
-      run: pnpm run typecheck
-    format:
-      glob: "*.{ts,tsx,js,jsx,mts,cts,json,jsonc,yaml,yml,md}"
-      run: pnpm biome check --no-errors-on-unmatched --write {staged_files}
-      stage_fixed: true
-    knip:
-      glob: "*.{ts,tsx,js,jsx,mts,cts}"
-      run: pnpm run format:knip
-      stage_fixed: true
+  jobs:
+    - name: lint-fmt
+      group:
+        piped: true
+        jobs:
+          - name: oxlint
+            glob: '*.{ts,tsx,js,jsx,mts,cts}'
+            run: bun oxlint --max-warnings=0 --type-aware --fix {staged_files}
+            stage_fixed: true
+          - name: oxfmt
+            glob: '*'
+            run: bun oxfmt --no-error-on-unmatched-pattern {staged_files}
+            stage_fixed: true
+
+    - name: typecheck
+      glob: '*.{ts,tsx,mts,cts}'
+      run: bun run typecheck

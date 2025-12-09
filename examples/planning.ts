@@ -15,28 +15,28 @@ const atsAccountId = 'your-ats-account-id';
 const hrisAccountId = 'your-hris-account-id';
 
 export const planningModule = async (): Promise<void> => {
-  const toolset = new StackOneToolSet();
+	const toolset = new StackOneToolSet();
 
-  const onboardWorkflow = await toolset.plan({
-    key: 'custom_onboarding',
-    input: 'Onboard the last new hire from Teamtailor to Workday',
-    model: 'stackone-planner-latest',
-    tools: ['hris_*', 'ats_*'],
-    accountIds: [atsAccountId, hrisAccountId],
-    cache: true, // saves the plan to $HOME/.stackone/plans
-  });
+	const onboardWorkflow = await toolset.plan({
+		key: 'custom_onboarding',
+		input: 'Onboard the last new hire from Teamtailor to Workday',
+		model: 'stackone-planner-latest',
+		tools: ['hris_*', 'ats_*'],
+		accountIds: [atsAccountId, hrisAccountId],
+		cache: true, // saves the plan to $HOME/.stackone/plans
+	});
 
-  await onboardWorkflow.execute();
+	await onboardWorkflow.execute();
 
-  /**
-   * or use as part of a larger agent (using AI SDK by Vercel)
-   */
-  await generateText({
-    model: openai('gpt-5'),
-    prompt: 'You are a workplace agent, onboard the latest hires to our systems',
-    tools: await onboardWorkflow.toAISDK(),
-    stopWhen: stepCountIs(3),
-  });
+	/**
+	 * or use as part of a larger agent (using AI SDK by Vercel)
+	 */
+	await generateText({
+		model: openai('gpt-5'),
+		prompt: 'You are a workplace agent, onboard the latest hires to our systems',
+		tools: await onboardWorkflow.toAISDK(),
+		stopWhen: stepCountIs(3),
+	});
 };
 
 console.log('Planning module is in closed beta and only available to design partners.');
