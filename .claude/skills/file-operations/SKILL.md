@@ -1,6 +1,8 @@
 ---
 name: file-operations
-description: HTTP request standards for StackOne SDK
+description: Use when making HTTP requests. Covers native fetch API patterns and error handling. (project)
+globs: "*.ts"
+alwaysApply: false
 ---
 
 # HTTP Request Standards
