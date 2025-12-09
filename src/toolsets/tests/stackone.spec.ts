@@ -1,13 +1,15 @@
-import { describe, expect, it } from 'bun:test';
-import { env } from 'bun';
 import { ToolSetConfigError } from '../base';
 import { StackOneToolSet } from '../stackone';
 
-// Mock environment variables
-env.STACKONE_API_KEY = 'test_key';
-env.STACKONE_ACCOUNT_ID = undefined;
-
 describe('StackOneToolSet', () => {
+  beforeEach(() => {
+    vi.stubEnv('STACKONE_API_KEY', 'test_key');
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
   describe('Authentication Configuration', () => {
     it('should configure basic auth with API key from constructor', () => {
       const toolset = new StackOneToolSet({ apiKey: 'custom_key' });
@@ -36,16 +38,11 @@ describe('StackOneToolSet', () => {
     });
 
     it('should throw ToolSetConfigError if no API key is provided and strict mode is enabled', () => {
-      // Temporarily remove environment variable
-      const originalKey = env.STACKONE_API_KEY;
-      env.STACKONE_API_KEY = undefined;
+      vi.stubEnv('STACKONE_API_KEY', undefined);
 
       expect(() => {
         new StackOneToolSet({ strict: true });
       }).toThrow(ToolSetConfigError);
-
-      // Restore environment variable
-      env.STACKONE_API_KEY = originalKey;
     });
 
     it('should not override custom headers with authentication', () => {
@@ -69,7 +66,6 @@ describe('StackOneToolSet', () => {
         accountId: 'test_account',
       });
 
-      // @ts-expect-error - Accessing protected property for testing
       const expectedAuthValue = `Basic ${Buffer.from('custom_key:').toString('base64')}`;
       // @ts-expect-error - Accessing protected property for testing
       expect(toolset.headers.Authorization).toBe(expectedAuthValue);

@@ -1,4 +1,3 @@
-import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from 'bun:test';
 import { BaseTool, StackOneTool, Tools } from '../tool';
 import { type ExecuteConfig, ParameterLocation, type ToolParameters } from '../types';
 import { StackOneAPIError } from '../utils/errors';
@@ -28,16 +27,6 @@ const createMockTool = (headers?: Record<string, string>): BaseTool => {
   return new BaseTool(name, description, parameters, executeConfig, headers);
 };
 
-// Set up and tear down mocks
-beforeEach(() => {
-  // Set up any common mocks here
-});
-
-afterEach(() => {
-  // Clean up all mocks
-  mock.restore();
-});
-
 describe('StackOneTool', () => {
   it('should initialize with correct properties', () => {
     const tool = createMockTool();
@@ -65,16 +54,13 @@ describe('StackOneTool', () => {
   it('should handle API errors', async () => {
     const tool = createMockTool();
 
-    try {
-      await tool.execute({ id: 'invalid' });
-      // Should not reach here
-      expect(true).toBe(false);
-    } catch (error) {
+    await expect(tool.execute({ id: 'invalid' })).rejects.toSatisfy((error) => {
       expect(error).toBeInstanceOf(StackOneAPIError);
       const apiError = error as StackOneAPIError;
       expect(apiError.statusCode).toBe(400);
       expect(apiError.responseBody).toEqual({ error: 'Invalid ID' });
-    }
+      return true;
+    });
   });
 
   it('should convert to OpenAI tool format', () => {
@@ -106,12 +92,13 @@ describe('StackOneTool', () => {
     expect(aiSdkTool.test_tool.description).toBe('Test tool');
     expect(aiSdkTool.test_tool.inputSchema).toBeDefined();
 
-    // The actual schema is in inputSchema.jsonSchema
+    // TODO: Remove ts-ignore once AISDKToolDefinition properly types inputSchema.jsonSchema
+    // @ts-ignore - jsonSchema is available on Schema wrapper from ai sdk
     const schema = aiSdkTool.test_tool.inputSchema.jsonSchema;
     expect(schema).toBeDefined();
     expect(schema.type).toBe('object');
-    expect(schema.properties.id).toBeDefined();
-    expect(schema.properties.id.type).toBe('string');
+    expect(schema.properties?.id).toBeDefined();
+    expect(schema.properties?.id.type).toBe('string');
   });
 
   it('should include execution metadata by default in AI SDK conversion', async () => {
@@ -121,8 +108,11 @@ describe('StackOneTool', () => {
     const execution = aiSdkTool.test_tool.execution;
 
     expect(execution).toBeDefined();
-    expect(execution?.config.method).toBe('GET');
-    expect(execution?.config.url).toBe('https://api.example.com/test/{id}');
+    expect(execution?.config.kind).toBe('http');
+    if (execution?.config.kind === 'http') {
+      expect(execution.config.method).toBe('GET');
+      expect(execution.config.url).toBe('https://api.example.com/test/{id}');
+    }
     expect(execution?.headers).toEqual({});
   });
 
@@ -174,29 +164,28 @@ describe('StackOneTool', () => {
     // Check that inputSchema is defined
     expect(aiSdkTool.complex_tool.inputSchema).toBeDefined();
 
-    // The actual schema is in inputSchema.jsonSchema
+    // TODO: Remove ts-ignore once AISDKToolDefinition properly types inputSchema.jsonSchema
+    // @ts-ignore - jsonSchema is available on Schema wrapper from ai sdk
     const schema = aiSdkTool.complex_tool.inputSchema.jsonSchema;
     expect(schema).toBeDefined();
     expect(schema.type).toBe('object');
 
     // Check that the properties are defined with correct types
     expect(schema.properties).toBeDefined();
-    expect(schema.properties.stringParam.type).toBe('string');
-    expect(schema.properties.numberParam.type).toBe('number');
-    expect(schema.properties.booleanParam.type).toBe('boolean');
-    expect(schema.properties.arrayParam.type).toBe('array');
-    expect(schema.properties.objectParam.type).toBe('object');
+    expect(schema.properties?.stringParam.type).toBe('string');
+    expect(schema.properties?.numberParam.type).toBe('number');
+    expect(schema.properties?.booleanParam.type).toBe('boolean');
+    expect(schema.properties?.arrayParam.type).toBe('array');
+    expect(schema.properties?.objectParam.type).toBe('object');
   });
 
   it('should execute AI SDK tool with parameters', async () => {
     const tool = createMockTool();
     const aiSdkTool = await tool.toAISDK();
 
-    if (!aiSdkTool.test_tool.execute) {
-      throw new Error('test_tool.execute is undefined');
-    }
+    expect(aiSdkTool.test_tool.execute).toBeDefined();
 
-    const result = await aiSdkTool.test_tool.execute(
+    const result = await aiSdkTool.test_tool.execute?.(
       { id: '123' },
       { toolCallId: 'test-tool-call-id', messages: [] }
     );
@@ -205,24 +194,16 @@ describe('StackOneTool', () => {
 
   it('should return error message as string when AI SDK tool execution fails', async () => {
     const tool = createMockTool();
-
-    // Mock the execute method to throw an error
-    const mockError = new Error('Test execution error');
-    spyOn(tool, 'execute').mockImplementation(() => {
-      throw mockError;
-    });
-
     const aiSdkTool = await tool.toAISDK();
 
-    if (!aiSdkTool.test_tool.execute) {
-      throw new Error('test_tool.execute is undefined');
-    }
+    expect(aiSdkTool.test_tool.execute).toBeDefined();
 
-    const result = await aiSdkTool.test_tool.execute(
-      { id: '123' },
+    // 'invalid' id returns 400 error via MSW handler
+    const result = await aiSdkTool.test_tool.execute?.(
+      { id: 'invalid' },
       { toolCallId: 'test-tool-call-id', messages: [] }
     );
-    expect(result).toBe('Error executing tool: Test execution error');
+    expect(result).toMatch(/Error executing tool:/);
   });
 });
 

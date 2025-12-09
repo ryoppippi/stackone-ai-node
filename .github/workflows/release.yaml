@@ -11,32 +11,30 @@ permissions:
 
 jobs:
   release-please:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     outputs:
       release_created: ${{ steps.release-please.outputs.release_created }}
     steps:
-      - uses: googleapis/release-please-action@c2a5a2bd6a758a0937f1ddb1e8950609867ed15c # v4.3.0
+      - uses: googleapis/release-please-action@16a9c90856f42705d54a6fda1823352bdc62cf38 # v4.4.0
         id: release-please
         with:
           release-type: node
 
   publish-package:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created  }}
     env:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_CONFIG_TOKEN }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2.0.2
-        with:
-          bun-version: latest
+      - name: Setup Nix
+        uses: ./.github/actions/setup-nix
 
       - name: Setup Node.js for npm
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_CONFIG_TOKEN }}
         with:
@@ -44,9 +42,7 @@ jobs:
           registry-url: "https://registry.npmjs.org"
 
       - name: 💫 Install dependencies
-        run: bun i
+        run: nix develop --command pnpm install --frozen-lockfile
 
       - name: 🚀 Publish package
-        run: npm publish --access public
-        env:
-          RELEASE: 1
+        run: nix develop --command pnpm publish --access public --no-git-checks

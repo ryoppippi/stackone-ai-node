@@ -1,0 +1,20 @@
+name: Dry Run Publish Package with pkg.pr.new
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  dry-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Setup Nix
+        uses: ./.github/actions/setup-nix
+
+      - name: Install dependencies
+        run: nix develop --command pnpm install --frozen-lockfile
+
+      - name: 🚀 Dry Run Publish Package
+        run: nix develop --command pnpm dlx pkg-pr-new publish --pnpm

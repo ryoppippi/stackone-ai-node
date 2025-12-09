@@ -1,6 +1,5 @@
-import { afterEach, beforeEach, describe, expect, it } from 'bun:test';
 import { http, HttpResponse } from 'msw';
-import { server } from '../../../mocks/node.ts';
+import { server } from '../../../mocks/node';
 import { type HttpExecuteConfig, ParameterLocation } from '../../types';
 import { StackOneAPIError } from '../../utils/errors';
 import { RequestBuilder } from '../requestBuilder';
@@ -329,8 +328,9 @@ describe('RequestBuilder', () => {
     });
 
     it('should throw error when circular reference is detected', async () => {
-      const circular: Record<string, unknown> = { a: { b: 'test' } };
-      circular.a.circular = circular; // Create circular reference
+      const inner: Record<string, unknown> = { b: 'test' };
+      const circular: Record<string, unknown> = { a: inner };
+      inner.circular = circular; // Create circular reference
 
       const params = {
         pathParam: 'test-value',

@@ -1,12 +1,20 @@
-import { afterAll, beforeAll, describe, expect, it, mock } from 'bun:test';
 import { StreamableHTTPTransport } from '@hono/mcp';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { StackOne } from '@stackone/stackone-client-ts';
 import { Hono } from 'hono';
+import { assert, vi } from 'vitest';
 import { z } from 'zod';
 import { server as mswServer } from '../../../mocks/node';
 import { ToolSet } from '../base';
 import { StackOneToolSet } from '../stackone';
+
+// Bun runtime types for test environment
+declare const Bun: {
+  serve(options: { port: number; fetch: (req: Request) => Response | Promise<Response> }): {
+    url: URL;
+    stop(): void;
+  };
+};
 
 type MockTool = {
   name: string;
@@ -14,7 +22,7 @@ type MockTool = {
   shape: Record<string, unknown>; // JSON Schema object
 };
 
-async function createMockMcpServer(accountTools: Record<string, MockTool[]>) {
+async function createMockMcpServer(accountTools: Record<string, readonly MockTool[]>) {
   const app = new Hono();
 
   app.all('/mcp', async (c) => {
@@ -31,9 +39,11 @@ async function createMockMcpServer(accountTools: Record<string, MockTool[]>) {
         tool.name,
         {
           description: tool.description,
-          inputSchema: tool.shape,
+          // TODO: Remove type assertion - MCP SDK expects Zod schema but we're using JSON Schema objects in tests
+          // biome-ignore lint/suspicious/noExplicitAny: MCP SDK type mismatch - using JSON Schema instead of Zod
+          inputSchema: tool.shape as any,
         },
-        async ({ params }) => ({
+        async ({ params }: { params: { arguments?: Record<string, unknown> } }) => ({
           content: [],
           structuredContent: params.arguments ?? {},
           _meta: undefined,
@@ -97,7 +107,7 @@ describe('ToolSet.fetchTools (MCP + RPC integration)', () => {
   it('creates tools from MCP catalog and wires RPC execution', async () => {
     const stackOneClient = {
       actions: {
-        rpcAction: mock(async () => ({ actionsRpcResponse: { data: null } })),
+        rpcAction: vi.fn(async () => ({ actionsRpcResponse: { data: null } })),
       },
     } as unknown as StackOne;
 
@@ -119,11 +129,17 @@ describe('ToolSet.fetchTools (MCP + RPC integration)', () => {
     const aiToolDefinition = aiTools.dummy_action;
     expect(aiToolDefinition).toBeDefined();
     expect(aiToolDefinition.description).toBe('Dummy tool');
+    // TODO: Remove ts-ignore once AISDKToolDefinition properly types inputSchema.jsonSchema
+    // @ts-ignore - jsonSchema is available on Schema wrapper from ai sdk
     expect(aiToolDefinition.inputSchema.jsonSchema.properties).toBeDefined();
     expect(aiToolDefinition.execution).toBeUndefined();
 
     const executableTool = (await tool.toAISDK()).dummy_action;
-    const result = await executableTool.execute({ foo: 'bar' });
+    assert(executableTool.execute, 'execute should be defined');
+    const result = await executableTool.execute(
+      { foo: 'bar' },
+      { toolCallId: 'test-id', messages: [] }
+    );
 
     expect(stackOneClient.actions.rpcAction).toHaveBeenCalledWith({
       action: 'dummy_action',
@@ -210,7 +226,7 @@ describe('StackOneToolSet account filtering', () => {
   it('supports setAccounts() for chaining', async () => {
     const stackOneClient = {
       actions: {
-        rpcAction: mock(async () => ({ actionsRpcResponse: { data: null } })),
+        rpcAction: vi.fn(async () => ({ actionsRpcResponse: { data: null } })),
       },
     } as unknown as StackOne;
 
@@ -228,7 +244,7 @@ describe('StackOneToolSet account filtering', () => {
   it('fetches tools without account filtering when no accountIds provided', async () => {
     const stackOneClient = {
       actions: {
-        rpcAction: mock(async () => ({ actionsRpcResponse: { data: null } })),
+        rpcAction: vi.fn(async () => ({ actionsRpcResponse: { data: null } })),
       },
     } as unknown as StackOne;
 
@@ -250,7 +266,7 @@ describe('StackOneToolSet account filtering', () => {
   it('uses x-account-id header when fetching tools with accountIds', async () => {
     const stackOneClient = {
       actions: {
-        rpcAction: mock(async () => ({ actionsRpcResponse: { data: null } })),
+        rpcAction: vi.fn(async () => ({ actionsRpcResponse: { data: null } })),
       },
     } as unknown as StackOne;
 
@@ -273,7 +289,7 @@ describe('StackOneToolSet account filtering', () => {
   it('uses setAccounts when no accountIds provided in fetchTools', async () => {
     const stackOneClient = {
       actions: {
-        rpcAction: mock(async () => ({ actionsRpcResponse: { data: null } })),
+        rpcAction: vi.fn(async () => ({ actionsRpcResponse: { data: null } })),
       },
     } as unknown as StackOne;
 
@@ -303,7 +319,7 @@ describe('StackOneToolSet account filtering', () => {
   it('overrides setAccounts when accountIds provided in fetchTools', async () => {
     const stackOneClient = {
       actions: {
-        rpcAction: mock(async () => ({ actionsRpcResponse: { data: null } })),
+        rpcAction: vi.fn(async () => ({ actionsRpcResponse: { data: null } })),
       },
     } as unknown as StackOne;
 
@@ -379,7 +395,7 @@ describe('StackOneToolSet provider and action filtering', () => {
   it('filters tools by providers', async () => {
     const stackOneClient = {
       actions: {
-        rpcAction: mock(async () => ({ actionsRpcResponse: { data: null } })),
+        rpcAction: vi.fn(async () => ({ actionsRpcResponse: { data: null } })),
       },
     } as unknown as StackOne;
 
@@ -406,7 +422,7 @@ describe('StackOneToolSet provider and action filtering', () => {
   it('filters tools by actions with exact match', async () => {
     const stackOneClient = {
       actions: {
-        rpcAction: mock(async () => ({ actionsRpcResponse: { data: null } })),
+        rpcAction: vi.fn(async () => ({ actionsRpcResponse: { data: null } })),
       },
     } as unknown as StackOne;
 
@@ -432,7 +448,7 @@ describe('StackOneToolSet provider and action filtering', () => {
   it('filters tools by actions with glob pattern', async () => {
     const stackOneClient = {
       actions: {
-        rpcAction: mock(async () => ({ actionsRpcResponse: { data: null } })),
+        rpcAction: vi.fn(async () => ({ actionsRpcResponse: { data: null } })),
       },
     } as unknown as StackOne;
 
@@ -490,7 +506,7 @@ describe('StackOneToolSet provider and action filtering', () => {
 
     const stackOneClient = {
       actions: {
-        rpcAction: mock(async () => ({ actionsRpcResponse: { data: null } })),
+        rpcAction: vi.fn(async () => ({ actionsRpcResponse: { data: null } })),
       },
     } as unknown as StackOne;
 
@@ -543,7 +559,7 @@ describe('StackOneToolSet provider and action filtering', () => {
 
     const stackOneClient = {
       actions: {
-        rpcAction: mock(async () => ({ actionsRpcResponse: { data: null } })),
+        rpcAction: vi.fn(async () => ({ actionsRpcResponse: { data: null } })),
       },
     } as unknown as StackOne;
 

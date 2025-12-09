@@ -25,7 +25,7 @@ Refer to `.claude/skills/openapi-architecture/SKILL.md` for complete details.
 ### Testing Strategy
 
 See the **typescript-testing** skill for comprehensive testing guidance:
-- Bun test runner setup and commands
+- Vitest test runner setup and commands
 - MSW (Mock Service Worker) patterns
 - File system testing with fs-fixture
 - Test organization and best practices
@@ -51,6 +51,10 @@ See the **file-operations** skill for file and HTTP guidance:
 - Common HTTP request patterns
 
 Refer to `.claude/skills/file-operations/SKILL.md` for complete details.
+
+## File Naming Conventions
+
+- Use `.yaml` extension instead of `.yml` for all YAML files (e.g., `lefthook.yaml`, GitHub Actions workflows)
 
 ## Orama Integration
 

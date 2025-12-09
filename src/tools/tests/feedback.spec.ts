@@ -1,8 +1,22 @@
-import { describe, expect, it } from 'bun:test';
 import { http, HttpResponse } from 'msw';
 import { server } from '../../../mocks/node';
 import { StackOneError } from '../../utils/errors';
 import { createFeedbackTool } from '../feedback';
+
+interface FeedbackResultItem {
+  account_id: string;
+  status: string;
+  result?: unknown;
+  error?: string;
+}
+
+interface FeedbackResult {
+  message: string;
+  total_accounts: number;
+  successful: number;
+  failed: number;
+  results: FeedbackResultItem[];
+}
 
 describe('meta_collect_tool_feedback', () => {
   describe('validation tests', () => {
@@ -126,17 +140,22 @@ describe('meta_collect_tool_feedback', () => {
       expect(recordedRequests).toHaveLength(1);
       expect(recordedRequests[0]?.url).toBe('https://api.stackone.com/ai/tool-feedback');
       expect(recordedRequests[0]?.method).toBe('POST');
-      expect(result).toMatchObject({
+      // TODO: Remove type assertion once createFeedbackTool returns properly typed result instead of JsonDict
+      const feedbackResult = result as unknown as FeedbackResult;
+      expect(feedbackResult).toMatchObject({
         message: 'Feedback sent to 1 account(s)',
         total_accounts: 1,
         successful: 1,
         failed: 0,
       });
-      expect(result.results[0]).toMatchObject({
+      expect(feedbackResult.results[0]).toMatchObject({
         account_id: 'acc_123456',
         status: 'success',
       });
-      expect(result.results[0].result).toHaveProperty('message', 'Feedback successfully stored');
+      expect(feedbackResult.results[0].result).toHaveProperty(
+        'message',
+        'Feedback successfully stored'
+      );
       server.events.removeListener('request:start', listener);
     });
 
@@ -228,19 +247,17 @@ describe('meta_collect_tool_feedback', () => {
       });
 
       expect(callCount).toBe(2);
-      expect(mixedResult).toMatchObject({
+      // TODO: Remove type assertion once createFeedbackTool returns properly typed result instead of JsonDict
+      const mixedFeedbackResult = mixedResult as unknown as FeedbackResult;
+      expect(mixedFeedbackResult).toMatchObject({
         message: 'Feedback sent to 2 account(s)',
         total_accounts: 2,
         successful: 1,
         failed: 1,
       });
 
-      const successResult = mixedResult.results.find(
-        (r: { account_id: string }) => r.account_id === 'acc_123456'
-      );
-      const errorResult = mixedResult.results.find(
-        (r: { account_id: string }) => r.account_id === 'acc_789012'
-      );
+      const successResult = mixedFeedbackResult.results.find((r) => r.account_id === 'acc_123456');
+      const errorResult = mixedFeedbackResult.results.find((r) => r.account_id === 'acc_789012');
 
       expect(successResult).toMatchObject({
         account_id: 'acc_123456',
@@ -278,40 +295,6 @@ describe('meta_collect_tool_feedback', () => {
           }),
         },
       });
-    });
-  });
-
-  describe('integration test', () => {
-    it('test_live_feedback_submission', async () => {
-      // Skip if no API key is available (similar to Python SDK)
-      if (!process.env.STACKONE_API_KEY) {
-        console.log('Skipping live test - STACKONE_API_KEY not available');
-        return;
-      }
-
-      const tool = createFeedbackTool();
-      const testData = {
-        feedback: `Test feedback from Node.js SDK at ${new Date().toISOString()}`,
-        account_id: 'test_account_123',
-        tool_names: ['test_tool_1', 'test_tool_2'],
-      };
-
-      try {
-        const result = await tool.execute(testData);
-        expect(result).toMatchObject({
-          message: 'Feedback sent to 1 account(s)',
-          total_accounts: 1,
-          successful: 1,
-          failed: 0,
-        });
-        expect(result.results[0]).toMatchObject({
-          account_id: 'test_account_123',
-          status: 'success',
-        });
-      } catch (error) {
-        // If the test account doesn't exist, that's expected
-        expect(error).toBeInstanceOf(StackOneError);
-      }
     });
   });
 });

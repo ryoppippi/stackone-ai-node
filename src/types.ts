@@ -2,6 +2,7 @@
  * Common type definitions for the StackOne SDK
  */
 
+import type { Tool } from '@ai-sdk/provider-utils';
 import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
 import type { ValueOf } from 'type-fest';
 
@@ -156,3 +157,27 @@ export interface ToolDefinition {
   parameters: ToolParameters;
   execute: ExecuteConfig;
 }
+
+/**
+ * Extended AI SDK tool definition with StackOne-specific execution metadata.
+ * Extends the base Tool type from @ai-sdk/provider-utils.
+ *
+ * NOTE: We avoid defining our own types as much as possible and use existing
+ * types from dependencies. This type only extends the AI SDK Tool type with
+ * StackOne-specific metadata that doesn't exist in the original type.
+ */
+export type AISDKToolDefinition = Tool & {
+  /**
+   * StackOne-specific execution metadata for debugging and introspection.
+   */
+  execution?: ToolExecution;
+};
+
+/**
+ * Result type for toAISDK() method.
+ * Maps tool names to their AI SDK tool definitions.
+ *
+ * NOTE: We avoid defining our own types as much as possible and use existing
+ * types from dependencies. This is a simple mapped type over AISDKToolDefinition.
+ */
+export type AISDKToolResult<T extends string = string> = Record<T, AISDKToolDefinition>;

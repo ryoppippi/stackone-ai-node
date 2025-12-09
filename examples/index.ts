@@ -8,8 +8,8 @@
  * # Using yarn
  * yarn add @stackone/ai
  *
- * # Using bun
- * bun add @stackone/ai
+ * # Using pnpm
+ * pnpm add @stackone/ai
  * ```
  *
  * # Authentication
@@ -42,17 +42,12 @@ const accountId = ACCOUNT_IDS.HRIS;
  */
 
 import assert from 'node:assert';
-import { StackOneToolSet } from '../src';
+import { StackOneToolSet } from '@stackone/ai';
 
 const apiKey = process.env.STACKONE_API_KEY;
-const isPlaceholderKey = !apiKey || apiKey === 'test-stackone-key';
-const shouldSkip = process.env.SKIP_FETCH_TOOLS_EXAMPLE !== '0' && isPlaceholderKey;
-
-if (shouldSkip) {
-  console.log(
-    'Skipping index example. Provide STACKONE_API_KEY and set SKIP_FETCH_TOOLS_EXAMPLE=0 to run.'
-  );
-  process.exit(0);
+if (!apiKey) {
+  console.error('STACKONE_API_KEY environment variable is required');
+  process.exit(1);
 }
 
 const quickstart = async (): Promise<void> => {

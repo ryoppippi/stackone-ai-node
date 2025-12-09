@@ -1,4 +1,3 @@
-import { env } from 'bun';
 import { defineConfig } from 'tsdown';
 
 export default defineConfig({
@@ -16,6 +15,6 @@ export default defineConfig({
   unused: true,
   unbundle: true,
   exports: {
-    devExports: !env.RELEASE,
+    devExports: !process.env.RELEASE,
   },
 });

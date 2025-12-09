@@ -8,19 +8,14 @@
 
 import process from 'node:process';
 import { openai } from '@ai-sdk/openai';
-import { generateText } from 'ai';
-import { StackOneToolSet, Tools } from '../src';
+import { StackOneToolSet, Tools } from '@stackone/ai';
+import { generateText, stepCountIs } from 'ai';
 import { ACCOUNT_IDS } from './constants';
 
 const apiKey = process.env.STACKONE_API_KEY;
-const isPlaceholderKey = !apiKey || apiKey === 'test-stackone-key';
-const shouldSkip = process.env.SKIP_FETCH_TOOLS_EXAMPLE !== '0' && isPlaceholderKey;
-
-if (shouldSkip) {
-  console.log(
-    'Skipping meta-tools example. Provide STACKONE_API_KEY and set SKIP_FETCH_TOOLS_EXAMPLE=0 to run.'
-  );
-  process.exit(0);
+if (!apiKey) {
+  console.error('STACKONE_API_KEY environment variable is required');
+  process.exit(1);
 }
 
 /**
@@ -49,7 +44,7 @@ const metaToolsWithAISDK = async (): Promise<void> => {
     prompt: `I need to create a time off request for an employee.
     First, find the right tool for this task, then use it to create a time off request
     for employee ID "emp_123" from January 15, 2024 to January 19, 2024.`,
-    maxSteps: 3, // Allow multiple tool calls
+    stopWhen: stepCountIs(3), // Allow multiple tool calls
   });
 
   console.log('AI Response:', text);
@@ -108,7 +103,9 @@ const metaToolsWithOpenAI = async (): Promise<void> => {
   if (response.choices[0].message.tool_calls) {
     console.log('\nTool calls:');
     for (const toolCall of response.choices[0].message.tool_calls) {
-      console.log(`- ${toolCall.function.name}: ${toolCall.function.arguments}`);
+      if (toolCall.type === 'function') {
+        console.log(`- ${toolCall.function.name}: ${toolCall.function.arguments}`);
+      }
     }
   }
 };

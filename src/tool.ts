@@ -1,8 +1,10 @@
 import * as orama from '@orama/orama';
-import type { ChatCompletionTool } from 'openai/resources/chat/completions';
+import type { ChatCompletionFunctionTool } from 'openai/resources/chat/completions';
 import { DEFAULT_HYBRID_ALPHA } from './constants';
 import { RequestBuilder } from './modules/requestBuilder';
 import type {
+  AISDKToolDefinition,
+  AISDKToolResult,
   ExecuteConfig,
   ExecuteOptions,
   Experimental_PreExecuteFunction,
@@ -164,7 +166,7 @@ export class BaseTool {
   /**
    * Convert the tool to OpenAI format
    */
-  toOpenAI(): ChatCompletionTool {
+  toOpenAI(): ChatCompletionFunctionTool {
     return {
       type: 'function',
       function: {
@@ -186,7 +188,7 @@ export class BaseTool {
     options: { executable?: boolean; execution?: ToolExecution | false } = {
       executable: true,
     }
-  ) {
+  ): Promise<AISDKToolResult> {
     const schema = {
       type: 'object' as const,
       properties: this.parameters.properties || {},
@@ -201,16 +203,19 @@ export class BaseTool {
       jsonSchema = ai.jsonSchema;
     } catch {
       throw new StackOneError(
-        'AI SDK is not installed. Please install it with: npm install ai@4.x|5.x or bun add ai@4.x|5.x'
+        'AI SDK is not installed. Please install it with: npm install ai@4.x|5.x or pnpm add ai@4.x|5.x'
       );
     }
 
     const schemaObject = jsonSchema(schema);
-    const toolDefinition: Record<string, unknown> = {
-      inputSchema: schemaObject, // v5
+    // TODO: Remove ts-ignore once AISDKToolDefinition properly types the inputSchema and parameters
+    // We avoid defining our own types as much as possible, so we use the AI SDK Tool type
+    // but need to suppress errors for backward compatibility properties
+    const toolDefinition = {
+      inputSchema: schemaObject,
       parameters: schemaObject, // v4 (backward compatibility)
       description: this.description,
-    };
+    } as AISDKToolDefinition;
 
     const executionOption =
       options.execution !== undefined
@@ -234,10 +239,8 @@ export class BaseTool {
     }
 
     return {
-      [this.name]: {
-        ...toolDefinition,
-      },
-    };
+      [this.name]: toolDefinition,
+    } as AISDKToolResult;
   }
 }
 
@@ -351,7 +354,7 @@ export class Tools implements Iterable<BaseTool> {
   /**
    * Convert all tools to OpenAI format
    */
-  toOpenAI(): ChatCompletionTool[] {
+  toOpenAI(): ChatCompletionFunctionTool[] {
     return this.tools.map((tool) => tool.toOpenAI());
   }
 
@@ -362,8 +365,8 @@ export class Tools implements Iterable<BaseTool> {
     options: { executable?: boolean; execution?: ToolExecution | false } = {
       executable: true,
     }
-  ) {
-    const result: Record<string, unknown> = {};
+  ): Promise<AISDKToolResult> {
+    const result: AISDKToolResult = {};
     for (const tool of this.tools) {
       Object.assign(result, await tool.toAISDK(options));
     }
