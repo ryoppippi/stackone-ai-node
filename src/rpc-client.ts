@@ -1,4 +1,4 @@
-import { STACKONE_HEADER_KEYS } from './schemas/headers';
+import { STACKONE_HEADER_KEYS } from './headers';
 import {
 	type RpcActionRequest,
 	type RpcActionResponse,
@@ -6,11 +6,11 @@ import {
 	rpcActionRequestSchema,
 	rpcActionResponseSchema,
 	rpcClientConfigSchema,
-} from './schemas/rpc';
+} from './schema';
 import { StackOneAPIError } from './utils/errors';
 
 // Re-export types for consumers and to make types portable
-export type { RpcActionResponse } from './schemas/rpc';
+export type { RpcActionResponse } from './schema';
 
 /**
  * Custom RPC client for StackOne API.

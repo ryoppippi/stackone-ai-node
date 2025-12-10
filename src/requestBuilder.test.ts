@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
-import { server } from '../../mocks/node';
-import { type HttpExecuteConfig, ParameterLocation } from '../types';
-import { StackOneAPIError } from '../utils/errors';
+import { server } from '../mocks/node';
+import { type HttpExecuteConfig, ParameterLocation } from './types';
+import { StackOneAPIError } from './utils/errors';
 import { RequestBuilder } from './requestBuilder';
 
 describe('RequestBuilder', () => {
@@ -62,8 +62,7 @@ describe('RequestBuilder', () => {
 		server.events.removeAllListeners('request:start');
 	});
 
-	it('should initialize with correct properties', () => {
-		expect(builder).toBeDefined();
+	it('should initialise with headers from constructor', () => {
 		expect(builder.getHeaders()).toEqual({ 'Initial-Header': 'test' });
 	});
 

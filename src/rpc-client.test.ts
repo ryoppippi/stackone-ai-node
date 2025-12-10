@@ -1,5 +1,5 @@
 import { RpcClient } from './rpc-client';
-import { stackOneHeadersSchema } from './schemas/headers';
+import { stackOneHeadersSchema } from './headers';
 import { StackOneAPIError } from './utils/errors';
 
 test('should successfully execute an RPC action', async () => {
