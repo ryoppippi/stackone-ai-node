@@ -35,7 +35,7 @@ export const stackoneAiHandlers = [
 		return HttpResponse.json({
 			tools: [
 				{
-					name: 'hris_list_employees',
+					name: 'bamboohr_list_employees',
 					description: 'List all employees',
 					parameters: {
 						type: 'object',
@@ -48,7 +48,7 @@ export const stackoneAiHandlers = [
 					},
 				},
 				{
-					name: 'hris_get_employee',
+					name: 'bamboohr_get_employee',
 					description: 'Get employee by ID',
 					parameters: {
 						type: 'object',
@@ -57,7 +57,7 @@ export const stackoneAiHandlers = [
 					},
 				},
 				{
-					name: 'hris_create_employee',
+					name: 'bamboohr_create_employee',
 					description: 'Create a new employee',
 					parameters: {
 						type: 'object',
@@ -73,11 +73,11 @@ export const stackoneAiHandlers = [
 		return HttpResponse.json({
 			openapi: '3.0.0',
 			info: { title: 'StackOne HRIS API', version: '1.0.0' },
-			servers: [{ url: 'https://api.stackone.com/unified' }],
+			servers: [{ url: 'https://api.stackone.com' }],
 			paths: {
 				'/hris/employees': {
 					get: {
-						operationId: 'hris_list_employees',
+						operationId: 'bamboohr_list_employees',
 						summary: 'List employees',
 						parameters: [{ name: 'limit', in: 'query', schema: { type: 'integer' } }],
 						responses: { '200': { description: 'Success' } },
@@ -85,7 +85,7 @@ export const stackoneAiHandlers = [
 				},
 				'/hris/employees/{id}': {
 					get: {
-						operationId: 'hris_get_employee',
+						operationId: 'bamboohr_get_employee',
 						summary: 'Get employee by ID',
 						parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
 						responses: { '200': { description: 'Success' } },
