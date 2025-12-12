@@ -21,191 +21,10 @@ yarn add @stackone/ai
 
 # Using pnpm
 pnpm add @stackone/ai
+
+# Using bun
+bun add @stackone/ai
 ```
-
-### Optional: AI SDK Integration
-
-If you plan to use the AI SDK integration (Vercel AI SDK), install it separately:
-
-```bash
-# Using npm
-npm install ai
-
-# Using yarn
-yarn add ai
-
-# Using pnpm
-pnpm add ai
-```
-
-## Development Environment
-
-### Using Nix Flake
-
-This project includes a Nix flake for reproducible development environments. If you have Nix installed with flakes enabled, you can use it to set up your development environment:
-
-```bash
-# Enter development shell
-nix develop
-
-# Or use direnv for automatic activation
-echo "use flake" > .envrc
-direnv allow
-```
-
-The flake provides all necessary development dependencies including Node.js, pnpm, and other build tools.
-
-## Integrations
-
-The StackOneToolSet makes it super easy to use StackOne APIs as tools in your AI applications.
-
-### With OpenAI library
-
-```typescript
-import { OpenAI } from "openai";
-import { StackOneToolSet } from "@stackone/ai";
-
-const toolset = new StackOneToolSet({
-  baseUrl: "https://api.stackone.com",
-  accountId: "your-account-id",
-});
-
-const tools = await toolset.fetchTools();
-
-await openai.chat.completions.create({
-  model: "gpt-5.1",
-  messages: [
-    {
-      role: "system",
-      content: "You are a helpful HR assistant using BambooHR.",
-    },
-    {
-      role: "user",
-      content: "Create a time-off request for employee id cxIQ5764hj2",
-    },
-  ],
-  tools: tools.toOpenAI(),
-});
-```
-
-[View full example](examples/openai-integration.ts)
-
-### AI SDK by Vercel
-
-```typescript
-import { openai } from "@ai-sdk/openai";
-import { generateText } from "ai";
-import { StackOneToolSet } from "@stackone/ai";
-
-const toolset = new StackOneToolSet({
-  baseUrl: "https://api.stackone.com",
-  accountId: "your-account-id",
-});
-
-const tools = await toolset.fetchTools();
-
-await generateText({
-  model: openai("gpt-5.1"),
-  tools: await tools.toAISDK(),
-  maxSteps: 3,
-});
-```
-
-[View full example](examples/ai-sdk-integration.ts)
-
-### TanStack AI
-
-```typescript
-import { chat } from "@tanstack/ai";
-import { openai } from "@tanstack/ai-openai";
-import { z } from "zod";
-import { StackOneToolSet } from "@stackone/ai";
-
-const toolset = new StackOneToolSet({
-  baseUrl: "https://api.stackone.com",
-  accountId: "your-account-id",
-});
-
-const tools = await toolset.fetchTools();
-const employeeTool = tools.getTool("bamboohr_get_employee");
-
-// TanStack AI requires Zod schemas for tool input validation
-const getEmployeeTool = {
-  name: employeeTool.name,
-  description: employeeTool.description,
-  inputSchema: z.object({
-    id: z.string().describe("The employee ID"),
-  }),
-  execute: async (args: { id: string }) => {
-    return employeeTool.execute(args);
-  },
-};
-
-const adapter = openai();
-const stream = chat({
-  adapter,
-  model: "gpt-4o",
-  messages: [{ role: "user", content: "Get employee with id: abc123" }],
-  tools: [getEmployeeTool],
-});
-
-for await (const chunk of stream) {
-  // Process streaming chunks
-}
-```
-
-[View full example](examples/tanstack-ai-integration.ts)
-
-### Claude Agent SDK
-
-```typescript
-import { query, tool, createSdkMcpServer } from "@anthropic-ai/claude-agent-sdk";
-import { z } from "zod";
-import { StackOneToolSet } from "@stackone/ai";
-
-const toolset = new StackOneToolSet({
-  baseUrl: "https://api.stackone.com",
-  accountId: "your-account-id",
-});
-
-const tools = await toolset.fetchTools();
-const employeeTool = tools.getTool("bamboohr_get_employee");
-
-// Create a Claude Agent SDK tool from the StackOne tool
-const getEmployeeTool = tool(
-  employeeTool.name,
-  employeeTool.description,
-  { id: z.string().describe("The employee ID") },
-  async (args) => {
-    const result = await employeeTool.execute(args);
-    return { content: [{ type: "text", text: JSON.stringify(result) }] };
-  }
-);
-
-// Create an MCP server with the StackOne tool
-const mcpServer = createSdkMcpServer({
-  name: "stackone-tools",
-  version: "1.0.0",
-  tools: [getEmployeeTool],
-});
-
-// Use with Claude Agent SDK query
-const result = query({
-  prompt: "Get the employee with id: abc123",
-  options: {
-    model: "claude-sonnet-4-5-20250929",
-    mcpServers: { "stackone-tools": mcpServer },
-    tools: [], // Disable built-in tools
-    maxTurns: 3,
-  },
-});
-
-for await (const message of result) {
-  // Process streaming messages
-}
-```
-
-[View full example](examples/claude-agent-sdk-integration.ts)
 
 ## Usage
 
@@ -260,6 +79,256 @@ tools.setAccountId("direct-account-id");
 const currentAccountId = tools.getAccountId(); // Get the current account ID
 ```
 
+## Integrations
+
+The StackOneToolSet makes it super easy to use StackOne APIs as tools in your AI applications.
+
+<details>
+<summary><strong>With OpenAI Chat Completions API</strong></summary>
+
+```bash
+npm install @stackone/ai openai  # or: yarn/pnpm/bun add
+```
+
+```typescript
+import { OpenAI } from "openai";
+import { StackOneToolSet } from "@stackone/ai";
+
+const toolset = new StackOneToolSet({
+  baseUrl: "https://api.stackone.com",
+  accountId: "your-account-id",
+});
+
+const tools = await toolset.fetchTools();
+
+await openai.chat.completions.create({
+  model: "gpt-5.1",
+  messages: [
+    {
+      role: "system",
+      content: "You are a helpful HR assistant using BambooHR.",
+    },
+    {
+      role: "user",
+      content: "Create a time-off request for employee id cxIQ5764hj2",
+    },
+  ],
+  tools: tools.toOpenAI(),
+});
+```
+
+[View full example](examples/openai-integration.ts)
+
+</details>
+
+<details>
+<summary><strong>With OpenAI Responses API</strong></summary>
+
+```bash
+npm install @stackone/ai openai  # or: yarn/pnpm/bun add
+```
+
+```typescript
+import OpenAI from "openai";
+import { StackOneToolSet } from "@stackone/ai";
+
+const toolset = new StackOneToolSet({
+  baseUrl: "https://api.stackone.com",
+  accountId: "your-account-id",
+});
+
+const tools = await toolset.fetchTools();
+
+const openai = new OpenAI();
+
+await openai.responses.create({
+  model: "gpt-5.1",
+  instructions: "You are a helpful HR assistant.",
+  input: "What is the phone number for employee c28xIQ?",
+  tools: tools.toOpenAIResponses(),
+});
+```
+
+[View full example](examples/openai-responses-integration.ts)
+
+</details>
+
+<details>
+<summary><strong>With Anthropic Claude</strong></summary>
+
+```bash
+npm install @stackone/ai @anthropic-ai/sdk  # or: yarn/pnpm/bun add
+```
+
+```typescript
+import Anthropic from "@anthropic-ai/sdk";
+import { StackOneToolSet } from "@stackone/ai";
+
+const toolset = new StackOneToolSet({
+  baseUrl: "https://api.stackone.com",
+  accountId: "your-account-id",
+});
+
+const tools = await toolset.fetchTools();
+
+const anthropic = new Anthropic();
+
+await anthropic.messages.create({
+  model: "claude-haiku-4-5-20241022",
+  max_tokens: 1024,
+  system: "You are a helpful HR assistant.",
+  messages: [
+    {
+      role: "user",
+      content: "What is the phone number for employee c28xIQ?",
+    },
+  ],
+  tools: tools.toAnthropic(),
+});
+```
+
+[View full example](examples/anthropic-integration.ts)
+
+</details>
+
+<details>
+<summary><strong>With AI SDK by Vercel</strong></summary>
+
+```bash
+npm install @stackone/ai ai @ai-sdk/openai  # or: yarn/pnpm/bun add
+```
+
+```typescript
+import { openai } from "@ai-sdk/openai";
+import { generateText } from "ai";
+import { StackOneToolSet } from "@stackone/ai";
+
+const toolset = new StackOneToolSet({
+  baseUrl: "https://api.stackone.com",
+  accountId: "your-account-id",
+});
+
+const tools = await toolset.fetchTools();
+
+await generateText({
+  model: openai("gpt-5.1"),
+  tools: await tools.toAISDK(),
+  maxSteps: 3,
+});
+```
+
+[View full example](examples/ai-sdk-integration.ts)
+
+</details>
+
+<details>
+<summary><strong>With TanStack AI</strong></summary>
+
+```bash
+npm install @stackone/ai @tanstack/ai @tanstack/ai-openai zod  # or: yarn/pnpm/bun add
+```
+
+```typescript
+import { chat } from "@tanstack/ai";
+import { openai } from "@tanstack/ai-openai";
+import { z } from "zod";
+import { StackOneToolSet } from "@stackone/ai";
+
+const toolset = new StackOneToolSet({
+  baseUrl: "https://api.stackone.com",
+  accountId: "your-account-id",
+});
+
+const tools = await toolset.fetchTools();
+const employeeTool = tools.getTool("bamboohr_get_employee");
+
+// TanStack AI requires Zod schemas for tool input validation
+const getEmployeeTool = {
+  name: employeeTool.name,
+  description: employeeTool.description,
+  inputSchema: z.object({
+    id: z.string().describe("The employee ID"),
+  }),
+  execute: async (args: { id: string }) => {
+    return employeeTool.execute(args);
+  },
+};
+
+const adapter = openai();
+const stream = chat({
+  adapter,
+  model: "gpt-5.1",
+  messages: [{ role: "user", content: "Get employee with id: abc123" }],
+  tools: [getEmployeeTool],
+});
+
+for await (const chunk of stream) {
+  // Process streaming chunks
+}
+```
+
+[View full example](examples/tanstack-ai-integration.ts)
+
+</details>
+
+<details>
+<summary><strong>With Claude Agent SDK</strong></summary>
+
+```bash
+npm install @stackone/ai @anthropic-ai/claude-agent-sdk zod  # or: yarn/pnpm/bun add
+```
+
+```typescript
+import { query, tool, createSdkMcpServer } from "@anthropic-ai/claude-agent-sdk";
+import { z } from "zod";
+import { StackOneToolSet } from "@stackone/ai";
+
+const toolset = new StackOneToolSet({
+  baseUrl: "https://api.stackone.com",
+  accountId: "your-account-id",
+});
+
+const tools = await toolset.fetchTools();
+const employeeTool = tools.getTool("bamboohr_get_employee");
+
+// Create a Claude Agent SDK tool from the StackOne tool
+const getEmployeeTool = tool(
+  employeeTool.name,
+  employeeTool.description,
+  { id: z.string().describe("The employee ID") },
+  async (args) => {
+    const result = await employeeTool.execute(args);
+    return { content: [{ type: "text", text: JSON.stringify(result) }] };
+  }
+);
+
+// Create an MCP server with the StackOne tool
+const mcpServer = createSdkMcpServer({
+  name: "stackone-tools",
+  version: "1.0.0",
+  tools: [getEmployeeTool],
+});
+
+// Use with Claude Agent SDK query
+const result = query({
+  prompt: "Get the employee with id: abc123",
+  options: {
+    model: "claude-sonnet-4-5-20250929",
+    mcpServers: { "stackone-tools": mcpServer },
+    tools: [], // Disable built-in tools
+    maxTurns: 3,
+  },
+});
+
+for await (const message of result) {
+  // Process streaming messages
+}
+```
+
+[View full example](examples/claude-agent-sdk-integration.ts)
+
+</details>
+
 ## Features
 
 ### Filtering Tools with fetchTools()
@@ -306,7 +375,7 @@ This is especially useful when you want to:
 
 Meta tools enable dynamic tool discovery and execution, allowing AI agents to search for relevant tools based on natural language queries without hardcoding tool names.
 
-> ⚠️ **Beta Feature**: Meta tools are currently in beta and the API may change in future versions.
+> **Beta Feature**: Meta tools are currently in beta and the API may change in future versions.
 
 #### How Meta Tools Work
 
@@ -381,8 +450,6 @@ import { StackOneToolSet } from "@stackone/ai";
 
 const toolset = new StackOneToolSet({ baseUrl: "https://api.example-dev.com" });
 ```
-
-[View full example](examples/custom-base-url.ts)
 
 ### Testing with dryRun
 
@@ -528,3 +595,20 @@ When AI agents use this tool, they will:
 5. **Report results**: Show which accounts received the feedback successfully
 
 The tool description includes clear instructions for AI agents to always ask for explicit user consent before submitting feedback.
+
+## Development Environment
+
+### Using Nix Flake
+
+This project includes a Nix flake for reproducible development environments. If you have Nix installed with flakes enabled, you can use it to set up your development environment:
+
+```bash
+# Enter development shell
+nix develop
+
+# Or use direnv for automatic activation
+echo "use flake" > .envrc
+direnv allow
+```
+
+The flake provides all necessary development dependencies including Node.js, pnpm, and other build tools.
