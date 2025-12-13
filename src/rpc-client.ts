@@ -1,3 +1,4 @@
+import { DEFAULT_BASE_URL, USER_AGENT } from './consts';
 import { STACKONE_HEADER_KEYS } from './headers';
 import {
 	type RpcActionRequest,
@@ -25,7 +26,7 @@ export class RpcClient {
 
 	constructor(config: RpcClientConfig) {
 		const validatedConfig = rpcClientConfigSchema.parse(config);
-		this.baseUrl = validatedConfig.serverURL || 'https://api.stackone.com';
+		this.baseUrl = validatedConfig.serverURL || DEFAULT_BASE_URL;
 		const username = validatedConfig.security.username;
 		const password = validatedConfig.security.password || '';
 		this.authHeader = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`;
@@ -68,7 +69,7 @@ export class RpcClient {
 			const httpHeaders = {
 				'Content-Type': 'application/json',
 				Authorization: this.authHeader,
-				'User-Agent': 'stackone-ai-node',
+				'User-Agent': USER_AGENT,
 				...forwardedHeaders,
 			} satisfies Record<string, string>;
 
