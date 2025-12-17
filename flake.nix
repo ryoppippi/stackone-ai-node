@@ -20,9 +20,15 @@
         {
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [
+              # runtime
               nodejs_24
               pnpm_10
+
+              # formatting and linting tools
+              similarity
               nixfmt-rfc-style
+              typos
+              typos-lsp
             ];
 
             shellHook = ''
