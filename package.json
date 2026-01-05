@@ -57,14 +57,12 @@
 		"zod": "catalog:prod"
 	},
 	"devDependencies": {
-		"@ai-sdk/provider": "catalog:dev",
-		"@ai-sdk/provider-utils": "catalog:dev",
 		"@fast-check/vitest": "catalog:dev",
 		"@hono/mcp": "catalog:dev",
 		"@types/node": "catalog:dev",
 		"@typescript/native-preview": "catalog:dev",
 		"@vitest/coverage-v8": "catalog:dev",
-		"ai": "catalog:peer",
+		"ai": "catalog:dev",
 		"hono": "catalog:dev",
 		"knip": "catalog:dev",
 		"lefthook": "catalog:dev",
