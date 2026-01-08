@@ -1,5 +1,6 @@
-import type { JSONSchema7 as AISDKJSONSchema } from 'ai';
+import { type JSONSchema7 as AISDKJSONSchema, jsonSchema } from 'ai';
 import type { Tool as AnthropicTool } from '@anthropic-ai/sdk/resources';
+import type { McpSdkServerConfigWithInstance } from '@anthropic-ai/claude-agent-sdk';
 import * as orama from '@orama/orama';
 import type { ChatCompletionFunctionTool } from 'openai/resources/chat/completions';
 import type { FunctionTool as OpenAIResponsesFunctionTool } from 'openai/resources/responses/responses';
@@ -10,6 +11,7 @@ import { RequestBuilder } from './requestBuilder';
 import type {
 	AISDKToolDefinition,
 	AISDKToolResult,
+	ClaudeAgentSdkOptions,
 	ExecuteConfig,
 	ExecuteOptions,
 	HttpExecuteConfig,
@@ -226,6 +228,36 @@ export class BaseTool {
 	}
 
 	/**
+	 * Convert the tool to Claude Agent SDK format.
+	 * Returns a tool definition compatible with the Claude Agent SDK's tool() function.
+	 *
+	 * @see https://docs.anthropic.com/en/docs/agents-and-tools/claude-agent-sdk
+	 */
+	async toClaudeAgentSdkTool(): Promise<{
+		name: string;
+		description: string;
+		inputSchema: Record<string, unknown>;
+		handler: (
+			args: Record<string, unknown>,
+		) => Promise<{ content: Array<{ type: 'text'; text: string }> }>;
+	}> {
+		const inputSchema = jsonSchema(this.toJsonSchema());
+		const execute = this.execute.bind(this);
+
+		return {
+			name: this.name,
+			description: this.description,
+			inputSchema,
+			handler: async (args: Record<string, unknown>) => {
+				const result = await execute(args as JsonObject);
+				return {
+					content: [{ type: 'text' as const, text: JSON.stringify(result) }],
+				};
+			},
+		};
+	}
+
+	/**
 	 * Convert the tool to AI SDK format
 	 */
 	async toAISDK(
@@ -393,6 +425,64 @@ export class Tools implements Iterable<BaseTool> {
 			Object.assign(result, await tool.toAISDK(options));
 		}
 		return result;
+	}
+
+	/**
+	 * Convert all tools to Claude Agent SDK format.
+	 * Returns an MCP server configuration that can be passed to the
+	 * Claude Agent SDK query() function's mcpServers option.
+	 *
+	 * @example
+	 * ```typescript
+	 * const tools = await toolset.fetchTools();
+	 * const mcpServer = await tools.toClaudeAgentSdk();
+	 *
+	 * const result = query({
+	 *   prompt: 'Get employee info',
+	 *   options: {
+	 *     model: 'claude-sonnet-4-5-20250929',
+	 *     mcpServers: {
+	 *       'stackone-tools': mcpServer,
+	 *     },
+	 *   },
+	 * });
+	 * ```
+	 *
+	 * @see https://docs.anthropic.com/en/docs/agents-and-tools/claude-agent-sdk
+	 */
+	async toClaudeAgentSdk(
+		options: ClaudeAgentSdkOptions = {},
+	): Promise<McpSdkServerConfigWithInstance> {
+		const { serverName = 'stackone-tools', serverVersion = '1.0.0' } = options;
+
+		// Import the Claude Agent SDK dynamically
+		const claudeAgentSdk = await tryImport<typeof import('@anthropic-ai/claude-agent-sdk')>(
+			'@anthropic-ai/claude-agent-sdk',
+			`npm install @anthropic-ai/claude-agent-sdk (requires ${peerDependencies['@anthropic-ai/claude-agent-sdk']})`,
+		);
+
+		// Convert all tools to Claude Agent SDK format
+		// We use type assertions here because the Zod types from our dynamic import
+		// don't perfectly match the Claude Agent SDK's expected types at compile time
+		const sdkTools = await Promise.all(
+			this.tools.map(async (baseTool) => {
+				const toolDef = await baseTool.toClaudeAgentSdkTool();
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Dynamic Zod schema types
+				return claudeAgentSdk.tool(
+					toolDef.name,
+					toolDef.description,
+					toolDef.inputSchema as any,
+					toolDef.handler as any,
+				);
+			}),
+		);
+
+		// Create and return the MCP server
+		return claudeAgentSdk.createSdkMcpServer({
+			name: serverName,
+			version: serverVersion,
+			tools: sdkTools,
+		});
 	}
 
 	/**

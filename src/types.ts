@@ -201,3 +201,17 @@ export type AISDKToolDefinition = Tool & {
 export type AISDKToolResult<T extends string = string> = ToolSet & {
 	[K in T]: AISDKToolDefinition;
 };
+
+/**
+ * Options for toClaudeAgentSdk() method
+ */
+export interface ClaudeAgentSdkOptions {
+	/**
+	 * Name of the MCP server. Defaults to 'stackone-tools'.
+	 */
+	serverName?: string;
+	/**
+	 * Version of the MCP server. Defaults to '1.0.0'.
+	 */
+	serverVersion?: string;
+}
