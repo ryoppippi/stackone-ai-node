@@ -1,7 +1,7 @@
 /**
  * Example: fetch the latest StackOne tool catalog with filtering options.
  *
- * Set `STACKONE_API_KEY` (and optionally `STACKONE_BASE_URL`) before running.
+ * Set `STACKONE_API_KEY` before running.
  * By default the script exits early in test environments where a real key is
  * not available.
  */
@@ -15,9 +15,7 @@ if (!apiKey) {
 	process.exit(1);
 }
 
-const toolset = new StackOneToolSet({
-	baseUrl: process.env.STACKONE_BASE_URL ?? 'https://api.stackone.com',
-});
+const toolset = new StackOneToolSet({});
 
 // Example 1: Fetch all tools
 console.log('\n=== Example 1: Fetch all tools ===');
@@ -33,9 +31,9 @@ console.log(`Loaded ${toolsByAccounts.length} tools for specified accounts`);
 // Example 3: Filter by account IDs using options
 console.log('\n=== Example 3: Filter by account IDs (using options) ===');
 const toolsByAccountsOption = await toolset.fetchTools({
-	accountIds: ['account-789'],
+	accountIds: ['your-account-id'],
 });
-console.log(`Loaded ${toolsByAccountsOption.length} tools for account-789`);
+console.log(`Loaded ${toolsByAccountsOption.length} tools for your-account-id`);
 
 // Example 4: Filter by providers
 console.log('\n=== Example 4: Filter by providers ===');
