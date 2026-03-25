@@ -1,5 +1,6 @@
 import { defu } from 'defu';
 import type { MergeExclusive, SimplifyDeep } from 'type-fest';
+import { z } from 'zod/v4';
 import { DEFAULT_BASE_URL } from './consts';
 import { createFeedbackTool } from './feedback';
 import { type StackOneHeaders, normalizeHeaders, stackOneHeadersSchema } from './headers';
@@ -16,11 +17,13 @@ import type {
 	ExecuteOptions,
 	JsonObject,
 	JsonSchemaProperties,
+	LocalExecuteConfig,
 	RpcExecuteConfig,
 	SearchConfig,
 	ToolParameters,
 } from './types';
 import { StackOneError } from './utils/error-stackone';
+import { StackOneAPIError } from './utils/error-stackone-api';
 import { normalizeActionName } from './utils/normalize';
 
 /**
@@ -125,6 +128,15 @@ interface MultipleAccountsConfig {
 type AccountConfig = SimplifyDeep<MergeExclusive<SingleAccountConfig, MultipleAccountsConfig>>;
 
 /**
+ * Execution configuration for the StackOneToolSet constructor.
+ * Controls default account scoping for tool execution in tools.
+ */
+export interface ExecuteToolsConfig {
+	/** Account IDs to scope tool discovery and execution. */
+	accountIds?: string[];
+}
+
+/**
  * Base configuration for StackOne toolset (without account options)
  */
 interface StackOneToolSetBaseConfig extends BaseToolSetConfig {
@@ -134,13 +146,19 @@ interface StackOneToolSetBaseConfig extends BaseToolSetConfig {
 	 * Search configuration. Controls default search behavior for `searchTools()`,
 	 * `getSearchTool()`, and `searchActionNames()`.
 	 *
-	 * - Omit or pass `undefined` → search enabled with defaults (`method: 'auto'`)
+	 * - Omit or pass `undefined` → search disabled (`null`)
 	 * - Pass `null` → search disabled
+	 * - Pass `{}` or `{ method: 'auto' }` → search enabled with defaults
 	 * - Pass `{ method, topK, minSimilarity }` → search enabled with custom defaults
 	 *
 	 * Per-call options always override these defaults.
 	 */
 	search?: SearchConfig | null;
+	/**
+	 * Execution configuration. Controls default account scoping for tool execution.
+	 * Pass `{ accountIds: ['acc-1'] }` to scope tools to specific accounts.
+	 */
+	execute?: ExecuteToolsConfig;
 }
 
 /**
@@ -252,6 +270,170 @@ export class SearchTool {
 	}
 }
 
+// --- Internal tool_search + tool_execute ---
+
+const searchInputSchema = z.object({
+	query: z
+		.string()
+		.transform((v) => v.trim())
+		.refine((v) => v.length > 0, { message: 'query must be a non-empty string' }),
+	connector: z.string().optional(),
+	top_k: z.number().int().min(1).max(50).optional(),
+});
+
+const searchParameters = {
+	type: 'object',
+	properties: {
+		query: {
+			type: 'string',
+			description:
+				'Natural language description of what you need (e.g. "create an employee", "list time off requests")',
+		},
+		connector: {
+			type: 'string',
+			description: 'Optional connector filter (e.g. "bamboohr", "hibob")',
+		},
+		top_k: {
+			type: 'integer',
+			description: 'Max results to return (1-50, default 5)',
+			minimum: 1,
+			maximum: 50,
+		},
+	},
+	required: ['query'],
+} as const satisfies ToolParameters;
+
+const executeInputSchema = z.object({
+	tool_name: z
+		.string()
+		.transform((v) => v.trim())
+		.refine((v) => v.length > 0, { message: 'tool_name must be a non-empty string' }),
+	parameters: z.record(z.string(), z.unknown()).optional().default({}),
+});
+
+const executeParameters = {
+	type: 'object',
+	properties: {
+		tool_name: {
+			type: 'string',
+			description: 'Exact tool name from tool_search results',
+		},
+		parameters: {
+			type: 'object',
+			description: 'Parameters for the tool. Pass an empty object {} if no parameters are needed.',
+		},
+	},
+	required: ['tool_name'],
+} as const satisfies ToolParameters;
+
+const localConfig = (id: string): LocalExecuteConfig => ({
+	kind: 'local',
+	identifier: `meta:${id}`,
+});
+
+/** @internal */
+export function createSearchTool(toolset: StackOneToolSet, accountIds?: string[]): BaseTool {
+	const tool = new BaseTool(
+		'tool_search',
+		'Search for available tools by describing what you need. Returns matching tool names, descriptions, and parameter schemas. Use the returned parameter schemas to know exactly what to pass when calling tool_execute.',
+		searchParameters,
+		localConfig('search'),
+	);
+
+	tool.execute = async (inputParams?: JsonObject | string): Promise<JsonObject> => {
+		try {
+			const raw = typeof inputParams === 'string' ? JSON.parse(inputParams) : inputParams || {};
+			const parsed = searchInputSchema.parse(raw);
+
+			const searchConfig = toolset.getSearchConfig() ?? {};
+			const results = await toolset.searchTools(parsed.query, {
+				connector: parsed.connector,
+				topK: parsed.top_k ?? searchConfig.topK,
+				minSimilarity: searchConfig.minSimilarity,
+				search: searchConfig.method,
+				accountIds,
+			});
+
+			return {
+				tools: results.toArray().map((t) => ({
+					name: t.name,
+					description: t.description,
+					parameters: t.parameters.properties as unknown as JsonObject,
+				})),
+				total: results.length,
+				query: parsed.query,
+			};
+		} catch (error) {
+			if (error instanceof StackOneAPIError) {
+				return { error: error.message, status_code: error.statusCode };
+			}
+			if (error instanceof SyntaxError || error instanceof z.ZodError) {
+				return {
+					error: `Invalid input: ${error instanceof z.ZodError ? error.issues.map((i) => i.message).join(', ') : error.message}`,
+				};
+			}
+			throw error;
+		}
+	};
+
+	return tool;
+}
+
+/** @internal */
+export function createExecuteTool(toolset: StackOneToolSet, accountIds?: string[]): BaseTool {
+	let cachedTools: Awaited<ReturnType<typeof toolset.fetchTools>> | null = null;
+
+	const tool = new BaseTool(
+		'tool_execute',
+		'Execute a tool by name with the given parameters. Use tool_search first to find available tools. The parameters field must match the parameter schema returned by tool_search. Pass parameters as a nested object matching the schema structure.',
+		executeParameters,
+		localConfig('execute'),
+	);
+
+	tool.execute = async (
+		inputParams?: JsonObject | string,
+		executeOptions?: ExecuteOptions,
+	): Promise<JsonObject> => {
+		let toolName = 'unknown';
+		try {
+			const raw = typeof inputParams === 'string' ? JSON.parse(inputParams) : inputParams || {};
+			const parsed = executeInputSchema.parse(raw);
+			toolName = parsed.tool_name;
+
+			if (!cachedTools) {
+				cachedTools = await toolset.fetchTools({ accountIds });
+			}
+			const target = cachedTools.getTool(parsed.tool_name);
+
+			if (!target) {
+				return {
+					error: `Tool "${parsed.tool_name}" not found. Use tool_search to find available tools.`,
+				};
+			}
+
+			return await target.execute(parsed.parameters as JsonObject, executeOptions);
+		} catch (error) {
+			if (error instanceof StackOneAPIError) {
+				return {
+					error: error.message,
+					status_code: error.statusCode,
+					response_body: error.responseBody as JsonObject,
+					tool_name: toolName,
+				};
+			}
+			if (error instanceof SyntaxError || error instanceof z.ZodError) {
+				return {
+					error: `Invalid input: ${error instanceof z.ZodError ? error.issues.map((i) => i.message).join(', ') : error.message}`,
+					tool_name: toolName,
+				};
+			}
+			throw error;
+		}
+	};
+
+	return tool;
+}
+
 /**
  * Class for loading StackOne tools via MCP
  */
@@ -261,6 +443,7 @@ export class StackOneToolSet {
 	private headers: Record<string, string>;
 	private rpcClient?: RpcClient;
 	private readonly searchConfig: SearchConfig | null;
+	private readonly executeConfig: ExecuteToolsConfig | undefined;
 
 	/**
 	 * Account ID for StackOne API
@@ -317,8 +500,9 @@ export class StackOneToolSet {
 		this.accountId = accountId;
 		this.accountIds = config?.accountIds ?? [];
 
-		// Resolve search config: undefined → defaults, null → disabled, object → custom
-		this.searchConfig = config?.search === null ? null : { method: 'auto', ...config?.search };
+		// Resolve search config: undefined/null → disabled, object → custom with defaults
+		this.searchConfig = config?.search != null ? { method: 'auto', ...config.search } : null;
+		this.executeConfig = config?.execute;
 
 		// Set Authentication headers if provided
 		if (this.authentication) {
@@ -383,6 +567,13 @@ export class StackOneToolSet {
 	}
 
 	/**
+	 * Get the current search config.
+	 */
+	getSearchConfig(): SearchConfig | null {
+		return this.searchConfig;
+	}
+
+	/**
 	 * Extract the API key from authentication config.
 	 */
 	private getApiKey(): string {
@@ -430,6 +621,71 @@ export class StackOneToolSet {
 			: this.searchConfig;
 
 		return new SearchTool(this, config);
+	}
+
+	/**
+	 * Get tool_search + tool_execute for agent-driven discovery.
+	 *
+	 * Returns a Tools collection with two tools that let the LLM
+	 * discover and execute tools on-demand.
+	 *
+	 * @param options - Options to scope tool discovery
+	 * @returns Tools collection containing tool_search and tool_execute
+	 */
+	getTools(options?: { accountIds?: string[] }): Tools {
+		return this.buildTools(options?.accountIds);
+	}
+
+	/**
+	 * Build tool_search + tool_execute tools scoped to this toolset.
+	 */
+	private buildTools(accountIds?: string[]): Tools {
+		if (this.searchConfig === null) {
+			throw new ToolSetConfigError(
+				'Search is disabled. Initialize StackOneToolSet with a search config to enable.',
+			);
+		}
+
+		const searchTool = createSearchTool(this, accountIds);
+		const executeTool = createExecuteTool(this, accountIds);
+		return new Tools([searchTool, executeTool]);
+	}
+
+	/**
+	 * Get tools in OpenAI function calling format.
+	 *
+	 * @param options - Options
+	 * @param options.mode - Tool mode.
+	 *   `undefined` (default): fetch all tools and convert to OpenAI format.
+	 *   `"search_and_execute"`: return two tools (tool_search + tool_execute)
+	 *   that let the LLM discover and execute tools on-demand.
+	 * @param options.accountIds - Account IDs to scope tools. Overrides the `execute`
+	 *   config from the constructor.
+	 * @returns List of tool definitions in OpenAI function format.
+	 *
+	 * @example
+	 * ```typescript
+	 * // All tools
+	 * const toolset = new StackOneToolSet();
+	 * const tools = await toolset.openai();
+	 *
+	 * // Search and execute for agent-driven discovery
+	 * const toolset = new StackOneToolSet({ search: {} });
+	 * const tools = await toolset.openai({ mode: 'search_and_execute' });
+	 * ```
+	 */
+	async openai(options?: {
+		mode?: 'search_and_execute';
+		accountIds?: string[];
+	}): Promise<ReturnType<Tools['toOpenAI']>> {
+		const effectiveAccountIds = options?.accountIds ?? this.executeConfig?.accountIds;
+
+		if (options?.mode === 'search_and_execute') {
+			return this.buildTools(effectiveAccountIds).toOpenAI();
+		}
+
+		const tools = await this.fetchTools({ accountIds: effectiveAccountIds });
+		return tools.toOpenAI();
 	}
 
 	/**
@@ -550,12 +806,26 @@ export class StackOneToolSet {
 				return new Tools([]);
 			}
 
-			// Match back to fetched tool definitions
-			const actionNames = new Set(topResults.map((r) => normalizeActionName(r.actionName)));
-			const matchedTools = allTools.toArray().filter((t) => actionNames.has(t.name));
+			// 1. Parse composite IDs to MCP-format action names, deduplicate
+			const seenNames = new Set<string>();
+			const actionNames: string[] = [];
+			for (const result of topResults) {
+				const name = normalizeActionName(result.id);
+				if (seenNames.has(name)) {
+					continue;
+				}
+				seenNames.add(name);
+				actionNames.push(name);
+			}
 
-			// Sort matched tools by semantic search score order
-			const actionOrder = new Map(topResults.map((r, i) => [normalizeActionName(r.actionName), i]));
+			if (actionNames.length === 0) {
+				return new Tools([]);
+			}
+
+			// 2. Use MCP tools (already fetched) — schemas come from the source of truth
+			// 3. Filter to only the tools search found, preserving search relevance order
+			const actionOrder = new Map(actionNames.map((name, i) => [name, i]));
+			const matchedTools = allTools.toArray().filter((t) => seenNames.has(t.name));
 			matchedTools.sort(
 				(a, b) =>
 					(actionOrder.get(a.name) ?? Number.POSITIVE_INFINITY) -
@@ -591,13 +861,13 @@ export class StackOneToolSet {
 	 * // Lightweight: inspect results before fetching
 	 * const results = await toolset.searchActionNames('manage employees');
 	 * for (const r of results) {
-	 *   console.log(`${r.actionName}: ${r.similarityScore.toFixed(2)}`);
+	 *   console.log(`${r.id}: ${r.similarityScore.toFixed(2)}`);
 	 * }
 	 *
 	 * // Then fetch specific high-scoring actions
 	 * const selected = results
 	 *   .filter(r => r.similarityScore > 0.7)
-	 *   .map(r => r.actionName);
+	 *   .map(r => r.id);
 	 * const tools = await toolset.fetchTools({ actions: selected });
 	 * ```
 	 */
@@ -668,14 +938,10 @@ export class StackOneToolSet {
 				allResults = response.results;
 			}
 
-			// Sort by score, normalize action names
+			// Sort by score — return raw results (consumers can normalize the composite ID if needed)
 			allResults.sort((a, b) => b.similarityScore - a.similarityScore);
-			const normalized = allResults.map((r) => ({
-				...r,
-				actionName: normalizeActionName(r.actionName),
-			}));
 
-			return effectiveTopK != null ? normalized.slice(0, effectiveTopK) : normalized;
+			return effectiveTopK != null ? allResults.slice(0, effectiveTopK) : allResults;
 		} catch (error) {
 			if (error instanceof SemanticSearchError) {
 				return [];

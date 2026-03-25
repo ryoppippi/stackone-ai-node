@@ -59,8 +59,8 @@ const searchToolsWithAISDK = async (): Promise<void> => {
 const searchToolWithAgentLoop = async (): Promise<void> => {
 	console.log('\nExample 2: SearchTool for agent loops\n');
 
-	// Default constructor — search enabled with method: 'auto'
-	const toolset = new StackOneToolSet();
+	// Enable search with default method: 'auto'
+	const toolset = new StackOneToolSet({ search: {} });
 
 	// Per-call options override constructor defaults when needed
 	const searchTool = toolset.getSearchTool({ search: 'auto' });
@@ -81,7 +81,7 @@ const searchToolWithAgentLoop = async (): Promise<void> => {
 const searchActionNames = async (): Promise<void> => {
 	console.log('\nExample 3: Lightweight action name search\n');
 
-	const toolset = new StackOneToolSet();
+	const toolset = new StackOneToolSet({ search: {} });
 
 	// Search for action names without fetching full tool definitions
 	const results = await toolset.searchActionNames('manage employees', {
@@ -90,14 +90,12 @@ const searchActionNames = async (): Promise<void> => {
 
 	console.log('Search results:');
 	for (const result of results) {
-		console.log(
-			`  - ${result.actionName} (${result.connectorKey}): score=${result.similarityScore.toFixed(2)}`,
-		);
+		console.log(`  - ${result.id}: score=${result.similarityScore.toFixed(2)}`);
 	}
 
 	// Then fetch specific tools based on the results
 	if (results.length > 0) {
-		const topActions = results.filter((r) => r.similarityScore > 0.7).map((r) => r.actionName);
+		const topActions = results.filter((r) => r.similarityScore > 0.7).map((r) => r.id);
 		console.log(`\nFetching tools for top actions: ${topActions.join(', ')}`);
 
 		const tools = await toolset.fetchTools({ actions: topActions });

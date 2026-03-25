@@ -13,18 +13,15 @@
  * This is the primary method used when integrating with OpenAI, Anthropic, or AI SDK.
  * The internal flow is:
  *
- * 1. Fetch ALL tools from linked accounts via MCP (uses accountIds to scope the request)
- * 2. Extract available connectors from the fetched tools (e.g. {bamboohr, hibob})
- * 3. Search EACH connector in parallel via the semantic search API (/actions/search)
- * 4. Collect results, sort by relevance score, apply topK if specified
- * 5. Match semantic results back to the fetched tool definitions
- * 6. Return Tools sorted by relevance score
+ * 1. Fetch tools from linked accounts via MCP (provides connectors and tool schemas)
+ * 2. Search EACH connector in parallel via the semantic search API (/actions/search)
+ * 3. Match search results to MCP tool definitions
+ * 4. Deduplicate, sort by relevance score, apply topK
+ * 5. Return Tools sorted by relevance score
  *
  * Key point: only the user's own connectors are searched — no wasted results
- * from connectors the user doesn't have. Tools are fetched first, semantic
- * search runs second, and only tools that exist in the user's linked
- * accounts AND match the semantic query are returned. This prevents
- * suggesting tools the user cannot execute.
+ * from connectors the user doesn't have. Tool schemas come from MCP (source
+ * of truth), while the search API provides relevance ranking.
  *
  * If the semantic API is unavailable, the SDK falls back to a local
  * BM25 + TF-IDF hybrid search over the fetched tools (unless
@@ -34,10 +31,9 @@
  * 2. `searchActionNames(query)` — Lightweight discovery
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *
- * Queries the semantic API directly and returns action name metadata
- * (name, connector, score, description) **without** fetching full tool
- * definitions. This is useful for previewing results before committing
- * to a full fetch.
+ * Queries the semantic API directly and returns action IDs with
+ * similarity scores, **without** building full tool objects. Useful
+ * for previewing results before committing to a full fetch.
  *
  * When `accountIds` are provided, each connector is searched in
  * parallel (same as `searchTools`). Without `accountIds`, results
@@ -69,12 +65,8 @@ export class SemanticSearchError extends StackOneError {
  * Single result from semantic search API.
  */
 export interface SemanticSearchResult {
-	actionName: string;
-	connectorKey: string;
+	id: string;
 	similarityScore: number;
-	label: string;
-	description: string;
-	projectId: string;
 }
 
 /**
@@ -109,7 +101,7 @@ export interface SemanticSearchOptions {
  * const client = new SemanticSearchClient({ apiKey: 'sk-xxx' });
  * const response = await client.search('create employee', { connector: 'bamboohr', topK: 5 });
  * for (const result of response.results) {
- *   console.log(`${result.actionName}: ${result.similarityScore.toFixed(2)}`);
+ *   console.log(`${result.id}: ${result.similarityScore.toFixed(2)}`);
  * }
  * ```
  */
@@ -152,7 +144,7 @@ export class SemanticSearchClient {
 	 * ```typescript
 	 * const response = await client.search('onboard a new team member', { topK: 5 });
 	 * for (const result of response.results) {
-	 *   console.log(`${result.actionName}: ${result.similarityScore.toFixed(2)}`);
+	 *   console.log(`${result.id}: ${result.similarityScore.toFixed(2)}`);
 	 * }
 	 * ```
 	 */
@@ -195,12 +187,8 @@ export class SemanticSearchClient {
 
 			const data = (await response.json()) as {
 				results: Array<{
-					action_name: string;
-					connector_key: string;
+					id: string;
 					similarity_score: number;
-					label: string;
-					description: string;
-					project_id?: string;
 				}>;
 				total_count: number;
 				query: string;
@@ -210,12 +198,8 @@ export class SemanticSearchClient {
 
 			return {
 				results: data.results.map((r) => ({
-					actionName: r.action_name,
-					connectorKey: r.connector_key,
+					id: r.id,
 					similarityScore: r.similarity_score,
-					label: r.label,
-					description: r.description,
-					projectId: r.project_id ?? 'global',
 				})),
 				totalCount: data.total_count,
 				query: data.query,
@@ -255,6 +239,6 @@ export class SemanticSearchClient {
 	 */
 	async searchActionNames(query: string, options?: SemanticSearchOptions): Promise<string[]> {
 		const response = await this.search(query, options);
-		return response.results.map((r) => r.actionName);
+		return response.results.map((r) => r.id);
 	}
 }
