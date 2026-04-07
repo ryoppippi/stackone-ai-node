@@ -97,6 +97,8 @@ export interface BaseToolSetConfig {
 	authentication?: AuthenticationConfig;
 	headers?: Record<string, string>;
 	rpcClient?: RpcClient;
+	/** Request timeout in milliseconds. Default: 60000 (60s). */
+	timeout?: number;
 }
 
 /**
@@ -134,6 +136,8 @@ type AccountConfig = SimplifyDeep<MergeExclusive<SingleAccountConfig, MultipleAc
 export interface ExecuteToolsConfig {
 	/** Account IDs to scope tool discovery and execution. */
 	accountIds?: string[];
+	/** Request timeout in milliseconds. Can also be set as a top-level config param which takes precedence. */
+	timeout?: number;
 }
 
 /**
@@ -332,10 +336,15 @@ const localConfig = (id: string): LocalExecuteConfig => ({
 });
 
 /** @internal */
-export function createSearchTool(toolset: StackOneToolSet, accountIds?: string[]): BaseTool {
+export function createSearchTool(
+	toolset: StackOneToolSet,
+	accountIds?: string[],
+	connectors?: string,
+): BaseTool {
+	const connectorLine = connectors ? ` Available connectors: ${connectors}.` : '';
 	const tool = new BaseTool(
 		'tool_search',
-		'Search for available tools by describing what you need. Returns matching tool names, descriptions, and parameter schemas. Use the returned parameter schemas to know exactly what to pass when calling tool_execute.',
+		`Search for available tools by describing what you need. Returns matching tool names, descriptions, and parameter schemas. Use the returned parameter schemas to know exactly what to pass when calling tool_execute.${connectorLine}`,
 		searchParameters,
 		localConfig('search'),
 	);
@@ -380,12 +389,17 @@ export function createSearchTool(toolset: StackOneToolSet, accountIds?: string[]
 }
 
 /** @internal */
-export function createExecuteTool(toolset: StackOneToolSet, accountIds?: string[]): BaseTool {
+export function createExecuteTool(
+	toolset: StackOneToolSet,
+	accountIds?: string[],
+	connectors?: string,
+): BaseTool {
 	let cachedTools: Awaited<ReturnType<typeof toolset.fetchTools>> | null = null;
 
+	const connectorLine = connectors ? ` Available connectors: ${connectors}.` : '';
 	const tool = new BaseTool(
 		'tool_execute',
-		'Execute a tool by name with the given parameters. Use tool_search first to find available tools. The parameters field must match the parameter schema returned by tool_search. Pass parameters as a nested object matching the schema structure.',
+		`Execute a tool by name with the given parameters. Use tool_search first to find available tools. The parameters field must match the parameter schema returned by tool_search. Pass parameters as a nested object matching the schema structure.${connectorLine}`,
 		executeParameters,
 		localConfig('execute'),
 	);
@@ -442,6 +456,7 @@ export class StackOneToolSet {
 	private authentication?: AuthenticationConfig;
 	private headers: Record<string, string>;
 	private rpcClient?: RpcClient;
+	private readonly timeout: number;
 	private readonly searchConfig: SearchConfig | null;
 	private readonly executeConfig: ExecuteToolsConfig | undefined;
 
@@ -497,6 +512,7 @@ export class StackOneToolSet {
 		this.authentication = authentication;
 		this.headers = configHeaders;
 		this.rpcClient = config?.rpcClient;
+		this.timeout = config?.timeout ?? config?.execute?.timeout ?? 60_000;
 		this.accountId = accountId;
 		this.accountIds = config?.accountIds ?? [];
 
@@ -633,21 +649,25 @@ export class StackOneToolSet {
 	 * @returns Tools collection containing tool_search and tool_execute
 	 */
 	getTools(options?: { accountIds?: string[] }): Tools {
-		return this.buildTools(options?.accountIds);
+		const accountIds =
+			options?.accountIds ??
+			this.executeConfig?.accountIds ??
+			(this.accountIds.length > 0 ? this.accountIds : undefined);
+		return this.buildTools(accountIds);
 	}
 
 	/**
 	 * Build tool_search + tool_execute tools scoped to this toolset.
 	 */
-	private buildTools(accountIds?: string[]): Tools {
+	private buildTools(accountIds?: string[], connectors?: string): Tools {
 		if (this.searchConfig === null) {
 			throw new ToolSetConfigError(
 				'Search is disabled. Initialize StackOneToolSet with a search config to enable.',
 			);
 		}
 
-		const searchTool = createSearchTool(this, accountIds);
-		const executeTool = createExecuteTool(this, accountIds);
+		const searchTool = createSearchTool(this, accountIds, connectors);
+		const executeTool = createExecuteTool(this, accountIds, connectors);
 		return new Tools([searchTool, executeTool]);
 	}
 
@@ -681,7 +701,18 @@ export class StackOneToolSet {
 		const effectiveAccountIds = options?.accountIds ?? this.executeConfig?.accountIds;
 
 		if (options?.mode === 'search_and_execute') {
-			return this.buildTools(effectiveAccountIds).toOpenAI();
+			// Discover available connectors for dynamic descriptions
+			let connectors: string | undefined;
+			try {
+				const allTools = await this.fetchTools({ accountIds: effectiveAccountIds });
+				const connectorSet = allTools.getConnectors();
+				if (connectorSet.size > 0) {
+					connectors = Array.from(connectorSet).sort().join(', ');
+				}
+			} catch {
+				// Best-effort: if discovery fails, use generic descriptions
+			}
+			return this.buildTools(effectiveAccountIds, connectors).toOpenAI();
 		}
 
 		const tools = await this.fetchTools({ accountIds: effectiveAccountIds });
@@ -1134,6 +1165,7 @@ export class StackOneToolSet {
 				username: apiKey,
 				password,
 			},
+			timeout: this.timeout,
 		});
 
 		return this.rpcClient;
