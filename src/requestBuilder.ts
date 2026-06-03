@@ -7,6 +7,7 @@ import {
 	type JsonObject,
 	ParameterLocation,
 } from './types';
+import { binaryDownloadFromResponse, isJsonContentType } from './utils/binary-response';
 import { StackOneAPIError } from './utils/error-stackone-api';
 
 interface SerializationOptions {
@@ -312,7 +313,16 @@ export class RequestBuilder {
 	}
 
 	/**
-	 * Execute the request
+	 * Execute the request.
+	 *
+	 * For JSON responses, returns the parsed API response.
+	 *
+	 * For file downloads (any non-JSON Content-Type, e.g. a `*_unified_download_file` action),
+	 * returns a description of the file:
+	 * `{ content: Buffer, contentType: string, statusCode: number, headers: Record<string, string>,
+	 * fileName: string | null }`. Note `content` is a raw `Buffer`, not a `JsonValue`: it
+	 * JSON-stringifies to a `{ type: 'Buffer', data: [...] }` byte array, so callers that
+	 * re-serialize tool results (e.g. for an LLM) should strip or transform this key.
 	 */
 	async execute(params: JsonObject, options?: ExecuteOptions): Promise<JsonObject> {
 		// Prepare request parameters
@@ -371,7 +381,17 @@ export class RequestBuilder {
 			);
 		}
 
-		// Parse the response
-		return (await response.json()) as JsonObject;
+		// Branch on Content-Type: JSON bodies are parsed as before; any non-JSON body is a file
+		// download (raw binary served with the file's own MIME type and a Content-Disposition
+		// header) and must not be forced through response.json(), which throws on binary content.
+		const contentType = response.headers.get('content-type') ?? '';
+		if (isJsonContentType(contentType)) {
+			return (await response.json()) as JsonObject;
+		}
+
+		// Return the raw bytes plus metadata. `content` is a Buffer, which is not representable in
+		// type-fest's JsonValue (and JSON-stringifies to a byte array, not the file); the double-cast
+		// is the documented escape hatch for returning a non-JSON value from this JsonObject method.
+		return (await binaryDownloadFromResponse(response)) as unknown as JsonObject;
 	}
 }

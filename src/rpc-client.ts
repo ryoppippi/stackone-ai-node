@@ -8,6 +8,11 @@ import {
 	rpcActionResponseSchema,
 	rpcClientConfigSchema,
 } from './schema';
+import {
+	type BinaryDownloadResult,
+	binaryDownloadFromResponse,
+	isJsonContentType,
+} from './utils/binary-response';
 import { StackOneAPIError } from './utils/error-stackone-api';
 
 // Re-export types for consumers and to make types portable
@@ -38,14 +43,18 @@ export class RpcClient {
 	 * Actions namespace containing RPC methods
 	 */
 	readonly actions: {
-		rpcAction: (request: RpcActionRequest) => Promise<RpcActionResponse>;
+		rpcAction: (request: RpcActionRequest) => Promise<RpcActionResponse | BinaryDownloadResult>;
 	} = {
 		/**
 		 * Execute an RPC action
 		 * @param request The RPC action request
-		 * @returns The RPC action response matching server's ActionsRpcResponseApiModel
+		 * @returns The RPC action response matching server's ActionsRpcResponseApiModel, or - for a
+		 *   file-download action served as raw binary - a {@link BinaryDownloadResult} of bytes +
+		 *   metadata. `content` is a raw `Buffer` (not a `JsonValue`); handle it before re-serializing.
 		 */
-		rpcAction: async (request: RpcActionRequest): Promise<RpcActionResponse> => {
+		rpcAction: async (
+			request: RpcActionRequest,
+		): Promise<RpcActionResponse | BinaryDownloadResult> => {
 			const validatedRequest = rpcActionRequestSchema.parse(request);
 			const url = `${this.baseUrl}/actions/rpc`;
 
@@ -90,6 +99,27 @@ export class RpcClient {
 					body: JSON.stringify(requestBody),
 					signal: controller.signal,
 				});
+
+				// A non-JSON body is never the {data,next} envelope. A successful one is a file download
+				// (raw binary with the file's own MIME type + Content-Disposition) - e.g. a
+				// *_unified_download_file action - returned as bytes + metadata. A non-JSON error body
+				// (e.g. an HTML gateway error) is surfaced as a StackOneAPIError rather than letting
+				// response.json() throw a raw SyntaxError. JSON bodies fall through to the parse +
+				// envelope-validation path below.
+				const contentType = response.headers.get('content-type') ?? '';
+				if (!isJsonContentType(contentType)) {
+					if (response.ok) {
+						return await binaryDownloadFromResponse(response);
+					}
+					const errorText = await response.text().catch(() => null);
+					throw new StackOneAPIError(
+						`RPC action failed for ${url}`,
+						response.status,
+						errorText || null,
+						requestBody,
+					);
+				}
+
 				responseBody = await response.json();
 			} catch (error) {
 				if (error instanceof Error && error.name === 'AbortError') {
