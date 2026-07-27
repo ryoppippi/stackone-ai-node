@@ -31,6 +31,26 @@ import { StackOneAPIError } from './utils/error-stackone-api';
 import { normalizeActionName } from './utils/normalize';
 
 /**
+ * Param-style pinned on the /mcp tool-listing URL. The MCP schema and the RPC-execution
+ * unwrap (splitEnvelopeParams) must agree on this, so it is pinned rather than following
+ * the server default — the server default is free to change without breaking the SDK.
+ */
+const MCP_PARAM_STYLE = 'flat_prefixed';
+
+/** Matches a flat_prefixed envelope key: `<location>_<field>` (e.g. `path_id`, `query_limit`). */
+const FLAT_ENVELOPE_KEY_PATTERN = /^(path|query|body|headers)_(.+)$/;
+
+const ENVELOPE_LOCATIONS = ['path', 'query', 'headers', 'body'] as const;
+
+type EnvelopeLocation = (typeof ENVELOPE_LOCATIONS)[number];
+
+const isEnvelopeLocation = (key: string): key is EnvelopeLocation =>
+	(ENVELOPE_LOCATIONS as readonly string[]).includes(key);
+
+const isPlainObject = (value: unknown): value is Record<string, unknown> =>
+	typeof value === 'object' && value !== null && !Array.isArray(value);
+
+/**
  * Converts an RPC action result to a JsonObject by flattening its top-level properties.
  *
  * RpcActionResponse uses z.passthrough() which preserves additional fields, making it
@@ -1245,7 +1265,7 @@ export class StackOneToolSet {
 		}
 
 		await using clients = await createMCPClient({
-			baseUrl: `${this.baseUrl}/mcp`,
+			baseUrl: `${this.baseUrl}/mcp?param-style=${MCP_PARAM_STYLE}`,
 			headers: requestHeaders,
 		});
 
@@ -1406,21 +1426,14 @@ export class StackOneToolSet {
 				const currentHeaders = tool.getHeaders();
 				const baseHeaders = this.buildActionHeaders(currentHeaders);
 
-				const pathParams = this.extractRecord(parsedParams, 'path');
-				const queryParams = this.extractRecord(parsedParams, 'query');
-				const additionalHeaders = this.extractRecord(parsedParams, 'headers');
-				const extraHeaders = normalizeHeaders(additionalHeaders);
+				const envelope = this.splitEnvelopeParams(parsedParams);
+				const pathParams = envelope.path;
+				const queryParams = envelope.query;
+				const extraHeaders = normalizeHeaders(envelope.headers);
 				// defu merges extraHeaders into baseHeaders, both are already branded types
 				const actionHeaders = defu(extraHeaders, baseHeaders);
 
-				const bodyPayload = this.extractRecord(parsedParams, 'body');
-				const rpcBody: JsonObject = bodyPayload ? { ...bodyPayload } : {};
-				for (const [key, value] of Object.entries(parsedParams)) {
-					if (key === 'body' || key === 'headers' || key === 'path' || key === 'query') {
-						continue;
-					}
-					rpcBody[key] = value as JsonObject[string];
-				}
+				const rpcBody: JsonObject = envelope.body;
 
 				if (options?.dryRun) {
 					const requestPayload = {
@@ -1472,14 +1485,75 @@ export class StackOneToolSet {
 		);
 	}
 
-	private extractRecord(
-		params: JsonObject,
-		key: 'body' | 'headers' | 'path' | 'query',
-	): JsonObject | undefined {
-		const value = params[key];
-		if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-			return value as JsonObject;
+	/**
+	 * Splits LLM-supplied tool arguments into the RPC envelope (path/query/headers/body).
+	 *
+	 * Tools are listed with `?param-style=flat_prefixed`, so keys arrive as `<location>_<field>`
+	 * (for example `path_id`, `query_limit`). The prefix carries the parameter location, so the
+	 * split needs no per-action schema. A bare object-valued `path`/`query`/`headers`/`body` key
+	 * is still bucketed for clients holding a cached nested schema, and any other key falls
+	 * through to the body.
+	 */
+	private splitEnvelopeParams(params: JsonObject): {
+		path?: JsonObject;
+		query?: JsonObject;
+		headers?: JsonObject;
+		body: JsonObject;
+	} {
+		// Null-prototype buckets so API fields named after Object.prototype members
+		// (`constructor`, `toString`, `__proto__`) are stored as ordinary own properties
+		// instead of colliding with the prototype chain and being dropped.
+		const buckets: Record<EnvelopeLocation, JsonObject> = {
+			path: Object.create(null),
+			query: Object.create(null),
+			headers: Object.create(null),
+			body: Object.create(null),
+		};
+
+		// Keeps whichever value reaches a field first, so the pass order below is what decides
+		// precedence rather than the order the caller happened to supply keys in.
+		const assignField = (bucket: JsonObject, field: string, value: unknown): void => {
+			if (!Object.hasOwn(bucket, field)) {
+				bucket[field] = value as JsonObject[string];
+			}
+		};
+
+		const entries = Object.entries(params);
+
+		// First pass: explicit flat_prefixed keys. Applied before anything else so a prefixed
+		// key always wins over the same field carried in a nested envelope or as a bare key.
+		for (const [key, value] of entries) {
+			const match = key.match(FLAT_ENVELOPE_KEY_PATTERN);
+			if (match) {
+				assignField(buckets[match[1] as EnvelopeLocation], match[2], value);
+			}
 		}
-		return undefined;
+
+		// Second pass: nested envelopes from clients on a cached schema, then bare body fields.
+		for (const [key, value] of entries) {
+			if (FLAT_ENVELOPE_KEY_PATTERN.test(key)) {
+				continue;
+			}
+			if (isEnvelopeLocation(key)) {
+				// Reserved keys name an envelope, never a body field. A non-object value cannot
+				// be bucketed, so it is dropped rather than leaked into the body under its
+				// reserved name.
+				if (isPlainObject(value)) {
+					for (const [field, fieldValue] of Object.entries(value)) {
+						assignField(buckets[key], field, fieldValue);
+					}
+				}
+				continue;
+			}
+			assignField(buckets.body, key, value);
+		}
+
+		// Spread onto ordinary objects so downstream JSON and schema handling sees plain records.
+		return {
+			path: Object.keys(buckets.path).length > 0 ? { ...buckets.path } : undefined,
+			query: Object.keys(buckets.query).length > 0 ? { ...buckets.query } : undefined,
+			headers: Object.keys(buckets.headers).length > 0 ? { ...buckets.headers } : undefined,
+			body: { ...buckets.body },
+		};
 	}
 }
