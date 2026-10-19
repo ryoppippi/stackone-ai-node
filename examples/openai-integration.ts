@@ -2,7 +2,6 @@
  * This example shows how to use StackOne tools with OpenAI.
  */
 
-import assert from 'node:assert';
 import process from 'node:process';
 import { StackOneToolSet } from '@stackone/ai';
 import OpenAI from 'openai';
@@ -12,57 +11,67 @@ if (!apiKey) {
 	console.error('STACKONE_API_KEY environment variable is required');
 	process.exit(1);
 }
-
-// Replace with your actual account ID from StackOne dashboard
-const accountId = 'your-bamboohr-account-id';
+if (!process.env.OPENAI_API_KEY) {
+	console.log('Skipping: OPENAI_API_KEY is not set');
+	process.exit(0);
+}
 
 const openaiIntegration = async (): Promise<void> => {
-	// Initialize StackOne
-	const toolset = new StackOneToolSet({
-		accountId,
-		baseUrl: process.env.STACKONE_BASE_URL ?? 'https://api.stackone.com',
-	});
+	// Initialize StackOne — reads STACKONE_API_KEY from env. The account id is passed explicitly;
+	// without one, the toolset uses every active shared account linked to the key
+	const toolset = new StackOneToolSet({ accountId: process.env.STACKONE_ACCOUNT_ID || undefined });
 
-	// Fetch all tools for this account via MCP
-	const tools = await toolset.fetchTools();
+	// Filter to specific tools to stay within OpenAI's 128-tool limit
+	const tools = await toolset.fetchTools({
+		actions: ['workday_list_workers', 'workday_get_worker', 'workday_get_current_user'],
+	});
 	const openAITools = tools.toOpenAI();
+	console.log(`Loaded ${openAITools.length} tools for OpenAI`);
 
 	// Initialize OpenAI client
 	const openai = new OpenAI();
 
 	// Create a chat completion with tool calls
+	const messages: OpenAI.ChatCompletionMessageParam[] = [
+		{
+			role: 'system',
+			content: 'You are a helpful assistant that can access HR information.',
+		},
+		{
+			role: 'user',
+			content: 'List the first 5 employees',
+		},
+	];
 	const response = await openai.chat.completions.create({
 		model: 'gpt-5.1',
-		messages: [
-			{
-				role: 'system',
-				content: 'You are a helpful assistant that can access BambooHR information.',
-			},
-			{
-				role: 'user',
-				content: 'What is the employee with id: c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA phone number?',
-			},
-		],
+		messages,
 		tools: openAITools,
 	});
 
-	// Verify the response contains tool calls
-	assert(response.choices.length > 0, 'Expected at least one choice in the response');
+	const message = response.choices[0]?.message;
+	const toolCalls = message?.tool_calls ?? [];
+	console.log(`Tool calls made: ${toolCalls.length}`);
+	if (!message || toolCalls.length === 0) {
+		return;
+	}
 
-	const choice = response.choices[0];
-	assert(choice.message.tool_calls !== undefined, 'Expected tool_calls to be defined');
-	assert(choice.message.tool_calls.length > 0, 'Expected at least one tool call');
+	for (const toolCall of toolCalls) {
+		if (toolCall.type === 'function') {
+			console.log(`  Tool: ${toolCall.function.name}`);
+			console.log(`  Arguments: ${toolCall.function.arguments}`);
+		}
+	}
 
-	const toolCall = choice.message.tool_calls[0];
-	assert(toolCall.type === 'function', 'Expected tool call to be a function');
-	assert(
-		toolCall.function.name === 'bamboohr_get_employee',
-		'Expected tool call to be bamboohr_get_employee',
-	);
+	// Run the tool calls and hand the results back. The assistant turn must come before its tool
+	// results, or OpenAI returns a 400. A failed call becomes a tool message the model can read.
+	messages.push(message, ...(await tools.executeOpenAIToolCalls(toolCalls)));
 
-	// Parse the arguments to verify they contain the expected fields
-	const args = JSON.parse(toolCall.function.arguments);
-	assert(args.id === 'c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA', 'Expected id to match the query');
+	const final = await openai.chat.completions.create({
+		model: 'gpt-5.1',
+		messages,
+		tools: openAITools,
+	});
+	console.log(`Answer: ${final.choices[0]?.message.content ?? ''}`);
 };
 
 // Run the example

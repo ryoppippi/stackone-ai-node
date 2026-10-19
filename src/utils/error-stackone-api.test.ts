@@ -1,4 +1,5 @@
 import { USER_AGENT } from '../consts';
+import { TEST_BASE_URL } from '../../mocks/constants';
 import { StackOneAPIError } from './error-stackone-api';
 
 describe('StackOneAPIError', () => {
@@ -10,26 +11,11 @@ describe('StackOneAPIError', () => {
 		expect(error.message).toBe('API failed');
 	});
 
-	it('should append message from responseBody if present', () => {
-		const error = new StackOneAPIError('API failed', 400, {
-			message: 'Invalid request body',
+	it('keeps the message it is given rather than rewriting it', () => {
+		const error = new StackOneAPIError('400 Bad Request: path.id is missing', 400, {
+			message: 'path.id is missing',
 		});
-		expect(error.message).toBe('API failed: Invalid request body');
-	});
-
-	it('should not append message if responseBody.message is not a string', () => {
-		const error = new StackOneAPIError('API failed', 400, { message: 123 });
-		expect(error.message).toBe('API failed');
-	});
-
-	it('should not append message if responseBody.message is empty', () => {
-		const error = new StackOneAPIError('API failed', 400, { message: '' });
-		expect(error.message).toBe('API failed');
-	});
-
-	it('should not append message if responseBody is null', () => {
-		const error = new StackOneAPIError('API failed', 400, null);
-		expect(error.message).toBe('API failed');
+		expect(error.message).toBe('400 Bad Request: path.id is missing');
 	});
 
 	it('should extract provider errors from responseBody', () => {
@@ -70,12 +56,12 @@ describe('StackOneAPIError', () => {
 
 	it('should include endpoint URL when present in message', () => {
 		const error = new StackOneAPIError(
-			'Request failed for https://api.stackone.com/tools/execute',
+			`Request failed for ${TEST_BASE_URL}/tools/execute`,
 			404,
 			{},
 		);
 		const result = error.toString();
-		expect(result).toContain('Endpoint: https://api.stackone.com/tools/execute');
+		expect(result).toContain(`Endpoint: ${TEST_BASE_URL}/tools/execute`);
 	});
 
 	it('should format object requestBody as JSON', () => {

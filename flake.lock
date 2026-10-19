@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "agent-skills": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791801176,
+        "narHash": "sha256-7yMjYQUjpCy0IhItfGt2EJbOobNu1pkIrBX2GA3yOcU=",
+        "owner": "Kyure-A",
+        "repo": "agent-skills-nix",
+        "rev": "2948865044b2af55c8c4e4eb2abda7de79d60f0e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Kyure-A",
+        "repo": "agent-skills-nix",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1792116957,
@@ -18,7 +38,25 @@
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "agent-skills": "agent-skills",
+        "nixpkgs": "nixpkgs",
+        "stackone-skills": "stackone-skills"
+      }
+    },
+    "stackone-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792401531,
+        "narHash": "sha256-BUq71mZLcgETcbte5zCDpWRPdkZ2OG40rmdAHPmtotk=",
+        "owner": "StackOneHQ",
+        "repo": "skills",
+        "rev": "dd7c5ffc2cde12f259098f0de4e782f70ecb9672",
+        "type": "github"
+      },
+      "original": {
+        "owner": "StackOneHQ",
+        "repo": "skills",
+        "type": "github"
       }
     }
   },

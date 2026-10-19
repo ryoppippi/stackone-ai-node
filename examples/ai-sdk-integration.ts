@@ -6,11 +6,12 @@
  * can autonomously call tools and reason over results until the stop condition
  * is met.
  *
- * In AI SDK v6+, you can use the `ToolLoopAgent` class for more explicit
- * agent functionality.
+ * Compatible with AI SDK v5–v7 (`ai` peer `>=5.0.108 <8.0.0`). Uses
+ * `stepCountIs`, which exists in v5/v6 and remains available as an alias in v7.
+ * AI SDK v7 requires Node.js 22+. On v6+ you can also use the `ToolLoopAgent`
+ * class for more explicit agent functionality; v5 has no such export.
  */
 
-import assert from 'node:assert';
 import process from 'node:process';
 import { openai } from '@ai-sdk/openai';
 import { StackOneToolSet } from '@stackone/ai';
@@ -21,32 +22,44 @@ if (!apiKey) {
 	console.error('STACKONE_API_KEY environment variable is required');
 	process.exit(1);
 }
-
-// Replace with your actual account ID from StackOne dashboard
-const accountId = 'your-bamboohr-account-id';
+if (!process.env.OPENAI_API_KEY) {
+	console.log('Skipping: OPENAI_API_KEY is not set');
+	process.exit(0);
+}
 
 const aiSdkIntegration = async (): Promise<void> => {
-	// Initialize StackOne
-	const toolset = new StackOneToolSet({
-		accountId,
-		baseUrl: process.env.STACKONE_BASE_URL ?? 'https://api.stackone.com',
-	});
+	// Initialize StackOne — reads STACKONE_API_KEY from env. The account id is passed explicitly;
+	// without one, the toolset uses every active shared account linked to the key
+	const toolset = new StackOneToolSet({ accountId: process.env.STACKONE_ACCOUNT_ID || undefined });
 
-	// Fetch all tools for this account via MCP
-	const tools = await toolset.fetchTools();
+	// Filter to specific tools to keep token usage manageable
+	const tools = await toolset.fetchTools({
+		actions: ['workday_list_workers', 'workday_get_worker', 'workday_get_current_user'],
+	});
 
 	// Convert to AI SDK tools
 	const aiSdkTools = await tools.toAISDK();
+	console.log(`Loaded ${Object.keys(aiSdkTools).length} tools for AI SDK`);
 
 	// The AI SDK will automatically call the tool if needed
-	const { text } = await generateText({
+	const { text, steps } = await generateText({
 		model: openai('gpt-5.1'),
 		tools: aiSdkTools,
-		prompt: 'Get all details about employee with id: c28xIQaWQ6MzM5MzczMDA2NzMzMzkwNzIwNA',
+		prompt: 'List the first 5 employees',
 		stopWhen: stepCountIs(3),
 	});
 
-	assert(text.includes('Michael'), 'Expected employee name to be included in the response');
+	console.log(`AI response: ${text}`);
+	console.log(`Steps taken: ${steps.length}`);
+
+	for (const step of steps) {
+		if (step.toolCalls && step.toolCalls.length > 0) {
+			for (const toolCall of step.toolCalls) {
+				console.log(`  Tool call: ${toolCall.toolName}`);
+				console.log(`  Arguments: ${JSON.stringify((toolCall as Record<string, unknown>).args)}`);
+			}
+		}
+	}
 };
 
 await aiSdkIntegration();
