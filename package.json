@@ -1,6 +1,6 @@
 {
 	"name": "@stackone/ai",
-	"version": "2.3.0",
+	"version": "3.1.0",
 	"description": "Tools for agents to perform actions on your SaaS",
 	"keywords": [
 		"agents",
@@ -24,22 +24,24 @@
 		"LICENSE",
 		"README.md",
 		"src",
-		"!examples/*.test.ts",
 		"examples/*.ts",
 		"!src/**/*.test-d.ts",
 		"!src/**/*.test.ts"
 	],
 	"type": "module",
-	"main": "./dist/index.mjs",
+	"main": "./dist/index.cjs",
 	"module": "./dist/index.mjs",
-	"types": "./dist/index.d.mts",
+	"types": "./dist/index.d.cts",
 	"exports": {
 		".": "./src/index.ts",
 		"./package.json": "./package.json"
 	},
 	"publishConfig": {
 		"exports": {
-			".": "./dist/index.mjs",
+			".": {
+				"import": "./dist/index.mjs",
+				"require": "./dist/index.cjs"
+			},
 			"./package.json": "./package.json"
 		}
 	},
@@ -56,17 +58,17 @@
 		"preinstall": "npx only-allow pnpm",
 		"prepack": "npm pkg delete scripts.preinstall && pnpm run build",
 		"test": "vitest",
-		"coverage": "vitest run --coverage"
+		"coverage": "vitest run --coverage",
+		"run:example": "tsx --env-file .env"
 	},
 	"dependencies": {
-		"@modelcontextprotocol/sdk": "catalog:prod",
-		"@orama/orama": "catalog:prod",
-		"defu": "catalog:prod"
+		"@modelcontextprotocol/sdk": "catalog:prod"
 	},
 	"devDependencies": {
 		"@fast-check/vitest": "catalog:dev",
 		"@hono/mcp": "catalog:dev",
 		"@types/node": "catalog:dev",
+		"@typescript/native": "catalog:dev",
 		"@vitest/coverage-v8": "catalog:dev",
 		"ai": "catalog:dev",
 		"hono": "catalog:dev",
@@ -76,6 +78,7 @@
 		"publint": "catalog:dev",
 		"tsdown": "catalog:dev",
 		"type-fest": "catalog:dev",
+		"typescript": "catalog:dev",
 		"unplugin-unused": "catalog:dev",
 		"vitest": "catalog:dev",
 		"zod": "catalog:dev"
@@ -84,8 +87,7 @@
 		"@anthropic-ai/claude-agent-sdk": "catalog:peer",
 		"@anthropic-ai/sdk": "catalog:peer",
 		"ai": "catalog:peer",
-		"openai": "catalog:peer",
-		"zod": "catalog:peer"
+		"openai": "catalog:peer"
 	},
 	"peerDependenciesMeta": {
 		"@anthropic-ai/claude-agent-sdk": {
@@ -105,7 +107,7 @@
 		"runtime": [
 			{
 				"name": "node",
-				"version": "^24.11.0",
+				"version": "24.22.3",
 				"onFail": "download"
 			}
 		]
@@ -113,5 +115,5 @@
 	"engines": {
 		"node": ">=20.19.6"
 	},
-	"packageManager": "pnpm@10.26.0"
+	"packageManager": "pnpm@11.17.0"
 }

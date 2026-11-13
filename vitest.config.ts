@@ -22,6 +22,7 @@ export default defineConfig({
 					exclude: ['node_modules', 'dist', 'examples'],
 					typecheck: {
 						enabled: true,
+						checker: './node_modules/@typescript/native/bin/tsc',
 						include: ['src/**/*.test.ts', 'src/**/*.test-d.ts'],
 					},
 				},
@@ -30,8 +31,8 @@ export default defineConfig({
 				extends: true,
 				test: {
 					name: 'examples',
-					root: './examples',
-					include: ['**/*.spec.ts', '**/*.test.ts'],
+					root: '.',
+					include: ['tests/examples/**/*.spec.ts', 'tests/examples/**/*.test.ts'],
 					exclude: ['node_modules', 'dist'],
 				},
 			},

@@ -14,6 +14,7 @@
 		/* Build for a library */
 		"module": "ESNext",
 		"moduleResolution": "bundler",
+		"rootDir": ".",
 		"outDir": "dist",
 		"sourceMap": true,
 		"declaration": true,
@@ -21,8 +22,17 @@
 		/* Other */
 		"forceConsistentCasingInFileNames": true,
 		"lib": ["es2022"],
+		/* Examples imported by tests/examples resolve the package to source, installed or not */
+		"paths": { "@stackone/ai": ["./src/index.ts"] },
 		"types": ["node", "vitest/globals", "vitest/importMeta"]
 	},
-	"include": ["src/**/*", "scripts/**/*", "mocks/**/*", "vitest.config.ts", "vitest.setup.ts"],
+	"include": [
+		"src/**/*",
+		"scripts/**/*",
+		"mocks/**/*",
+		"tests/**/*",
+		"vitest.config.ts",
+		"vitest.setup.ts"
+	],
 	"exclude": ["node_modules", "dist", "examples"]
 }

@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Rules and Skills Structure
 
 - **Rules** (`.claude/rules/`): Automatically loaded based on file paths. Source of truth for project conventions.
-- **Skills** (`.claude/skills/`): Manually invoked for specific integrations.
+- **Skills** (`.agents/skills/`, `.claude/skills/`): Managed by Nix via [agent-skills-nix](https://github.com/Kyure-A/agent-skills-nix). Skills are sourced from [StackOneHQ/skills](https://github.com/StackOneHQ/skills) and installed automatically when entering `nix develop`.
 - **Cursor rules** (`.cursor/rules/`): Symlinks to `.claude/rules/` for consistency.
 
 ## Available Rules
@@ -22,7 +22,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Available Skills
 
-| Skill                 | Usage                       | Description                                        |
-| --------------------- | --------------------------- | -------------------------------------------------- |
-| **orama-integration** | N/A                         | Integrating with Orama search/indexing             |
-| **release-please**    | `/release-please <version>` | Trigger a release-please PR for a specific version |
+| Skill              | Usage                       | Description                                        |
+| ------------------ | --------------------------- | -------------------------------------------------- |
+| **release-please** | `/release-please <version>` | Trigger a release-please PR for a specific version |
